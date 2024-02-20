@@ -5,8 +5,9 @@ var objReturn = {
     msg: 'ok'
 }
 
-exports.getListUser = async (req, res, next) => {
-    let listUser = [];
+
+exports.getListCategory = async (req, res, next) => {
+    let listCategory = [];
 
     try {
         listUser = await userModel.find();
@@ -28,7 +29,7 @@ exports.getListUser = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.getOneUser = async (req, res, next) => {
+exports.getOneCategory = async (req, res, next) => {
     try {
         const id = req.params.id;
 
@@ -52,7 +53,7 @@ exports.getOneUser = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.addUser = async (req, res, next) => {
+exports.addCategory = async (req, res, next) => {
 
     try {
         const newData = req.body;
@@ -72,7 +73,7 @@ exports.addUser = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.updateUser = async (req, res, next) => {
+exports.updateCategory = async (req, res, next) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
@@ -88,7 +89,7 @@ exports.updateUser = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.deleteUser = async (req, res, next) => {
+exports.deleteCategory = async (req, res, next) => {
 
     try {
         const id = req.params.id;
@@ -105,20 +106,6 @@ exports.deleteUser = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.dangNhap = async (req, res, next) => {
-    try {
-        const { username, passwork } = req.body
-        const result = await userModel.findOne({ username, passwork })
-        if (result === null) {
-            return res.status(404).json({ message: "Not found user" })
-        } else {
-            return res.status(200).json({ message: "oke" })
-        }
-
-    } catch (error) {
-        return res.status(404).json({ err: error })
-    }
-}
 
 
 
