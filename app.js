@@ -8,7 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 const CategoryRouter = require('./routes/category.route')
+const VariationRouter = require('./routes/variation.route')
 const BookRouter = require('./routes/book.route')
+const EvaluateRouter = require('./routes/evaluate.route')
 
 var app = express();
 
@@ -27,8 +29,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
-app.use('/categories',CategoryRouter)
-app.use('/books',BookRouter)
+app.use('/api/categories',CategoryRouter)
+app.use('/api/variations',VariationRouter)
+app.use('/api/evaluates',EvaluateRouter)
+app.use('/api/books',BookRouter)
 
 // #middlewares
 app.use(handleNotFound);

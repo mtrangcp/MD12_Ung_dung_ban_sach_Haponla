@@ -1,28 +1,29 @@
-# book
+# books
 
 ### getAll
-GET http://localhost:3000/books
+GET http://localhost:3000/api/books
 
 
 ### add
-POST http://localhost:3000/books
+POST http://localhost:3000/api/books
 Content-Type: application/json
 
 {
-    "name": "one piece"
+    "name": "one piece",
+    "id_category":"65d6d98281ba668fb7f9c9c7"
 }
 
 
 ### get
-GET http://localhost:3000/books/65d6d98281ba668fb7f9c9c7
+GET http://localhost:3000/api/books/65d7460c4e154cfa301d98ee
 
 
 ### remove
-DELETE  http://localhost:3000/books/65d71645c4a9245eee5f9d33
+DELETE  http://localhost:3000/api/books/65d7460c4e154cfa301d98ee
 
 
 ### set
-PATCH  http://localhost:3000/books/65d7104eabc33f091b5c1e8b
+PATCH  http://localhost:3000/api/books/65d7460b4e154cfa301d98ec
 Content-Type: application/json
 
 {

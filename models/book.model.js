@@ -3,7 +3,7 @@ const { MongoDbConnection } = require("../configs/database");
 const { CategoryModel } = require("./category.model");
 const { userModel } = require("./bookStore.model");
 
-const BookVariationSchema = new mongoose.Schema(
+const VariationSchema = new mongoose.Schema(
   {
     quality: {
       type: String,
@@ -11,16 +11,17 @@ const BookVariationSchema = new mongoose.Schema(
     },
     language: {
       type: String,
-      required: true,
+      enum: ["vi", "en"],
+      default: "vi",
     },
   },
   {
     versionKey: false,
   }
 );
-const BookVariationModel = MongoDbConnection.model(
-  "book_variation",
-  BookVariationSchema
+const VariationModel = MongoDbConnection.model(
+  "variation",
+  VariationSchema
 );
 
 const EvaluateSchema = new mongoose.Schema(
@@ -44,6 +45,7 @@ const EvaluateSchema = new mongoose.Schema(
     id_user: {
       type: mongoose.Types.ObjectId,
       ref: userModel.modelName,
+      required: true,
     },
   },
   { versionKey: false }
@@ -89,7 +91,7 @@ const BookSchema = new mongoose.Schema(
     book_variation: [
       {
         type: mongoose.Types.ObjectId,
-        ref: BookVariationModel.modelName,
+        ref: VariationModel.modelName,
       },
     ],
     evaluate: [
@@ -101,6 +103,7 @@ const BookSchema = new mongoose.Schema(
     id_category: {
       type: mongoose.Types.ObjectId,
       ref: CategoryModel.modelName,
+      required: true,
     },
   },
   {
@@ -111,5 +114,7 @@ const BookSchema = new mongoose.Schema(
 const BookModel = MongoDbConnection.model("book", BookSchema);
 
 module.exports = {
+  VariationModel,
+  EvaluateModel,
   BookModel,
 };

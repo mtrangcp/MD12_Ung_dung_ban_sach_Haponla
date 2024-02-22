@@ -9,6 +9,7 @@ const CategorySchema = new mongoose.Schema(
     },
     image: {
       type: String,
+      default: `https://cdn-icons-png.flaticon.com/512/5078/5078755.png`
     },
   },
   {
