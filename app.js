@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 const CategoryRouter = require('./routes/category.route')
+const BookRouter = require('./routes/book.route')
 
 var app = express();
 
@@ -27,9 +28,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
 app.use('/categories',CategoryRouter)
+app.use('/books',BookRouter)
 
 // #middlewares
 app.use(handleNotFound);
 app.use(handleError);
 
 module.exports = app;
+
