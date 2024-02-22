@@ -1,4 +1,4 @@
-var db = require('./db');
+var db = require('../configs/database')
 
 const addressChema = new db.mongoose.Schema(
     {

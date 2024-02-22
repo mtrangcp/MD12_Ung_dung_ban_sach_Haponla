@@ -1,0 +1,30 @@
+# category
+
+### getAll
+GET http://localhost:3000/categories
+
+
+### add
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+    "name": "comic"
+}
+
+
+### get
+GET http://localhost:3000/categories/65d6d98281ba668fb7f9c9c7
+
+
+### remove
+DELETE  http://localhost:3000/categories/65d6d98b81ba668fb7f9c9cd
+
+
+### set
+PATCH  http://localhost:3000/categories/65d6d98281ba668fb7f9c9c7
+Content-Type: application/json
+
+{
+    "name": "horror"
+}
