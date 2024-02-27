@@ -1,18 +1,17 @@
-var { addressModel, discountModel, item_discountModel, notificationModel, userModel } = require('../../tranghtm_datn/models/bookStore.model');
+var { notificationModel, userModel } = require('../models/bookStore.model');
 
 var objReturn = {
     status: 1,
     msg: 'ok'
 }
 
-
-exports.getListCategory = async (req, res, next) => {
-    let listCategory = [];
+exports.getListNotification = async (req, res, next) => {
+    let listNotification = [];
 
     try {
-        listUser = await userModel.find();
-        if (listUser) {
-            objReturn.data = listUser;
+        listNotification = await notificationModel.find();
+        if (listNotification) {
+            objReturn.data = listNotification;
             objReturn.status = 1;
             objReturn.msg = 'lay thanh cong'
 
@@ -29,14 +28,14 @@ exports.getListCategory = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.getOneCategory = async (req, res, next) => {
+exports.getOneNotification = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        const user = await userModel.findById(id);
+        const notification = await notificationModel.findById(id);
 
-        if (user) {
-            objReturn.data = user;
+        if (notification) {
+            objReturn.data = notification;
             objReturn.status = 1;
             objReturn.msg = 'lay thanh cong'
 
@@ -53,17 +52,18 @@ exports.getOneCategory = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.addCategory = async (req, res, next) => {
+exports.addNotification = async (req, res, next) => {
 
     try {
         const newData = req.body;
-        const checkEmail = await userModel.findOne({ email: req.body.email })
-        const checkUsername = await userModel.findOne({ username: req.body.username })
-        if ((checkEmail === null) && (checkUsername === null)) {
-            const dataRes = await userModel.create(newData);
+        const checkContent = await notificationModel.findOne({ content: req.body.content });
+        const checkTitle = await notificationModel.findOne({ title: req.body.title });
+
+        if ((checkTitle === null) && (checkContent === null)) {
+            const dataRes = await notificationModel.create(newData);
             return res.status(200).json({ message: dataRes })
         } else {
-            return res.status(400).json({ message: "Account da ton tai" })
+            return res.status(400).json({ message: "Thong bao da ton tai" })
         }
     } catch (error) {
         objReturn.status = 0;
@@ -73,11 +73,11 @@ exports.addCategory = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.updateCategory = async (req, res, next) => {
+exports.updateAddress = async (req, res, next) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
-        const result = await userModel.findByIdAndUpdate(id, updatedData, { new: true });
+        const result = await notificationModel.findByIdAndUpdate(id, updatedData, { new: true });
 
         return res.status(200).json(result);
 
@@ -89,14 +89,14 @@ exports.updateCategory = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.deleteCategory = async (req, res, next) => {
+exports.deleteNotification = async (req, res, next) => {
 
     try {
         const id = req.params.id;
 
-        // await blModel.deleteMany({ idUser: id })
+        await userModel.deleteMany({ notifications: id })
 
-        const result = await userModel.findByIdAndDelete(id);
+        const result = await notificationModel.findByIdAndDelete(id);
         return res.status(200).json(result);
     } catch (error) {
         objReturn.status = 0;
