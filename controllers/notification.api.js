@@ -94,7 +94,7 @@ exports.deleteNotification = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        await userModel.deleteMany({ notifications: id })
+        await userModel.deleteMany({ notifications: id });
 
         const result = await notificationModel.findByIdAndDelete(id);
         return res.status(200).json(result);

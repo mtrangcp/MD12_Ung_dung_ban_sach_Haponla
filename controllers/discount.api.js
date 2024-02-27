@@ -94,7 +94,7 @@ exports.deleteDiscount = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        await userModel.deleteMany({ discounts: id })
+        await userModel.deleteMany({ discounts: id });
 
         const result = await discountModel.findByIdAndDelete(id);
         return res.status(200).json(result);
