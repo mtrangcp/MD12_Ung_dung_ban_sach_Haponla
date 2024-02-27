@@ -66,12 +66,21 @@ const userChema = new db.mongoose.Schema(
     { collection: 'User' }
 );
 
+const categoryChema = new db.mongoose.Schema(
+    {
+        name: { type: String, required: true }
+    },
+    { collection: 'Category' }
+);
+
 
 let addressModel = db.mongoose.model('addressModel', addressChema);
 let discountModel = db.mongoose.model('discountModel', discountChema);
 let item_discountModel = db.mongoose.model('item_discountModel', item_discountChema);
 let notificationModel = db.mongoose.model('item_notificationModel', notificationChema);
 let userModel = db.mongoose.model('userModel', userChema);
+let categoryModel = db.mongoose.model('categoryModel', categoryChema);
 
 
-module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel };
+
+module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel, categoryModel };

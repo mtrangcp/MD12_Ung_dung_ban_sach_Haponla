@@ -93,7 +93,7 @@ exports.deleteUser = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        await blModel.deleteMany({ idUser: id })
+        // await blModel.deleteMany({ idUser: id })
 
         const result = await userModel.findByIdAndDelete(id);
         return res.status(200).json(result);
