@@ -11,6 +11,9 @@ const CategoryRouter = require('./routes/category.route')
 const VariationRouter = require('./routes/variation.route')
 const BookRouter = require('./routes/book.route')
 const EvaluateRouter = require('./routes/evaluate.route')
+const BillRouter = require('./routes/bill.route')
+const BillItemRouter = require('./routes/billItem.route')
+const CartRouter = require('./routes/cart.route')
 
 var app = express();
 
@@ -33,6 +36,9 @@ app.use('/api/categories',CategoryRouter)
 app.use('/api/variations',VariationRouter)
 app.use('/api/evaluates',EvaluateRouter)
 app.use('/api/books',BookRouter)
+app.use('/api/bills',BillRouter)
+app.use('/api/billItems',BillItemRouter)
+app.use('/api/carts',CartRouter)
 
 // #middlewares
 app.use(handleNotFound);
