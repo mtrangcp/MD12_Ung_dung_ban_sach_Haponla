@@ -1,17 +1,17 @@
-var { notificationModel, userModel } = require('../models/bookStore.model');
+var { addressModel, userModel } = require('../../models/bookStore.model');
 
 var objReturn = {
     status: 1,
     msg: 'ok'
 }
 
-exports.getListNotification = async (req, res, next) => {
-    let listNotification = [];
+exports.getListAddress = async (req, res, next) => {
+    let listAddress = [];
 
     try {
-        listNotification = await notificationModel.find();
-        if (listNotification) {
-            objReturn.data = listNotification;
+        listAddress = await addressModel.find();
+        if (listAddress) {
+            objReturn.data = listAddress;
             objReturn.status = 1;
             objReturn.msg = 'lay thanh cong'
 
@@ -28,14 +28,14 @@ exports.getListNotification = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.getOneNotification = async (req, res, next) => {
+exports.getOneAddress = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        const notification = await notificationModel.findById(id);
+        const address = await addressModel.findById(id);
 
-        if (notification) {
-            objReturn.data = notification;
+        if (address) {
+            objReturn.data = address;
             objReturn.status = 1;
             objReturn.msg = 'lay thanh cong'
 
@@ -52,18 +52,19 @@ exports.getOneNotification = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.addNotification = async (req, res, next) => {
+exports.addAddress = async (req, res, next) => {
 
     try {
         const newData = req.body;
-        const checkContent = await notificationModel.findOne({ content: req.body.content });
-        const checkTitle = await notificationModel.findOne({ title: req.body.title });
+        const checkUsername = await addressModel.findOne({ username: req.body.username })
+        const checkPhone = await addressModel.findOne({ phone: req.body.phone })
+        const checkLocation = await addressModel.findOne({ location: req.body.location })
 
-        if ((checkTitle === null) && (checkContent === null)) {
-            const dataRes = await notificationModel.create(newData);
+        if ((checkUsername === null) && (checkPhone === null) && (checkLocation === null)) {
+            const dataRes = await addressModel.create(newData);
             return res.status(200).json({ message: dataRes })
         } else {
-            return res.status(400).json({ message: "Thong bao da ton tai" })
+            return res.status(400).json({ message: "Address da ton tai" })
         }
     } catch (error) {
         objReturn.status = 0;
@@ -77,7 +78,7 @@ exports.updateAddress = async (req, res, next) => {
     try {
         const id = req.params.id;
         const updatedData = req.body;
-        const result = await notificationModel.findByIdAndUpdate(id, updatedData, { new: true });
+        const result = await addressModel.findByIdAndUpdate(id, updatedData, { new: true });
 
         return res.status(200).json(result);
 
@@ -89,14 +90,14 @@ exports.updateAddress = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-exports.deleteNotification = async (req, res, next) => {
+exports.deleteAddress = async (req, res, next) => {
 
     try {
         const id = req.params.id;
 
-        await userModel.deleteMany({ notifications: id });
+        await userModel.deleteMany({ address: id });
 
-        const result = await notificationModel.findByIdAndDelete(id);
+        const result = await addressModel.findByIdAndDelete(id);
         return res.status(200).json(result);
     } catch (error) {
         objReturn.status = 0;
