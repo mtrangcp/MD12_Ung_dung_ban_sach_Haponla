@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-var api_user = require('../controllers/user.api');
-var api_discount = require('../controllers/discount.api');
-var api_address = require('../controllers/address.api');
-var api_notification = require('../controllers/notification.api');
+var api_user = require('../controllers/api/user.api');
+var api_discount = require('../controllers/api/discount.api');
+var api_address = require('../controllers/api/address.api');
+var api_notification = require('../controllers/api/notification.api');
 
 
 router.get('/user', api_user.getListUser);
