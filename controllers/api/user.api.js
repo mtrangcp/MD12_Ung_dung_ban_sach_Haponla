@@ -1,4 +1,4 @@
-var { addressModel, discountModel, item_discountModel, notificationModel, userModel } = require('../../tranghtm_datn/models/bookStore.model');
+var { addressModel, discountModel, item_discountModel, notificationModel, userModel } = require('../../models/bookStore.model');
 
 var objReturn = {
     status: 1,

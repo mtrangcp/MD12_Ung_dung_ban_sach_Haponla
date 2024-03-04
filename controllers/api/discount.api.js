@@ -1,4 +1,4 @@
-var { discountModel, item_discountModel, userModel } = require('../models/bookStore.model');
+var { discountModel, item_discountModel, userModel } = require('../../models/bookStore.model');
 
 var objReturn = {
     status: 1,
