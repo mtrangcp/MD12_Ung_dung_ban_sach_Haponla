@@ -168,7 +168,6 @@
                         <li class="header_navbar-item">
                             <a href="/users" class="aTrangchu">Trang chủ</a>
                         </li>
-
                     </ul>
 
                     <ul class="header_navbar-list">
@@ -191,34 +190,46 @@
         </header>
 
         <div class="container">
-            <div style="margin: 50px; text-align: center;">
-                <h2>Cấm User</h2>
-            </div>
+            <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;">Sửa thông tin tài khoản</h2>
             <div style="margin: auto;">
                 <h4>
                     <%= msg %>
                 </h4>
             </div>
+            <div class="formss" style="width: 500px; margin: auto;">
 
-            <div style="width: 350px; margin: auto;">
-                <form class="formss" action="" method="post">
+                <form method="post" action="">
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="user_name" class="form-control" value="<%= objAdmin.username  %>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">SĐT</label>
+                        <input type="text" name="sdt" class="form-control" value="<%= objAdmin.phone  %>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="text" name="email" class="form-control" value="<%= objAdmin.email  %>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giới tính</label>
+                        <input type="text" name="gender" class="form-control" value="<%= objAdmin.gender  %>">
+                    </div>
 
-                    Có chắc chắn cấm: <%= objUser.username %> ? <br>
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên</label>
+                        <input type="text" name="fullname" class="form-control" value="<%= objAdmin.fullname  %>">
+                    </div>
 
-                        <div style="margin: 30px; display: flex; justify-content: space-between;">
-                            <button type="submit button" class="btn btn-secondary">YES</button>
-                            <button type="button" class="btn btn-secondary">
-                                <a href="/users" style="text-decoration: none; color: white;">NO</a>
-                            </button>
-                        </div>
-
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
+
             </div>
 
         </div>
 
         <footer class="footer">
-            <!-- <h3>MD12</h3> -->
+
         </footer>
     </div>
 
