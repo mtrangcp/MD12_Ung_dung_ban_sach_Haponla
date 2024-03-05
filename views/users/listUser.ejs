@@ -15,8 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="../inc/assets/css/base.css">
+    <link rel="stylesheet" href="../inc/assets/css/main.css">
 </head>
 
 <body>
@@ -79,8 +79,8 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">ID </th>
                             <th scope="col">Username</th>
+                            <th scope="col">Phone</th>
                             <th scope="col">Email</th>
                             <th scope="col">VaiTro</th>
                             <th scope="col">Action</th>
@@ -91,18 +91,18 @@
 
                             <tr>
                                 <td>
-                                    <%= row._id %>
-                                </td>
-                                <td>
                                     <a href="users/chitiet/<%= row._id  %>">
                                         <%= row.username %>
                                     </a>
                                 </td>
                                 <td>
+                                    <%= row.phone %>
+                                </td>
+                                <td>
                                     <%= row.email %>
                                 </td>
                                 <td>
-                                    <%= row.vaitro %>
+                                    <%= row.role %>
                                 </td>
                                 <td>
                                     <a href="/users/edit/<%= row._id  %>">
