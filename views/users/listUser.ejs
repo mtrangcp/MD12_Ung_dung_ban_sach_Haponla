@@ -15,8 +15,149 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-    <link rel="stylesheet" href="../inc/assets/css/base.css">
-    <link rel="stylesheet" href="../inc/assets/css/main.css">
+    <link rel="stylesheet" href="./user.css">
+
+    <style>
+        .header {
+            height: 120px;
+            background-image: linear-gradient(0, rgb(104, 212, 94), #0e9c0e);
+        }
+
+        .header_navbar {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header_navbar-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .header_navbar-item {
+            margin: 0 8px;
+            position: relative;
+            min-height: 26px;
+        }
+
+        .item-strong {
+            font-weight: 400;
+        }
+
+        .item-separate::after {
+            content: "";
+            display: block;
+            position: absolute;
+            border-left: 1px solid #70fe33;
+            height: 16px;
+            right: -9px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header_navbar-item,
+        .header_navbar-item-link {
+            display: inline-block;
+            font-size: 1.4rem;
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 300;
+        }
+
+        .header_navbar-item,
+        .header_navbar-item-link,
+        .nav-icon-link {
+            align-items: center;
+            display: inline-flex;
+        }
+
+        .header_navbar-item:hover,
+        .nav-icon-link:hover,
+        .header_navbar-item-link:hover {
+            cursor: pointer;
+            color: rgb(255, 255, 255, 0.7);
+        }
+
+        .nav-icon-link {
+            color: var(--white-color);
+            text-decoration: none;
+        }
+
+        .header_nav-icon {
+            font-size: 1.8rem;
+            margin: 0 4px;
+        }
+
+
+
+        /* comment */
+
+        :root {
+            --white-color: #fff;
+            --black-color: #000;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+
+        html {
+            font-size: 62.5%;
+            line-height: 1.6rem;
+            font-family: 'Roboto', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .grid {
+            width: 1200px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .grid_full-width {
+            width: 100%;
+        }
+
+        .grid_row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .roboto-light {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .roboto-regular {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .roboto-medium {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        .roboto-bold {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .aTrangchu {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .aTrangchu:hover {
+            text-decoration: underline;
+            color: rgb(255, 255, 255, 0.7);
+        }
+    </style>
+
 </head>
 
 <body>
@@ -25,7 +166,9 @@
             <div class="grid">
                 <nav class="header_navbar">
                     <ul class="header_navbar-list">
-                        <li class="header_navbar-item">Trang chủ</li>
+                        <li class="header_navbar-item">
+                            <a href="/users" class="aTrangchu">Trang chủ</a>
+                        </li>
 
                     </ul>
 
@@ -52,7 +195,7 @@
             <div class="row d-inline">
 
                 <div class="d-inline">
-                    <a class="btn btn-secondary btnadd " href="/users/add">Add user</a>
+
                 </div>
                 <div class="input-group ">
 
@@ -80,9 +223,12 @@
                     <thead>
                         <tr>
                             <th scope="col">Username</th>
-                            <th scope="col">Phone</th>
+                            <th scope="col">SĐT</th>
                             <th scope="col">Email</th>
-                            <th scope="col">VaiTro</th>
+                            <th scope="col">Giới tính</th>
+                            <th scope="col">trạng thái</th>
+                            <th scope="col">Điểm</th>
+                            <th scope="col">Họ tên</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -102,22 +248,31 @@
                                     <%= row.email %>
                                 </td>
                                 <td>
-                                    <%= row.role %>
+                                    <%= row.gender %>
                                 </td>
                                 <td>
-                                    <a href="/users/edit/<%= row._id  %>">
-                                        <img style="width: 30px; height: 30px;"
-                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2XiL7IpyzC-sjH68kW5JPVEPZciZjrguI5w&usqp=CAU"
-                                            alt="edit">
-
-                                    </a>
-                                    <a href="/users/del/<%= row._id  %>">
-                                        <img onclick="" style="width: 30px; height: 30px;"
-                                            src="https://cdn-icons-png.flaticon.com/512/1345/1345874.png" alt="delete">
+                                    <%= row.active %>
                                 </td>
-                                </a>
-                            </tr>
+                                <td>
+                                    <%= row.points %>
+                                </td>
+                                <td>
+                                    <%= row.fullname %>
+                                </td>
+                                <td>
+                                    <% if (row.active) { %>
+                                        <a href="/users/ban/<%= row._id %>" style="color: #000;">
+                                            <i class='bx bxs-lock'></i>
+                                        </a>
+                                        <% } else { %>
+                                            <a href="/users/unban/<%= row._id %>">
+                                                <i class='bx bxs-lock-open'></i>
+                                            </a>
+                                            <% } %>
 
+                                </td>
+
+                            </tr>
 
                             <% }) %>
 

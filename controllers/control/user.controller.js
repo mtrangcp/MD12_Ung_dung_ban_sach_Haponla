@@ -14,6 +14,46 @@ exports.getListUser = async (req, res, next) => {
     res.render('users/listUser', { listUsers: list, soluong: soluong });
 }
 
+exports.banUser = async (req, res, next) => {
+
+    let msg = "";
+    let iduser = req.params.iduser;
+    let objUser = await myModel.userModel.findById(iduser);
+
+    if (req.method == "POST") {
+        if (objUser != null) {
+            objUser.active = false;
+            await objUser.save();
+
+            msg = 'Đã ban người dùng thành công!';
+        } else {
+            msg = " User không tồn tại!"
+        }
+    }
+
+    res.render('users/banUser', { msg: msg, objUser: objUser });
+}
+
+exports.unbanUser = async (req, res, next) => {
+
+    let msg = "";
+    let iduser = req.params.iduser;
+    let objUser = await myModel.userModel.findById(iduser);
+
+    if (req.method == "POST") {
+        if (objUser != null) {
+            objUser.active = true;
+            await objUser.save();
+
+            msg = 'Đã unban người dùng thành công!';
+        } else {
+            msg = " User không tồn tại!"
+        }
+    }
+
+    res.render('users/unbanUser', { msg: msg, objUser: objUser });
+}
+
 exports.login = async (req, res, next) => {
 
     let msg = "";
