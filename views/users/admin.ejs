@@ -86,10 +86,6 @@
             margin: 0 4px;
         }
 
-
-
-        /* comment */
-
         :root {
             --white-color: #fff;
             --black-color: #000;
@@ -155,6 +151,17 @@
             text-decoration: underline;
             color: rgb(255, 255, 255, 0.7);
         }
+
+        .dmk {
+            text-decoration: none;
+            color: #000;
+            padding: 0 120px;
+        }
+
+        .dmk:hover {
+            text-decoration: underline;
+            color: rgba(0, 0, 0, 0.7);
+        }
     </style>
 
 </head>
@@ -168,7 +175,6 @@
                         <li class="header_navbar-item">
                             <a href="/users" class="aTrangchu">Trang chủ</a>
                         </li>
-
                     </ul>
 
                     <ul class="header_navbar-list">
@@ -191,34 +197,55 @@
         </header>
 
         <div class="container">
-            <div style="margin: 50px; text-align: center;">
-                <h2>Cấm User</h2>
+            <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;"> Thông tin tài khoản</h2>
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <h5>
+                    <a href="admin/dmk/<%= objAdmin._id%>" class="dmk">Đổi mật khẩu</a>
+                </h5>
+                <h5>
+                    <a href="admin/edit/<%= objAdmin._id%>" class="dmk">Sửa thông tin</a>
+                </h5>
             </div>
-            <div style="margin: auto;">
-                <h4>
-                    <%= msg %>
-                </h4>
-            </div>
+            <div class="formss" style="width: 500px; margin: auto;">
 
-            <div style="width: 350px; margin: auto;">
-                <form class="formss" action="" method="post">
-
-                    Có chắc chắn cấm: <%= objUser.username %> ? <br>
-
-                        <div style="margin: 30px; display: flex; justify-content: space-between;">
-                            <button type="submit button" class="btn btn-secondary">YES</button>
-                            <button type="button" class="btn btn-secondary">
-                                <a href="/users" style="text-decoration: none; color: white;">NO</a>
-                            </button>
+                <form method="post" action="">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objAdmin.username  %>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">SĐT</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objAdmin.phone  %>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objAdmin.email  %>">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Giới tính</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objAdmin.gender  %>">
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label">Họ tên</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objAdmin.fullname  %>">
+                        </div>
+
+                    </fieldset>
                 </form>
+
             </div>
 
         </div>
 
         <footer class="footer">
-            <!-- <h3>MD12</h3> -->
+
         </footer>
     </div>
 

@@ -2,7 +2,7 @@ var myModel = require('../../models/bookStore.model');
 
 exports.getListUser = async (req, res, next) => {
 
-    let dk_loc = null;
+    let dk_loc = { role: "USER" };
     if (typeof (req.query.username) != 'undefined') {
         dk_loc = { username: req.query.username };
     }
@@ -12,6 +12,15 @@ exports.getListUser = async (req, res, next) => {
     var soluong = list.length;
 
     res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
+exports.getAdmin = async (req, res, next) => {
+
+    let dk_loc = { role: "ADMIN" };
+    console.log(dk_loc);
+    var objAdmin = await myModel.userModel.findOne(dk_loc);
+
+    res.render('users/admin', { objAdmin: objAdmin });
 }
 
 exports.banUser = async (req, res, next) => {
@@ -71,21 +80,28 @@ exports.login = async (req, res, next) => {
                     } else {
                         msg = 'Bạn không có quyền đăng nhập!';
                     }
-
                 } else {
                     msg = 'Sai password!';
                 }
-
             } else {
                 msg = 'Không tồn tại user ' + req.body.username;
             }
-
         } catch (error) {
             msg = error.message;
             console.log(error);
         }
     }
     res.render('users/login', { msg: msg })
+}
+
+exports.chiTietUser = async (req, res, next) => {
+
+    let iduser = req.params.iduser;
+
+    let objUser = await myModel.userModel.findById(iduser);
+
+
+    res.render('users/chitietUser', { objUser: objUser });
 }
 
 exports.logout = async (req, res, next) => {
@@ -117,6 +133,81 @@ exports.logout = async (req, res, next) => {
     }
 
     res.render('users/login', { msg: msg })
+}
+
+exports.editAdmin = async (req, res, next) => {
+
+    let msg = "";
+    let idadmin = req.params.idadmin;
+
+    let objAdmin = await myModel.userModel.findById(idadmin);
+
+    if (req.method == 'POST') {
+        let objAdmin = new myModel.userModel();
+
+        if (typeof (req.body.user_name != 'undefined')) {
+            objAdmin.username = req.body.user_name;
+        }
+        if (typeof (req.body.sdt != 'undefined')) {
+            objAdmin.phone = req.body.sdt;
+        }
+        if (typeof (req.body.email != 'undefined')) {
+            objAdmin.email = req.body.email;
+        }
+        if (typeof (req.body.gender != 'undefined')) {
+            objAdmin.gender = req.body.gender;
+        }
+        if (typeof (req.body.fullname != 'undefined')) {
+            objAdmin.fullname = req.body.fullname;
+        }
+        objAdmin._id = idadmin;
+
+        try {
+            await myModel.userModel.findByIdAndUpdate({ _id: idadmin }, objAdmin);
+            msg = 'Sửa thành công!'
+            return res.redirect('/users/admin');
+
+        } catch (err) {
+            msg = 'Lỗi: ' + err;
+            console.log(err);
+        }
+    }
+    res.render('users/editAdmin', { msg: msg, objAdmin: objAdmin });
+}
+
+exports.dmkAdmin = async (req, res, next) => {
+
+    let msg = "";
+    let idadmin = req.params.idadmin;
+
+    let objAdmin = await myModel.userModel.findById(idadmin);
+
+    if (req.method == 'POST') {
+        let objAdmin = new myModel.userModel();
+
+        if (typeof (req.body.user_name != 'undefined')) {
+            objAdmin.username = req.body.user_name;
+        }
+        if (typeof (req.body.sdt != 'undefined')) {
+            objAdmin.phone = req.body.sdt;
+        }
+        if (typeof (req.body.email != 'undefined')) {
+            objAdmin.email = req.body.email;
+        }
+
+        objAdmin._id = idadmin;
+
+        try {
+            await myModel.userModel.findByIdAndUpdate({ _id: idadmin }, objAdmin);
+            msg = 'Sửa thành công!'
+            return res.redirect('/users/admin');
+
+        } catch (err) {
+            msg = 'Lỗi: ' + err;
+            console.log(err);
+        }
+    }
+    res.render('users/editAdmin', { msg: msg, objAdmin: objAdmin });
 }
 
 

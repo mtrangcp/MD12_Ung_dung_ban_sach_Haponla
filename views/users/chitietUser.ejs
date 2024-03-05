@@ -145,6 +145,16 @@
             font-weight: 700;
             font-style: normal;
         }
+
+        .aTrangchu {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .aTrangchu:hover {
+            text-decoration: underline;
+            color: rgb(255, 255, 255, 0.7);
+        }
     </style>
 
 </head>
@@ -155,8 +165,9 @@
             <div class="grid">
                 <nav class="header_navbar">
                     <ul class="header_navbar-list">
-                        <li class="header_navbar-item">Trang chủ</li>
-
+                        <li class="header_navbar-item">
+                            <a href="/users" class="aTrangchu">Trang chủ</a>
+                        </li>
                     </ul>
 
                     <ul class="header_navbar-list">
@@ -179,12 +190,47 @@
         </header>
 
         <div class="container">
+            <h2 style="text-align: center; margin-bottom: 40px; margin-top: 30px;"> Thông tin tài khoản</h2>
+            <div class="formss" style="width: 500px; margin: auto;">
 
+                <form method="post" action="">
+                    <fieldset disabled>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Username</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objUser.username  %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">SĐT</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objUser.username  %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Email</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objUser.username  %>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Giới tính</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objUser.username  %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">Họ tên</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                                value="<%= objUser.email  %>">
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
 
         </div>
 
         <footer class="footer">
-            <h3>MD12</h3>
+
         </footer>
     </div>
 
