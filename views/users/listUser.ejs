@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Users</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="./user.css">
+
+    <style>
+        .header {
+            height: 120px;
+            background-image: linear-gradient(0, rgb(104, 212, 94), #0e9c0e);
+        }
+
+        .header_navbar {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header_navbar-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .header_navbar-item {
+            margin: 0 8px;
+            position: relative;
+            min-height: 26px;
+        }
+
+        .item-strong {
+            font-weight: 400;
+        }
+
+        .item-separate::after {
+            content: "";
+            display: block;
+            position: absolute;
+            border-left: 1px solid #70fe33;
+            height: 16px;
+            right: -9px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header_navbar-item,
+        .header_navbar-item-link {
+            display: inline-block;
+            font-size: 1.4rem;
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: 300;
+        }
+
+        .header_navbar-item,
+        .header_navbar-item-link,
+        .nav-icon-link {
+            align-items: center;
+            display: inline-flex;
+        }
+
+        .header_navbar-item:hover,
+        .nav-icon-link:hover,
+        .header_navbar-item-link:hover {
+            cursor: pointer;
+            color: rgb(255, 255, 255, 0.7);
+        }
+
+        .nav-icon-link {
+            color: var(--white-color);
+            text-decoration: none;
+        }
+
+        .header_nav-icon {
+            font-size: 1.8rem;
+            margin: 0 4px;
+        }
+
+
+
+        /* comment */
+
+        :root {
+            --white-color: #fff;
+            --black-color: #000;
+            --text-color: #333;
+        }
+
+        * {
+            box-sizing: inherit;
+        }
+
+        html {
+            font-size: 62.5%;
+            line-height: 1.6rem;
+            font-family: 'Roboto', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .grid {
+            width: 1200px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .grid_full-width {
+            width: 100%;
+        }
+
+        .grid_row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .roboto-light {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .roboto-regular {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .roboto-medium {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        .roboto-bold {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .aTrangchu {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .aTrangchu:hover {
+            text-decoration: underline;
+            color: rgb(255, 255, 255, 0.7);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <div class="grid">
+                <nav class="header_navbar">
+                    <ul class="header_navbar-list">
+                        <li class="header_navbar-item">
+                            <a href="/users" class="aTrangchu">Trang chủ</a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="header_navbar-list">
+                        <li class="header_navbar-item">
+                            <a href="#" class="header_navbar-item-link item-separate">
+                                <i class='header_nav-icon bx bxs-bell'></i>
+                                Thông báo</a>
+                        </li>
+                        <li class="header_navbar-item item-separate">
+                            <a href="#" class="nav-icon-link">
+                                <i class='header_nav-icon bx bxs-help-circle'></i>
+                                Trợ giúp </a>
+                        </li>
+                        <li class="header_navbar-item item-strong item-separate">Tài khoản</li>
+                        <li class="header_navbar-item item-strong">Đăng xuất</li>
+                    </ul>
+                </nav>
+            </div>
+
+        </header>
+
+        <div class="container">
+            <div class="row d-inline">
+
+                <div class="d-inline">
+
+                </div>
+                <div class="input-group ">
+
+                    <span class="input-group-text">Search</span>
+                    <input type="text" aria-label="First name" class="form-control" placeholder="by email">
+                    <input type="text" aria-label="Last name" class="form-control" placeholder="by username">
+                    <div class="btn-group col-sm-4 col-md-2">
+                        <button type="button" class="btn">USERNAME</button>
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/users/thapCao">A - Z</a></li>
+                            <li><a class="dropdown-item" href="/users/caoThap">Z - A</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">SĐT</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Giới tính</th>
+                            <th scope="col">trạng thái</th>
+                            <th scope="col">Điểm</th>
+                            <th scope="col">Họ tên</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% listUsers.forEach((row)=> { %>
+
+                            <tr>
+                                <td>
+                                    <a href="users/chitiet/<%= row._id  %>">
+                                        <%= row.username %>
+                                    </a>
+                                </td>
+                                <td>
+                                    <%= row.phone %>
+                                </td>
+                                <td>
+                                    <%= row.email %>
+                                </td>
+                                <td>
+                                    <%= row.gender %>
+                                </td>
+                                <td>
+                                    <%= row.active %>
+                                </td>
+                                <td>
+                                    <%= row.points %>
+                                </td>
+                                <td>
+                                    <%= row.fullname %>
+                                </td>
+                                <td>
+                                    <% if (row.active) { %>
+                                        <a href="/users/ban/<%= row._id %>" style="color: #000;">
+                                            <i class='bx bxs-lock'></i>
+                                        </a>
+                                        <% } else { %>
+                                            <a href="/users/unban/<%= row._id %>">
+                                                <i class='bx bxs-lock-open'></i>
+                                            </a>
+                                            <% } %>
+
+                                </td>
+
+                            </tr>
+
+                            <% }) %>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="d-inline p-2 ">Đang xem:<%= soluong %>/<%= soluong %>
+            </div>
+            <div class="d-inline p-2 "></div>
+            <div class="d-inline p-2 btn btn-secondary">Previous</div>
+            <div class="d-inline p-2 btn btn-secondary">1</div>
+            <div class="d-inline p-2 btn btn-secondary">2</div>
+            <div class="d-inline p-2 btn btn-secondary">3</div>
+            <div class="d-inline p-2 btn btn-secondary">Next</div>
+
+        </div>
+
+        <footer class="footer">
+
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
