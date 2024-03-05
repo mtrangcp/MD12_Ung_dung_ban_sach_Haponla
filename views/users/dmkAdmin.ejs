@@ -181,8 +181,12 @@
                                 <i class='header_nav-icon bx bxs-help-circle'></i>
                                 Trợ giúp </a>
                         </li>
-                        <li class="header_navbar-item item-strong item-separate">Tài khoản</li>
-                        <li class="header_navbar-item item-strong">Đăng xuất</li>
+                        <li class="header_navbar-item item-strong item-separate">
+                            <a href="users/admin" class="aTrangchu">Tài khoản</a>
+                        </li>
+                        <li class="header_navbar-item item-strong">
+                            <a href="/users/login" class="aTrangchu">Đăng xuất</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -200,32 +204,21 @@
 
                 <form method="post" action="">
                     <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        <input type="text" name="user_name" class="form-control" value="<%= objAdmin.username  %>">
+                        <label class="form-label">Mật khẩu cũ</label>
+                        <input type="password" required name="oldPass" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">SĐT</label>
-                        <input type="text" name="sdt" class="form-control" value="<%= objAdmin.phone  %>">
+                        <label class="form-label">Mật khẩu mới</label>
+                        <input type="password" required name="newPass" class="form-control">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="text" name="email" class="form-control" value="<%= objAdmin.email  %>">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Giới tính</label>
-                        <input type="text" name="gender" class="form-control" value="<%= objAdmin.gender  %>">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Họ tên</label>
-                        <input type="text" name="fullname" class="form-control" value="<%= objAdmin.fullname  %>">
+                        <label class="form-label">Xác nhận mật khẩu mới</label>
+                        <input type="password" required name="reNewPass" class="form-control">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Save</button>
                 </form>
-
             </div>
-
         </div>
 
         <footer class="footer">
