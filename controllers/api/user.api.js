@@ -53,7 +53,6 @@ exports.getOneUser = async (req, res, next) => {
 }
 
 exports.addUser = async (req, res, next) => {
-
     try {
         const newData = req.body;
         const checkEmail = await userModel.findOne({ email: req.body.email })

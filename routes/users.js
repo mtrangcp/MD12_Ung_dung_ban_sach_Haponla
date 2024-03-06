@@ -32,6 +32,12 @@ router.post('/unban/:iduser', userCtrl.unbanUser);
 router.get('/chitiet/:iduser', userCtrl.chiTietUser);
 router.post('/chitiet/:iduser', userCtrl.chiTietUser);
 
+router.get('/thapCao', userCtrl.getListUserThapcao);
+router.post('/thapCao', userCtrl.getListUserThapcao);
+
+router.get('/caoThap', userCtrl.getListUserCaoThap);
+router.post('/caoThap', userCtrl.getListUserCaoThap);
+
 
 
 module.exports = router;

@@ -14,6 +14,34 @@ exports.getListUser = async (req, res, next) => {
     res.render('users/listUser', { listUsers: list, soluong: soluong });
 }
 
+exports.getListUserThapcao = async (req, res, next) => {
+
+    let dk_loc = { role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc).sort({ username: 1 });
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
+exports.getListUserCaoThap = async (req, res, next) => {
+
+    let dk_loc = { role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc).sort({ username: -1 });
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
 exports.getAdmin = async (req, res, next) => {
 
     let dk_loc = { role: "ADMIN" };
@@ -176,38 +204,38 @@ exports.editAdmin = async (req, res, next) => {
 }
 
 exports.dmkAdmin = async (req, res, next) => {
-
     let msg = "";
     let idadmin = req.params.idadmin;
-
     let objAdmin = await myModel.userModel.findById(idadmin);
 
     if (req.method == 'POST') {
-        let objAdmin = new myModel.userModel();
+        if (typeof req.body.oldPass !== 'undefined' && typeof (req.body.newPass != 'undefined') && typeof (req.body.reNewPass != 'undefined')) {
+            if (req.body.oldPass == objAdmin.passwork) {
+                if (req.body.newPass == req.body.reNewPass) {
+                    let objAdminNew = new myModel.userModel();
+                    objAdminNew.passwork = req.body.newPass;
+                    objAdminNew._id = idadmin;
 
-        if (typeof (req.body.user_name != 'undefined')) {
-            objAdmin.username = req.body.user_name;
-        }
-        if (typeof (req.body.sdt != 'undefined')) {
-            objAdmin.phone = req.body.sdt;
-        }
-        if (typeof (req.body.email != 'undefined')) {
-            objAdmin.email = req.body.email;
+                    try {
+                        await myModel.userModel.findByIdAndUpdate({ _id: idadmin }, objAdminNew);
+                        msg = 'Đổi mật khẩu thành công!'
+                        return res.redirect('/users/admin');
+
+                    } catch (err) {
+                        msg = 'Lỗi: ' + err;
+                        console.log(err);
+                    }
+
+                } else {
+                    msg = 'Xác nhận lại mật khẩu mới!'
+                }
+            } else {
+                msg = 'Sai mật khẩu cũ!'
+            }
         }
 
-        objAdmin._id = idadmin;
-
-        try {
-            await myModel.userModel.findByIdAndUpdate({ _id: idadmin }, objAdmin);
-            msg = 'Sửa thành công!'
-            return res.redirect('/users/admin');
-
-        } catch (err) {
-            msg = 'Lỗi: ' + err;
-            console.log(err);
-        }
     }
-    res.render('users/editAdmin', { msg: msg, objAdmin: objAdmin });
+    res.render('users/dmkAdmin', { msg: msg, objAdmin: objAdmin });
 }
 
 
