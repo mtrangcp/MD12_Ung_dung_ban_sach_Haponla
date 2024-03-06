@@ -14,6 +14,34 @@ exports.getListUser = async (req, res, next) => {
     res.render('users/listUser', { listUsers: list, soluong: soluong });
 }
 
+exports.getListUserThapcao = async (req, res, next) => {
+
+    let dk_loc = { role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc).sort({ username: 1 });
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
+exports.getListUserCaoThap = async (req, res, next) => {
+
+    let dk_loc = { role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc).sort({ username: -1 });
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
 exports.getAdmin = async (req, res, next) => {
 
     let dk_loc = { role: "ADMIN" };
