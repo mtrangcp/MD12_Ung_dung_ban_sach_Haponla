@@ -60,7 +60,7 @@ exports.addAddress = async (req, res, next) => {
         const checkPhone = await addressModel.findOne({ phone: req.body.phone })
         const checkLocation = await addressModel.findOne({ location: req.body.location })
 
-        if ((checkUsername === null) && (checkPhone === null) && (checkLocation === null)) {
+        if ((checkUsername === null) && (checkPhone === null)) {
             const dataRes = await addressModel.create(newData);
             return res.status(200).json({ message: dataRes })
         } else {
@@ -69,6 +69,7 @@ exports.addAddress = async (req, res, next) => {
     } catch (error) {
         objReturn.status = 0;
         objReturn.msg = error.msg;
+        console.log(error);
     }
 
     return res.json(objReturn);

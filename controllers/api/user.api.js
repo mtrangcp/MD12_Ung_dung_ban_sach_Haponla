@@ -66,6 +66,7 @@ exports.addUser = async (req, res, next) => {
     } catch (error) {
         objReturn.status = 0;
         objReturn.msg = error.msg;
+        console.log(error);
     }
 
     return res.json(objReturn);
