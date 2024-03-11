@@ -4,18 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-const { handleError, handleNotFound } = require('./middlewares/errorHandler')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
-const CategoryRouter = require('./routes/category.route')
-const VariationRouter = require('./routes/variation.route')
-const BookRouter = require('./routes/book.route')
-const EvaluateRouter = require('./routes/evaluate.route')
-const BillRouter = require('./routes/bill.route')
-const BillItemRouter = require('./routes/billItem.route')
-const CartRouter = require('./routes/cart.route')
 
 var app = express();
 
@@ -41,18 +33,8 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
-app.use('/api/categories', CategoryRouter)
-app.use('/api/variations', VariationRouter)
-app.use('/api/evaluates', EvaluateRouter)
-app.use('/api/books', BookRouter)
-app.use('/api/bills', BillRouter)
-app.use('/api/billItems', BillItemRouter)
-app.use('/api/carts', CartRouter)
 
 // #middlewares
-app.use(handleNotFound);
-app.use(handleError);
-
 app.use(function (req, res, next) {
     next(createError(404));
 });
