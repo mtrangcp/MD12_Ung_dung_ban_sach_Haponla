@@ -8,6 +8,7 @@ const db = require("./configs/database");
 const apiResponseMiddleware = require("./middlewares/response");
 const errorMiddleware = require("./middlewares/error");
 const apiCategoryRouter = require("./routes/categoryApi.route");
+const apiVariationRouter = require("./routes/variationApi.route");
 const apiBookRouter = require("./routes/bookApi.route");
 
 var indexRouter = require("./routes/index");
@@ -44,6 +45,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/api", apiRouter);
 app.use("/api/categories", apiCategoryRouter);
+app.use("/api/variations", apiVariationRouter);
 app.use("/api/books", apiBookRouter);
 
 //# middlewares

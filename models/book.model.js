@@ -1,3 +1,6 @@
+/**
+ * dev: ManhThai
+ */
 const { Schema, model } = require("mongoose");
 const ObjectId = Schema.ObjectId;
 const { CategoryModel } = require("./category.model");
@@ -95,5 +98,6 @@ const BookSchema = new Schema({
 const BookModel = model("book", BookSchema);
 
 module.exports = {
+  VariationModel,
   BookModel,
 };

@@ -1,16 +1,16 @@
 /**
  * dev: ManhThai
  */
-const { CategoryModel } = require("../../models/category.model");
+const { VariationModel } = require("../../models/book.model");
 
 const getAll = async (req, res) => {
-  const allData = await CategoryModel.find();
+  const allData = await VariationModel.find();
   return res.apiSuccess({ data: allData });
 };
 
 const add = async (req, res) => {
   console.log(req.body);
-  const data = new CategoryModel(req.body);
+  const data = new VariationModel(req.body);
   await data.save();
 
   if (data) {
@@ -23,7 +23,7 @@ const add = async (req, res) => {
 const get = async (req, res) => {
   const { id } = req.params;
 
-  const data = await CategoryModel.findById(id);
+  const data = await VariationModel.findById(id);
 
   if (data) {
     return res.apiSuccess({ data });
@@ -35,7 +35,7 @@ const get = async (req, res) => {
 const remove = async (req, res) => {
   const { id } = req.params;
 
-  const data = await CategoryModel.findByIdAndDelete(id, { new: true });
+  const data = await VariationModel.findByIdAndDelete(id, { new: true });
 
   if (data) {
     return res.apiSuccess({ data });
@@ -48,7 +48,7 @@ const set = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
-  const data = await CategoryModel.findByIdAndUpdate(id, req.body, {
+  const data = await VariationModel.findByIdAndUpdate(id, req.body, {
     new: true,
   });
 

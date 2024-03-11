@@ -1,0 +1,31 @@
+# endpoint: /api/variations
+
+
+###
+GET http://localhost:3000/api/variations
+
+
+###
+POST  http://localhost:3000/api/variations
+Content-Type: application/json
+
+{
+    "republish": "added"
+}
+
+
+###
+GET http://localhost:3000/api/variations/65eed80d826b16e7449d55a7
+
+
+###
+DELETE  http://localhost:3000/api/variations/65eed80d826b16e7449d55a7
+
+
+###
+PATCH  http://localhost:3000/api/variations/65eed80d826b16e7449d55a7
+Content-Type: application/json
+
+{
+    "republish": "updated"
+}

@@ -1,3 +1,6 @@
+/**
+ * dev: ManhThai
+ */
 const { BookModel } = require("../../models/book.model");
 
 const getAll = async (req, res) => {
