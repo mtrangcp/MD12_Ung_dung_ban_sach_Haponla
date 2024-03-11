@@ -12,6 +12,7 @@ const apiVariationRouter = require("./routes/variationApi.route");
 const apiEvaluteRouter = require("./routes/evaluateApi.route");
 const apiBookRouter = require("./routes/bookApi.route");
 const apiCartRouter = require("./routes/cartApi.route");
+const apiBillRouter = require("./routes/billApi.route");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -51,6 +52,7 @@ app.use("/api/variations", apiVariationRouter);
 app.use("/api/evaluates", apiEvaluteRouter);
 app.use("/api/books", apiBookRouter);
 app.use("/api/carts", apiCartRouter);
+app.use("/api/bills", apiBillRouter);
 
 //# middlewares
 app.use(errorMiddleware.notFound);
