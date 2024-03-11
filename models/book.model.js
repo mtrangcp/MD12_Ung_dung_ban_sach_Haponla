@@ -1,117 +1,101 @@
-const mongoose = require("mongoose");
-const { MongoDbConnection } = require("../configs/database");
+/**
+ * dev: ManhThai
+ */
+const { Schema, model } = require("mongoose");
+const ObjectId = Schema.ObjectId;
 const { CategoryModel } = require("./category.model");
 const { userModel } = require("./bookStore.model");
 
-const VariationSchema = new mongoose.Schema(
-  {
-    quality: {
-      type: String,
-      required: true,
-    },
-    language: {
-      type: String,
-      enum: ["vi", "en"],
-      default: "vi",
-    },
+// variation
+const VariationSchema = new Schema({
+  republish: {
+    type: String,
+    require: true,
   },
-  {
-    versionKey: false,
-  }
-);
-const VariationModel = MongoDbConnection.model(
-  "variation",
-  VariationSchema
-);
-
-const EvaluateSchema = new mongoose.Schema(
-  {
-    number: {
-      type: Number,
-      min: 0,
-      max: 5,
-      required: true,
-    },
-    comment: {
-      type: String,
-    },
-    create_at: {
-      type: Date,
-      default: Date.now,
-    },
-    reply: {
-      type: String,
-    },
-    id_user: {
-      type: mongoose.Types.ObjectId,
-      ref: userModel.modelName,
-      required: true,
-    },
+  language: {
+    type: String,
+    default: "vi",
   },
-  { versionKey: false }
-);
-const EvaluateModel = MongoDbConnection.model("evaluate", EvaluateSchema);
+});
 
-const BookSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    author: {
-      type: String,
-    },
-    detail: {
-      type: String,
-    },
-    image: {
-      type: String,
-    },
-    price: {
-      type: Number,
-      min: 0,
-    },
-    stock: {
-      type: Number,
-      min: 0,
-    },
-    sold: {
-      type: Number,
-      min: 0,
-    },
-    view: {
-      type: Number,
-      min: 0,
-    },
-    percent_discount: {
-      type: Number,
-      min: 0,
-      max: 100,
-    },
-    book_variation: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: VariationModel.modelName,
-      },
-    ],
-    evaluate: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: EvaluateModel.modelName,
-      },
-    ],
-    id_category: {
-      type: mongoose.Types.ObjectId,
-      ref: CategoryModel.modelName,
-      required: true,
-    },
+const VariationModel = model("variation", VariationSchema);
+
+// evaluate
+const EvaluateSchema = new Schema({
+  star: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 5,
   },
-  {
-    versionKey: false,
-  }
-);
+  comment: {
+    type: String,
+  },
+  reply: {
+    type: String,
+  },
+  create_at: {
+    type: Date,
+    default: Date.now,
+  },
+  id_user: { type: ObjectId, ref: userModel.modelName, required: true },
+});
 
-const BookModel = MongoDbConnection.model("book", BookSchema);
+const EvaluateModel = model("evaluate", EvaluateSchema);
+
+// book
+const BookSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: String,
+  },
+  detail: {
+    type: String,
+  },
+  image: {
+    type: String,
+    default: "",
+  },
+  price: {
+    type: Number,
+    min: 0,
+  },
+  stock: {
+    type: Number,
+    min: 0,
+  },
+  sold: {
+    type: Number,
+    min: 0,
+  },
+  view: {
+    type: Number,
+    min: 0,
+  },
+  percent_discount: {
+    type: Number,
+    min: 0,
+    max: 100,
+  },
+  variations: [
+    {
+      type: ObjectId,
+      ref: VariationModel.modelName,
+    },
+  ],
+  evaluates: [
+    {
+      type: ObjectId,
+      ref: EvaluateModel.modelName,
+    },
+  ],
+  id_category: { type: ObjectId, ref: CategoryModel.modelName, required: true },
+});
+
+const BookModel = model("book", BookSchema);
 
 module.exports = {
   VariationModel,

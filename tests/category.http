@@ -1,0 +1,31 @@
+# endpoint: /api/categories
+
+
+###
+GET http://localhost:3000/api/categories
+
+
+###
+POST  http://localhost:3000/api/categories
+Content-Type: application/json
+
+{
+    "name": "horror"
+}
+
+
+###
+GET http://localhost:3000/api/categories/65eece398e9397beb4a81081
+
+
+###
+DELETE  http://localhost:3000/api/categories/65eece398e9397beb4a81081
+
+
+###
+PATCH  http://localhost:3000/api/categories/65eece398e9397beb4a81081
+Content-Type: application/json
+
+{
+    "name": "updated"
+}
