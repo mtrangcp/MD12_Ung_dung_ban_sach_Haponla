@@ -9,6 +9,7 @@ const apiResponseMiddleware = require("./middlewares/response");
 const errorMiddleware = require("./middlewares/error");
 const apiCategoryRouter = require("./routes/categoryApi.route");
 const apiVariationRouter = require("./routes/variationApi.route");
+const apiEvaluteRouter = require("./routes/evaluateApi.route");
 const apiBookRouter = require("./routes/bookApi.route");
 
 var indexRouter = require("./routes/index");
@@ -46,6 +47,7 @@ app.use("/users", usersRouter);
 app.use("/api", apiRouter);
 app.use("/api/categories", apiCategoryRouter);
 app.use("/api/variations", apiVariationRouter);
+app.use("/api/evaluates", apiEvaluteRouter);
 app.use("/api/books", apiBookRouter);
 
 //# middlewares

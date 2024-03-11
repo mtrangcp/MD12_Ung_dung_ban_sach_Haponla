@@ -99,5 +99,6 @@ const BookModel = model("book", BookSchema);
 
 module.exports = {
   VariationModel,
+  EvaluateModel,
   BookModel,
 };
