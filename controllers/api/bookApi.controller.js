@@ -1,13 +1,13 @@
-const { CategoryModel } = require("../../models/category.model");
+const { BookModel } = require("../../models/book.model");
 
 const getAll = async (req, res) => {
-  const allData = await CategoryModel.find();
+  const allData = await BookModel.find();
   return res.apiSuccess({ data: allData });
 };
 
 const add = async (req, res) => {
   console.log(req.body);
-  const data = new CategoryModel(req.body);
+  const data = new BookModel(req.body);
   await data.save();
 
   if (data) {
@@ -20,7 +20,7 @@ const add = async (req, res) => {
 const get = async (req, res) => {
   const { id } = req.params;
 
-  const data = await CategoryModel.findById(id);
+  const data = await BookModel.findById(id);
 
   if (data) {
     return res.apiSuccess({ data });
@@ -32,7 +32,7 @@ const get = async (req, res) => {
 const remove = async (req, res) => {
   const { id } = req.params;
 
-  const data = await CategoryModel.findByIdAndDelete(id, { new: true });
+  const data = await BookModel.findByIdAndDelete(id, { new: true });
 
   if (data) {
     return res.apiSuccess({ data });
@@ -45,7 +45,7 @@ const set = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
-  const data = await CategoryModel.findByIdAndUpdate(id, req.body, {
+  const data = await BookModel.findByIdAndUpdate(id, req.body, {
     new: true,
   });
 
