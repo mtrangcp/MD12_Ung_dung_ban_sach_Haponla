@@ -7,6 +7,7 @@ var session = require("express-session");
 const db = require("./configs/database");
 const apiResponseMiddleware = require("./middlewares/response");
 const errorMiddleware = require("./middlewares/error");
+const apiCategoryRouter = require("./routes/categoryApi.route");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -41,6 +42,7 @@ app.use(
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/api", apiRouter);
+app.use("/api/categories", apiCategoryRouter);
 
 //# middlewares
 app.use(errorMiddleware.notFound);
