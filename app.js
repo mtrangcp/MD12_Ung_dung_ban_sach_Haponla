@@ -1,3 +1,4 @@
+require('dotenv').config()
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -32,15 +33,6 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.set("layout", "./layouts/home");
-app.set("layout error", false);
-// app.set("layout admin", false);
-// app.set("layout banUser", false);
-// app.set("layout chitietUser", false);
-// app.set("layout dmkAdmin", false);
-// app.set("layout editAdmin", false);
-// app.set("layout listUser", false);
-// app.set("layout login", false);
-// app.set("layout unbanUser", false);
 
 //# middlewares
 app.use(logger("dev"));
