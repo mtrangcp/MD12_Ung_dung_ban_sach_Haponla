@@ -4,9 +4,9 @@ const addressChema = new db.mongoose.Schema(
     {
         username: { type: String, required: true },
         phone: { type: Number, required: true },
-        location: { type: Number, required: true }
+        location: { type: String, required: true }
     },
-    { collection: 'Address' }
+    { collection: 'Address', versionKey: false }
 );
 
 const item_discountChema = new db.mongoose.Schema(
@@ -14,7 +14,7 @@ const item_discountChema = new db.mongoose.Schema(
         id_discount: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'discountModel' }],
         status: { type: Boolean }
     },
-    { collection: 'ItemDiscount' }
+    { collection: 'ItemDiscount', versionKey: false }
 );
 
 const discountChema = new db.mongoose.Schema(
@@ -32,7 +32,7 @@ const discountChema = new db.mongoose.Schema(
         },
         condition: { type: Number, required: true }
     },
-    { collection: 'Discount' }
+    { collection: 'Discount', versionKey: false }
 );
 
 const notificationChema = new db.mongoose.Schema(
@@ -40,7 +40,7 @@ const notificationChema = new db.mongoose.Schema(
         title: { type: String, required: true },
         content: { type: String, required: true }
     },
-    { collection: 'Notification' }
+    { collection: 'Notification', versionKey: false }
 );
 
 const userChema = new db.mongoose.Schema(
@@ -63,14 +63,14 @@ const userChema = new db.mongoose.Schema(
         notifications: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'notificationModel', required: false }],
         points: { type: Number, required: true }
     },
-    { collection: 'User' }
+    { collection: 'User', versionKey: false }
 );
 
 const categoryChema = new db.mongoose.Schema(
     {
         name: { type: String, required: true }
     },
-    { collection: 'Category' }
+    { collection: 'Category', versionKey: false }
 );
 
 

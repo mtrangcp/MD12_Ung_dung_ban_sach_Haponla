@@ -14,6 +14,7 @@ exports.getListUser = async (req, res, next) => {
     res.render('users/listUser', { listUsers: list, soluong: soluong });
 }
 
+// loc theo username
 exports.getListUserThapcao = async (req, res, next) => {
 
     let dk_loc = { role: "USER" };
