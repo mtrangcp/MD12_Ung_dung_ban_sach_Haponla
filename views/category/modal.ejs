@@ -14,7 +14,7 @@
         <!-- body -->
         <div class="modal-body">
           <div class="mb-3">
-            <label for="categoryInputName" class="form-label">Name</label>
+            <label for="categoryInputName" class="form-label">Name *</label>
             <input name="name" value="<%= locals.item ?
             locals.item.name : "" %>" type="text" class="form-control" id="categoryInputName" required />
           </div>
@@ -22,7 +22,7 @@
             <!-- TODO feature: get image by multer -->
             <!-- <label for="formFile" class="form-label">Image</label>
             <input name="image" class="form-control" type="file" id="formFile" accept="image/*" /> -->
-            <label for="categoryInputImage" class="form-label">Image</label>
+            <label for="categoryInputImage" class="form-label">Image *</label>
             <input name="image" value="<%= locals.item ?
             locals.item.image : "" %>" type="text" class="form-control" id="categoryInputImage" required />
             <img src="<%= locals.item ? locals.item.image : "" %>" width="80px">

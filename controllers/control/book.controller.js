@@ -37,6 +37,17 @@ const add = async (req, res) => {
   return res.redirect(`/books?status=${status}&message=${message}`);
 };
 
+const remove = async (req, res) => {
+  const {id} = req.params
+
+  const data = await BookModel.findByIdAndDelete(id)
+
+  let status = true;
+  let message = `deleted: ${data.name}`;
+
+  return res.redirect(`/books?status=${status}&message=${message}`);
+}
+
 const set = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
@@ -55,6 +66,6 @@ module.exports = {
   getAll,
   // get,
   add,
-  // remove,
+  remove,
   set,
 };
