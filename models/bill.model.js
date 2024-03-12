@@ -1,19 +1,22 @@
+/**
+ * dev: ManhThai
+ */
 const { Schema, model } = require("mongoose");
 const ObjectId = Schema.ObjectId;
 const { BookModel } = require("./book.model");
 const { userModel, addressModel, discountModel } = require("./bookStore.model");
 
-const BillItemSchema = new mongoose.Schema(
+const BillItemSchema = new Schema(
   {
     quantity: { type: Number, min: 1, required: true },
-    id_book: { type: mongoose.Types.ObjectId, ref: BookModel.modelName, required: true },
+    id_book: { type: ObjectId, ref: BookModel.modelName, required: true },
   },
   { versionKey: false, }
 );
 
 const BillItemModel = model("bill_item", BillItemSchema);
 
-const BillSchema = new mongoose.Schema(
+const BillSchema = new Schema(
   {
     status: {
       type: String,
@@ -24,11 +27,11 @@ const BillSchema = new mongoose.Schema(
     real_price: { type: Number, min: 0 },
     create_at: { type: Date, default: Date.now },
     detail: [{
-      type: mongoose.Types.ObjectId, ref: BillItemModel.modelName, required: true
+      type: ObjectId, ref: BillItemModel.modelName, required: true
     }],
-    id_discount: { type: mongoose.Types.ObjectId, ref: discountModel.modelName },
+    id_discount: { type: ObjectId, ref: discountModel.modelName },
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },
-    id_address: { type: mongoose.Types.ObjectId, ref: addressModel.modelName, required: true },
+    id_address: { type: ObjectId, ref: addressModel.modelName, required: true },
 
   },
   {

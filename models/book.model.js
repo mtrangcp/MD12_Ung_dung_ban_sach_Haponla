@@ -8,36 +8,18 @@ const { userModel } = require("./bookStore.model");
 
 // variation
 const VariationSchema = new Schema({
-  republish: {
-    type: String,
-    require: true,
-  },
-  language: {
-    type: String,
-    default: "vi",
-  },
+  republish: { type: String, require: true },
+  language: { type: String, default: "vi" },
 });
 
 const VariationModel = model("variation", VariationSchema);
 
 // evaluate
 const EvaluateSchema = new Schema({
-  star: {
-    type: Number,
-    required: true,
-    min: 0,
-    max: 5,
-  },
-  comment: {
-    type: String,
-  },
-  reply: {
-    type: String,
-  },
-  create_at: {
-    type: Date,
-    default: Date.now,
-  },
+  star: { type: Number, required: true, min: 0, max: 5 },
+  comment: { type: String },
+  reply: { type: String },
+  create_at: { type: Date, default: Date.now },
   id_user: { type: ObjectId, ref: userModel.modelName, required: true },
 });
 

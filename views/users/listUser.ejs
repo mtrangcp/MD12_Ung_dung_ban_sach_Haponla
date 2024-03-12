@@ -19,8 +19,8 @@
 
     <style>
         .header {
-            height: 120px;
-            background-image: linear-gradient(0, rgb(104, 212, 94), #0e9c0e);
+            height: var(--header-height);
+            background-image: linear-gradient(0, rgb(104, 212, 94), #0ad50a);
         }
 
         .header_navbar {
@@ -31,6 +31,7 @@
         .header_navbar-list {
             list-style: none;
             padding-left: 0;
+            margin: 4px 0 0 0;
         }
 
         .header_navbar-item {
@@ -87,14 +88,16 @@
             margin: 0 4px;
         }
 
-
-
         /* comment */
 
         :root {
+            --primary-color: #70fe33;
             --white-color: #fff;
             --black-color: #000;
             --text-color: #333;
+            --navbar-height: 34px;
+            --header-height: 120px;
+            --header-search-height: calc(var(--header-height) - var(--navbar-height));
         }
 
         * {
@@ -121,6 +124,20 @@
         .grid_row {
             display: flex;
             flex-wrap: wrap;
+            margin-left: -12px;
+            margin-right: -12px;
+        }
+
+        .grid_column-2 {
+            padding-left: 12px;
+            padding-right: 12px;
+            width: 16%;
+        }
+
+        .grid_column-10 {
+            padding-left: 12px;
+            padding-right: 12px;
+            width: 84%;
         }
 
         .roboto-light {
@@ -156,6 +173,105 @@
             text-decoration: underline;
             color: rgb(255, 255, 255, 0.7);
         }
+
+        .header-with-search {
+            height: var(--header-search-height);
+            display: flex;
+            align-items: center;
+            margin: 0 8px;
+        }
+
+        .header_logo {
+            width: 150px;
+        }
+
+        .header_logo-img {
+            width: 50px;
+        }
+
+        .header_search {
+            display: flex;
+            flex: 1;
+            height: 40px;
+            border-radius: 2px;
+            background-color: var(--white-color);
+            align-items: center;
+        }
+
+        .header_bill {
+            width: 150px;
+            text-align: center;
+        }
+
+        .header_bill-icon {
+            color: var(--white-color);
+            font-size: 3rem;
+        }
+
+        .header_search-input {
+            flex: 1;
+            height: 100%;
+            border: none;
+            outline: none;
+            font-size: 1.4rem;
+            color: var(--text-color);
+            padding: 0 16px;
+            border-radius: 3px;
+        }
+
+        .header_search-btn {
+            border: none;
+            background-color: #54f011;
+            height: 34px;
+            width: 60px;
+            border-radius: 3px;
+            margin-right: 3px;
+            outline: none;
+        }
+
+        .header_search-btn:hover {
+            background-color: #70fe33;
+            cursor: pointer;
+        }
+
+        .header_search-btn-icon {
+            font-size: 2rem;
+            color: var(--white-color);
+        }
+
+        .category {
+            background-color: #F5F5F5;
+            border-radius: 2px;
+        }
+
+        .category_heading {
+            color: var(--text-color);
+            font-size: 1.6rem;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgb(0, 0, 0, 0.07);
+        }
+
+        .category-list {
+            padding: 0 0 8px 0;
+            list-style: none;
+            margin-left: 10px;
+        }
+
+        .category-item_link {
+            position: relative;
+            padding: 4px 16px;
+            font-size: 1.4rem;
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            transition: right linear 0.1s;
+            right: 0;
+        }
+
+        .category-item_link:hover {
+            right: -4px;
+            color: var(--primary-color);
+        }
     </style>
 
 </head>
@@ -169,7 +285,6 @@
                         <li class="header_navbar-item">
                             <a href="/users" class="aTrangchu">Trang chủ</a>
                         </li>
-
                     </ul>
 
                     <ul class="header_navbar-list">
@@ -191,110 +306,147 @@
                         </li>
                     </ul>
                 </nav>
-            </div>
 
-        </header>
+                <!-- tim kiem -->
+                <div class="header-with-search">
+                    <div class="header_logo">
+                        <a href="#">
+                            <img class="header_logo-img" src="https://cdn-icons-png.flaticon.com/128/4484/4484610.png"
+                                alt="Logo">
+                        </a>
 
-        <div class="container">
-            <div class="row d-inline">
-
-                <div class="d-inline">
-
-                </div>
-                <div class="input-group ">
-
-                    <span class="input-group-text">Search</span>
-                    <input type="text" aria-label="First name" class="form-control" placeholder="by email">
-                    <input type="text" aria-label="Last name" class="form-control" placeholder="by username">
-                    <div class="btn-group col-sm-4 col-md-2">
-                        <button type="button" class="btn">USERNAME</button>
-                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
-                            data-bs-toggle="dropdown" aria-expanded="false">
+                    </div>
+                    <div class="header_search">
+                        <input type="text" class="header_search-input" placeholder="Search">
+                        <button class="header_search-btn">
+                            <i class='header_search-btn-icon bx bx-search-alt'></i>
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/users/thapCao">A - Z</a></li>
-                            <li><a class="dropdown-item" href="/users/caoThap">Z - A</a></li>
+                    </div>
+                    <div class="header_bill">
 
-                        </ul>
                     </div>
                 </div>
-
             </div>
+        </header>
 
+        <div class=" app_container">
+            <div class="grid">
+                <div class="grid_row">
+                    <div class="grid_column-2">
+                        <nav class="category">
+                            <h3 class="category_heading">Quan ly</h3>
 
-            <div>
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">SĐT</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Giới tính</th>
-                            <th scope="col">trạng thái</th>
-                            <th scope="col">Điểm</th>
-                            <th scope="col">Họ tên</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% listUsers.forEach((row)=> { %>
+                            <ul class="category-list">
+                                <li class="category-item category-item-active">
+                                    <a href="#" class="category-item_link">Danh muc</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="#" class="category-item_link">Thong ke</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="#" class="category-item_link">Don hang</a>
+                                </li>
+                                <li class="category-item">
+                                    <a href="#" class="category-item_link">Binh Luan</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
 
-                            <tr>
-                                <td>
-                                    <a href="users/chitiet/<%= row._id  %>">
-                                        <%= row.username %>
-                                    </a>
-                                </td>
-                                <td>
-                                    <%= row.phone %>
-                                </td>
-                                <td>
-                                    <%= row.email %>
-                                </td>
-                                <td>
-                                    <%= row.gender %>
-                                </td>
-                                <td>
-                                    <%= row.active %>
-                                </td>
-                                <td>
-                                    <%= row.points %>
-                                </td>
-                                <td>
-                                    <%= row.fullname %>
-                                </td>
-                                <td>
-                                    <% if (row.active) { %>
-                                        <a href="/users/ban/<%= row._id %>" style="color: #000;">
-                                            <i class='bx bxs-lock'></i>
-                                        </a>
-                                        <% } else { %>
-                                            <a href="/users/unban/<%= row._id %>">
-                                                <i class='bx bxs-lock-open'></i>
-                                            </a>
-                                            <% } %>
+                    <div class="grid_column-10">
+                        <div class="row d-inline">
 
-                                </td>
+                            <div class="d-inline">
 
-                            </tr>
+                            </div>
+                            <div class="input-group ">
 
-                            <% }) %>
+                                <span class="input-group-text">Search</span>
+                                <input type="text" aria-label="First name" class="form-control" placeholder="by email">
+                                <input type="text" aria-label="Last name" class="form-control"
+                                    placeholder="by username">
+                                <div class="btn-group col-sm-4 col-md-2">
+                                    <button type="button" class="btn">USERNAME</button>
+                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/users/thapCao">A - Z</a></li>
+                                        <li><a class="dropdown-item" href="/users/caoThap">Z - A</a></li>
 
-                    </tbody>
-                </table>
+                                    </ul>
+                                </div>
+                            </div>
 
+                        </div>
+
+                        <div>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">SĐT</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Giới tính</th>
+                                        <th scope="col">trạng thái</th>
+                                        <th scope="col">Điểm</th>
+                                        <th scope="col">Họ tên</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% listUsers.forEach((row)=> { %>
+
+                                        <tr>
+                                            <td>
+                                                <a href="users/chitiet/<%= row._id  %>">
+                                                    <%= row.username %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <%= row.phone %>
+                                            </td>
+                                            <td>
+                                                <%= row.email %>
+                                            </td>
+                                            <td>
+                                                <%= row.gender %>
+                                            </td>
+                                            <td>
+                                                <%= row.active %>
+                                            </td>
+                                            <td>
+                                                <%= row.points %>
+                                            </td>
+                                            <td>
+                                                <%= row.fullname %>
+                                            </td>
+                                            <td>
+                                                <% if (row.active) { %>
+                                                    <a href="/users/ban/<%= row._id %>" style="color: #000;">
+                                                        <i class='bx bxs-lock'></i>
+                                                    </a>
+                                                    <% } else { %>
+                                                        <a href="/users/unban/<%= row._id %>">
+                                                            <i class='bx bxs-lock-open'></i>
+                                                        </a>
+                                                        <% } %>
+
+                                            </td>
+
+                                        </tr>
+
+                                        <% }) %>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="d-inline p-2 ">Đang xem:<%= soluong %>/<%= soluong %>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-
-            <div class="d-inline p-2 ">Đang xem:<%= soluong %>/<%= soluong %>
-            </div>
-            <div class="d-inline p-2 "></div>
-            <div class="d-inline p-2 btn btn-secondary">Previous</div>
-            <div class="d-inline p-2 btn btn-secondary">1</div>
-            <div class="d-inline p-2 btn btn-secondary">2</div>
-            <div class="d-inline p-2 btn btn-secondary">3</div>
-            <div class="d-inline p-2 btn btn-secondary">Next</div>
-
         </div>
 
         <footer class="footer">
