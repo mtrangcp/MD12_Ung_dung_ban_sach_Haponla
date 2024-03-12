@@ -1,0 +1,36 @@
+<table class="table table-borderless table-striped table-hover table-response">
+  <thead class="table-dark">
+    <tr class="text-center">
+      <th>#</th>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Original Price</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.forEach(function(item,index){ %> <% var modalId
+    ="modalForUpdatingTask-"+item._id %>
+    <tr
+      class="text-center align-middle"
+      data-bs-toggle="modal"
+      data-bs-target="#<%= modalId %>"
+    >
+      <td><%= index + 1 %></td>
+      <td>
+        <img src="<%= item.image %>" width="80px" />
+      </td>
+      <td><%= item.name %></td>
+      <td><%= item.original_price %></td>
+      <td><%= item.price %></td>
+      <td>
+        <h5>
+          <span class="badge text-bg-secondary"><%= item.category %></span>
+        </h5>
+      </td>
+    </tr>
+    <!-- modal updating -->
+    <%- include('./modal.ejs', {item, modalId}) %> <% }) %>
+  </tbody>
+</table>

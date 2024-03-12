@@ -1,0 +1,5 @@
+<select name="<%= selectId %>" class="form-select" aria-label="Default select example" required>
+  <% options.forEach(function(item,index){ %>
+  <option value="<%= item._id %>"><%= item.name %></option>
+  <% }) %>
+</select>

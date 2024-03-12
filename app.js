@@ -3,6 +3,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var session = require("express-session");
+const expressLayouts = require("express-ejs-layouts");
 
 const db = require("./configs/database");
 const apiResponseMiddleware = require("./middlewares/response");
@@ -14,6 +15,8 @@ const apiBookRouter = require("./routes/bookApi.route");
 const apiCartRouter = require("./routes/cartApi.route");
 const apiBillItemRouter = require("./routes/billItemApi.route");
 const apiBillRouter = require("./routes/billApi.route");
+const categoryRouter = require('./routes/category.route')
+const bookRouter = require('./routes/book.route')
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -27,6 +30,17 @@ db.connectDb();
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
+app.use(expressLayouts);
+app.set("layout", "./layouts/home");
+app.set("layout error", false);
+// app.set("layout admin", false);
+// app.set("layout banUser", false);
+// app.set("layout chitietUser", false);
+// app.set("layout dmkAdmin", false);
+// app.set("layout editAdmin", false);
+// app.set("layout listUser", false);
+// app.set("layout login", false);
+// app.set("layout unbanUser", false);
 
 //# middlewares
 app.use(logger("dev"));
@@ -55,6 +69,8 @@ app.use("/api/books", apiBookRouter);
 app.use("/api/carts", apiCartRouter);
 app.use("/api/bill_items", apiBillItemRouter);
 app.use("/api/bills", apiBillRouter);
+app.use("/categories", categoryRouter);
+app.use("/books", bookRouter);
 
 //# middlewares
 app.use(errorMiddleware.notFound);

@@ -55,13 +55,19 @@ const BookSchema = new Schema({
   detail: {
     type: String,
   },
-  image: {
+  image: [{
     type: String,
     default: "",
+  }],
+  original_price: {
+    type: Number,
+    min: 0,
+    required: true
   },
   price: {
     type: Number,
     min: 0,
+    required: true
   },
   stock: {
     type: Number,
@@ -80,12 +86,12 @@ const BookSchema = new Schema({
     min: 0,
     max: 100,
   },
-  variations: [
-    {
-      type: ObjectId,
-      ref: VariationModel.modelName,
-    },
-  ],
+  // variations: [
+  //   {
+  //     type: ObjectId,
+  //     ref: VariationModel.modelName,
+  //   },
+  // ],
   evaluates: [
     {
       type: ObjectId,

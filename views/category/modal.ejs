@@ -1,0 +1,41 @@
+<div class="modal fade" id="<%= modalId %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <!-- header -->
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          <%= locals.item ? "Updating: " +item.name : "Adding" %>
+        </h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="<%= locals.item ? " /categories/"+item._id : "/categories" %>">
+        <!-- body -->
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="categoryInputName" class="form-label">Name</label>
+            <input name="name" value="<%= locals.item ?
+            locals.item.name : "" %>" type="text" class="form-control" id="categoryInputName" required />
+          </div>
+          <div class="mb-3">
+            <!-- TODO feature: get image by multer -->
+            <!-- <label for="formFile" class="form-label">Image</label>
+            <input name="image" class="form-control" type="file" id="formFile" accept="image/*" /> -->
+            <label for="categoryInputImage" class="form-label">Image</label>
+            <input name="image" value="<%= locals.item ?
+            locals.item.image : "" %>" type="text" class="form-control" id="categoryInputImage" required />
+            <img src="<%= locals.item ? locals.item.image : "" %>" width="80px">
+          </div>
+        </div>
+        <!-- footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light-subtle" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

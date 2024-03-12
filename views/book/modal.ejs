@@ -1,0 +1,52 @@
+<div class="modal fade" id="<%= modalId %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <!-- header -->
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          <%= locals.item ? "Updating: " +item.name : "Adding" %>
+        </h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" action="<%= locals.item ? " /books/"+item._id : "/books" %>">
+        <!-- body -->
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="bookInputName" class="form-label">Name</label>
+            <input name="name" value="<%= locals.item ?
+            locals.item.name : "" %>" type="text" class="form-control" id="bookInputName" required />
+          </div>
+          <div class="mb-3">
+            <!-- TODO feature: get image by multer -->
+            <!-- <label for="formFile" class="form-label">Image</label>
+            <input name="image" class="form-control" type="file" id="formFile" accept="image/*" /> -->
+            <label for="bookInputImage" class="form-label">Image</label>
+            <input name="image" value="<%= locals.item ?
+            locals.item.image : "" %>" type="text" class="form-control" id="bookInputImage" required />
+            <img src="<%= locals.item ? locals.item.image : "" %>" width="80px">
+          </div>
+          <div class="mb-3">
+            <label for="bookInputOriginalPrice" class="form-label">Original Price</label>
+            <input name="original_price" value="<%= locals.item ?
+            locals.item.original_price : "" %>" type="number" class="form-control" id="bookInputOriginalPrice" required />
+          </div>
+          <div class="mb-3">
+            <label for="bookInputPrice" class="form-label">Price</label>
+            <input name="price" value="<%= locals.item ?
+            locals.item.price : "" %>" type="number" class="form-control" id="bookInputPrice" required />
+          </div>
+          <%- include('../partials/select.ejs',{selectId:"id_category", options}) %>
+        </div>
+        <!-- footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light-subtle" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
