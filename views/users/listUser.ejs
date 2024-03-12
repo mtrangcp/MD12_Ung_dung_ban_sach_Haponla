@@ -19,7 +19,7 @@
 
     <style>
         .header {
-            height: 120px;
+            height: var(--header-height);
             background-image: linear-gradient(0, rgb(104, 212, 94), #0e9c0e);
         }
 
@@ -31,6 +31,7 @@
         .header_navbar-list {
             list-style: none;
             padding-left: 0;
+            margin: 4px 0 0 0;
         }
 
         .header_navbar-item {
@@ -87,14 +88,15 @@
             margin: 0 4px;
         }
 
-
-
         /* comment */
 
         :root {
             --white-color: #fff;
             --black-color: #000;
             --text-color: #333;
+            --navbar-height: 34px;
+            --header-height: 120px;
+            --header-search-height: calc(var(--header-height) - var(--navbar-height));
         }
 
         * {
@@ -156,6 +158,20 @@
             text-decoration: underline;
             color: rgb(255, 255, 255, 0.7);
         }
+
+        .header-with-search {
+            height: var(--header-search-height);
+            display: flex;
+            align-items: center;
+        }
+
+        .header_logo {
+            width: 200px;
+        }
+
+        .header_logo-img {
+            width: 50px;
+        }
     </style>
 
 </head>
@@ -169,7 +185,6 @@
                         <li class="header_navbar-item">
                             <a href="/users" class="aTrangchu">Trang chủ</a>
                         </li>
-
                     </ul>
 
                     <ul class="header_navbar-list">
@@ -191,8 +206,24 @@
                         </li>
                     </ul>
                 </nav>
-            </div>
 
+                <!-- tim kiem -->
+                <div class="header-with-search">
+                    <div class="header_logo">
+                        <a href="">
+                            <img class="header_logo-img" src="https://cdn-icons-png.flaticon.com/128/4484/4484610.png"
+                                alt="Logo">
+                        </a>
+
+                    </div>
+                    <div class="header_search">
+
+                    </div>
+                    <div class="header_book">
+
+                    </div>
+                </div>
+            </div>
         </header>
 
         <div class="container">
