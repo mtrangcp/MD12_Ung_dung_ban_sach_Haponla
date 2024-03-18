@@ -23,13 +23,14 @@ exports.getListBill = async (req, res, next) => {
   } catch (error) {
     objReturn.status = 0;
     objReturn.msg = error.msg;
+    console.log(msg);
   }
 
   return res.json(objReturn);
 }
 
 
-const addBill = async (req, res) => {
+exports.addBill = async (req, res) => {
   console.log(req.body);
   const data = new BillModel(req.body);
   await data.save();
@@ -41,7 +42,7 @@ const addBill = async (req, res) => {
   }
 };
 
-const getOneBill = async (req, res) => {
+exports.getOneBill = async (req, res) => {
   const { id } = req.params;
 
   const data = await BillModel.findById(id);
@@ -53,7 +54,7 @@ const getOneBill = async (req, res) => {
   }
 };
 
-const deleteBill = async (req, res) => {
+exports.deleteBill = async (req, res) => {
   const { id } = req.params;
 
   const data = await BillModel.findByIdAndDelete(id, { new: true });
@@ -65,7 +66,7 @@ const deleteBill = async (req, res) => {
   }
 };
 
-const updateBill = async (req, res) => {
+exports.updateBill = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 

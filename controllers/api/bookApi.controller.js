@@ -1,14 +1,12 @@
-/**
- * dev: ManhThai
- */
+
 const { BookModel } = require("../../models/book.model");
 
-const getAll = async (req, res) => {
+exports.getListBook = async (req, res) => {
   const allData = await BookModel.find();
   return res.apiSuccess({ data: allData });
 };
 
-const add = async (req, res) => {
+exports.addBook = async (req, res) => {
   console.log(req.body);
   const data = new BookModel(req.body);
   await data.save();
@@ -20,7 +18,7 @@ const add = async (req, res) => {
   }
 };
 
-const get = async (req, res) => {
+exports.getOneBook = async (req, res) => {
   const { id } = req.params;
 
   const data = await BookModel.findById(id);
@@ -32,7 +30,7 @@ const get = async (req, res) => {
   }
 };
 
-const remove = async (req, res) => {
+exports.deleteBook = async (req, res) => {
   const { id } = req.params;
 
   const data = await BookModel.findByIdAndDelete(id, { new: true });
@@ -44,7 +42,7 @@ const remove = async (req, res) => {
   }
 };
 
-const set = async (req, res) => {
+exports.updateBook = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
@@ -57,12 +55,4 @@ const set = async (req, res) => {
   } else {
     return res.apiError("something's wrong, try another");
   }
-};
-
-module.exports = {
-  getAll,
-  get,
-  add,
-  remove,
-  set,
 };
