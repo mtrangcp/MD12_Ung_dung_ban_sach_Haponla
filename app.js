@@ -19,6 +19,7 @@ const apiEvaluteRouter = require("./routes/evaluateApi.route");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var apiRouter = require("./routes/api");
+var billsRouter = require("./routes/bill");
 
 var app = express();
 
@@ -48,6 +49,7 @@ app.use(
 //# routes
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/bill", billsRouter);
 app.use("/api", apiRouter);
 // app.use("/api/categories", apiCategoryRouter);
 app.use("/api/variations", apiVariationRouter);
