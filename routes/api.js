@@ -12,14 +12,14 @@ var api_cart = require("../controllers/api/cartApi.controller");
 var api_category = require("../controllers/api/categoryApi.controller");
 
 
-// category
+// category : the loai
 router.get('/category', api_category.getListCategory);
 router.get('/category/:id', api_category.getOneCategory);
 router.post('/category/add', api_category.addCategory);
 router.put('/category/update/:id', api_category.updateCategory);
 router.delete('/category/delete/:id', api_category.deleteCategory);
 
-// cart
+// cart : gio hang
 router.get('/cart', api_cart.getListCart);
 router.get('/cart/:id', api_cart.getOneCart);
 router.post('/cart/add', api_cart.addCart);
@@ -33,14 +33,14 @@ router.post('/book/add', api_book.addBook);
 router.put('/book/update/:id', api_book.updateBook);
 router.delete('/book/delete/:id', api_book.deleteBook);
 
-// billItem
+// billItem 
 router.get('/billItem', api_billItem.getListBillItem);
 router.get('/billItem/:id', api_billItem.getOneBillItem);
 router.post('/billItem/add', api_billItem.addBillItem);
 router.put('/billItem/update/:id', api_billItem.updateBillItem);
 router.delete('/billItem/delete/:id', api_billItem.deleteBillItem);
 
-// bill
+// bill : hoa don
 router.get('/bill', api_bill.getListBill);
 router.get('/bill/:id', api_bill.getOneBill);
 router.post('/bill/add', api_bill.addBill);
@@ -56,21 +56,21 @@ router.delete('/user/delete/:id', api_user.deleteUser);
 
 router.post('/user/dn', api_user.dangNhap);
 
-// discount
+// discount : giam gia
 router.get('/discount', api_discount.getListDiscount);
 router.get('/discount/:id', api_discount.getOneDiscount);
 router.post('/discount/add', api_discount.addDiscount);
 router.put('/discount/update/:id', api_discount.updateDiscount);
 router.delete('/discount/delete/:id', api_discount.deleteDiscount);
 
-// address
+// address : dia chi
 router.get('/address', api_address.getListAddress);
 router.get('/address/:id', api_address.getOneAddress);
 router.post('/address/add', api_address.addAddress);
 router.put('/address/update/:id', api_address.updateAddress);
 router.delete('/address/delete/:id', api_address.deleteAddress);
 
-// notification
+// notification : thong bao
 router.get('/notification', api_notification.getListNotification);
 router.get('/notification/:id', api_notification.getOneNotification);
 router.post('/notification/add', api_notification.addNotification);
