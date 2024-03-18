@@ -299,7 +299,7 @@
                                 Trợ giúp </a>
                         </li>
                         <li class="header_navbar-item item-strong item-separate">
-                            <a href="users/admin" class="aTrangchu">Tài khoản</a>
+                            <a href="/users/admin" class="aTrangchu">Tài khoản</a>
                         </li>
                         <li class="header_navbar-item item-strong">
                             <a href="/users/login" class="aTrangchu">Đăng xuất</a>
@@ -334,20 +334,20 @@
                 <div class="grid_row">
                     <div class="grid_column-2">
                         <nav class="category">
-                            <h3 class="category_heading">Quan ly</h3>
+                            <h3 class="category_heading">Quản lý</h3>
 
                             <ul class="category-list">
                                 <li class="category-item category-item-active">
-                                    <a href="#" class="category-item_link">Danh muc</a>
+                                    <a href="#" class="category-item_link">Danh mục</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#" class="category-item_link">Thong ke</a>
+                                    <a href="#" class="category-item_link">Thống kê</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#" class="category-item_link">Don hang</a>
+                                    <a href="#" class="category-item_link">Đơn hàng</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#" class="category-item_link">Binh Luan</a>
+                                    <a href="#" class="category-item_link">Bình Luận</a>
                                 </li>
                             </ul>
                         </nav>
@@ -360,13 +360,34 @@
 
                             </div>
                             <div class="input-group ">
+                                <div class="btn-group col-sm-4 col-md-2"
+                                    style="background-color: #F5F5F5; margin-right: 8px;">
+                                    <button type="button" class="btn">Email</button>
+                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/users/emailthapCao">A - Z</a></li>
+                                        <li><a class="dropdown-item" href="/users/emailcaoThap">Z - A</a></li>
 
-                                <span class="input-group-text">Search</span>
-                                <input type="text" aria-label="First name" class="form-control" placeholder="by email">
-                                <input type="text" aria-label="Last name" class="form-control"
-                                    placeholder="by username">
-                                <div class="btn-group col-sm-4 col-md-2">
-                                    <button type="button" class="btn">USERNAME</button>
+                                    </ul>
+                                </div>
+                                <div class="btn-group col-sm-4 col-md-2"
+                                    style="background-color: #F5F5F5; margin-right: 8px;">
+                                    <button type="button" class="btn">Active</button>
+                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/users/true">Hoạt động</a></li>
+                                        <li><a class="dropdown-item" href="/users/false">Ngưng hoạt động</a></li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="btn-group col-sm-4 col-md-2"
+                                    style="background-color: #F5F5F5; margin-right: 8px;">
+                                    <button type="button" class="btn">Username</button>
                                     <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                     </button>
@@ -399,7 +420,7 @@
 
                                         <tr>
                                             <td>
-                                                <a href="users/chitiet/<%= row._id  %>">
+                                                <a href="users/bill/<%= row._id  %>">
                                                     <%= row.username %>
                                                 </a>
                                             </td>

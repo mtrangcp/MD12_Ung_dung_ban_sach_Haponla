@@ -17,7 +17,7 @@ const BillItemModel = model("bill_item", BillItemSchema);
 const BillSchema = new db.mongoose.Schema(
   {
     status: {
-      type: String,
+      type: Number,
       min: 0,
       max: 3,
     },

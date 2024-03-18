@@ -1,14 +1,35 @@
-/**
- * dev: ManhThai
- */
 const { BillModel } = require("../../models/bill.model");
 
-const getAll = async (req, res) => {
-  const allData = await BillModel.find();
-  return res.apiSuccess({ data: allData });
-};
+var objReturn = {
+  status: 1,
+  msg: 'ok'
+}
 
-const add = async (req, res) => {
+exports.getListBill = async (req, res, next) => {
+  let listBill = [];
+
+  try {
+    listBill = await BillModel.find();
+    if (listBill) {
+      objReturn.data = listBill;
+      objReturn.status = 1;
+      objReturn.msg = 'lay thanh cong'
+
+    } else {
+      objReturn.status = 0;
+      objReturn.msg = 'k co du lieu'
+    }
+
+  } catch (error) {
+    objReturn.status = 0;
+    objReturn.msg = error.msg;
+  }
+
+  return res.json(objReturn);
+}
+
+
+const addBill = async (req, res) => {
   console.log(req.body);
   const data = new BillModel(req.body);
   await data.save();
@@ -20,7 +41,7 @@ const add = async (req, res) => {
   }
 };
 
-const get = async (req, res) => {
+const getOneBill = async (req, res) => {
   const { id } = req.params;
 
   const data = await BillModel.findById(id);
@@ -32,7 +53,7 @@ const get = async (req, res) => {
   }
 };
 
-const remove = async (req, res) => {
+const deleteBill = async (req, res) => {
   const { id } = req.params;
 
   const data = await BillModel.findByIdAndDelete(id, { new: true });
@@ -44,7 +65,7 @@ const remove = async (req, res) => {
   }
 };
 
-const set = async (req, res) => {
+const updateBill = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
@@ -57,12 +78,4 @@ const set = async (req, res) => {
   } else {
     return res.apiError("something's wrong, try another");
   }
-};
-
-module.exports = {
-  getAll,
-  get,
-  add,
-  remove,
-  set,
 };

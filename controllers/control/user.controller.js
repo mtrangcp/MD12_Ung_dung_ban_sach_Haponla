@@ -43,6 +43,62 @@ exports.getListUserCaoThap = async (req, res, next) => {
     res.render('users/listUser', { listUsers: list, soluong: soluong });
 }
 
+exports.getListUserEmailThapcao = async (req, res, next) => {
+
+    let dk_loc = { role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc).sort({ email: 1 });
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
+exports.getListUserEmailCaoThap = async (req, res, next) => {
+
+    let dk_loc = { role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc).sort({ email: -1 });
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
+exports.getListUserTrue = async (req, res, next) => {
+
+    let dk_loc = { active: true, role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, active: true, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc);
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
+exports.getListUserFalse = async (req, res, next) => {
+
+    let dk_loc = { active: false, role: "USER" };
+    if (typeof (req.query.username) != 'undefined') {
+        dk_loc = { username: req.query.username, active: false, role: "USER" };
+    }
+    console.log(dk_loc);
+
+    var list = await myModel.userModel.find(dk_loc);
+    var soluong = list.length;
+
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+}
+
 exports.getAdmin = async (req, res, next) => {
 
     let dk_loc = { role: "ADMIN" };
