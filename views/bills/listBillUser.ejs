@@ -409,7 +409,6 @@
                                         <th scope="col">Tổng tiền</th>
                                         <th scope="col">Thời gian</th>
                                         <th scope="col">Giảm giá</th>
-                                        <th scope="col">Người mua</th>
                                         <th scope="col">Thông tin nhận</th>
                                         <th scope="col">Chi tiết</th>
                                     </tr>
@@ -418,9 +417,27 @@
                                     <% listBillUser.forEach((row)=> { %>
                                         <tr>
                                             <td>
-                                                <a href="bill/status/<%= row._id  %>">
-                                                    <%= row.status %>
-                                                </a>
+                                                <% if ( row.status==1 ) { %>
+                                                    <a href="bill/status/<%= row._id  %>">
+                                                        đã đặt hàng, chờ xác nhận
+                                                    </a>
+                                                    <% } else if ( row.status==2) {%>
+                                                        <a href="bill/status/<%= row._id  %>">
+                                                            đã xác nhận, đang xử lí
+                                                        </a>
+                                                        <% } else if ( row.status==3) {%>
+                                                            <a href="bill/status/<%= row._id  %>">
+                                                                đang vận chuyển
+                                                            </a>
+                                                            <% } else if ( row.status==4) {%>
+                                                                <a href="bill/status/<%= row._id  %>">
+                                                                    giao hàng thành công
+                                                                </a>
+                                                                <% } else if ( row.status==0) {%>
+                                                                    <a href="bill/status/<%= row._id  %>">
+                                                                        đã bị hủy
+                                                                    </a>
+                                                                    <% } %>
                                             </td>
                                             <td>
                                                 <%= row.real_price %>
@@ -429,16 +446,18 @@
                                                 <%= row.create_at %>
                                             </td>
                                             <td>
-                                                <%= row.id_discount %>
+                                                <%= row.id_discount.value %>
                                             </td>
                                             <td>
-                                                <%= row.id_user %>
+                                                <%= row.id_address.username %><br>
+                                                    <%= row.id_address.phone %><br>
+                                                        <%= row.id_address.location %>
                                             </td>
                                             <td>
-                                                <%= row.id_address %>
-                                            </td>
-                                            <td>
-                                                <%= row.detail %>
+                                                <a href="bill/chitiet/<%= row._id  %>">
+                                                    Chi tiết
+                                                </a>
+                                                <!-- <%= row.detail %> -->
                                             </td>
 
                                         </tr>

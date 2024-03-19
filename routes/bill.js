@@ -11,8 +11,8 @@ router.use((req, res, next) => {
 
 router.get('/', check_login.yeu_cau_login, billCtrl.getListBill);
 
-router.get('/:idUser', billCtrl.getBillUsername);
-router.post('/:idUser', billCtrl.getBillUsername);
+router.get('/:idU', billCtrl.getBillUsername);
+router.post('/:idU', billCtrl.getBillUsername);
 
 
 module.exports = router;

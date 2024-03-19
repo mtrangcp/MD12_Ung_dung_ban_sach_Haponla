@@ -9,15 +9,16 @@ exports.getListBill = async (req, res, next) => {
 }
 
 exports.getBillUsername = async (req, res, next) => {
-    let idUser = req.params.idUser;
-    let dk_loc = { id_user: idUser };
-    if (typeof (req.query.idUser) != 'undefined') {
-        dk_loc = { id_user: req.query.idUser };
-    }
-    console.log(dk_loc);
+    try {
+        let idU = req.params.idU;
+        let dk_loc = { id_user: idU };
+        console.log("----dk loc:" + dk_loc);
 
-    var list = await myModel.BillModel.find(dk_loc);
-    var soluong = list.length;
+        var list = await myModel.BillModel.find(dk_loc).populate('id_user').populate('id_address').populate('id_discount').populate('detail');
+        var soluong = list.length;
+    } catch (error) {
+        console.log(error);
+    }
 
     res.render('bills/listBillUser', { listBillUser: list, soluong: soluong });
 }
