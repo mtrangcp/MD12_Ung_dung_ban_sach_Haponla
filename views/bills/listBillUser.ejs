@@ -335,6 +335,8 @@
                         <nav class="category">
                             <h3 class="category_heading">Quản lý</h3>
 
+
+
                             <ul class="category-list">
                                 <li class="category-item category-item-active">
                                     <a href="#" class="category-item_link">Danh mục</a>
@@ -343,7 +345,7 @@
                                     <a href="#" class="category-item_link">Thống kê</a>
                                 </li>
                                 <li class="category-item">
-                                    <a href="#" class="category-item_link">Đơn hàng</a>
+                                    <a href="/bill" class="category-item_link">Đơn hàng</a>
                                 </li>
                                 <li class="category-item">
                                     <a href="#" class="category-item_link">Bình Luận</a>
@@ -412,58 +414,62 @@
                                         <th scope="col">Chi tiết</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+
+                                <% if (listBillUser) {%>
                                     <% listBillUser.forEach((row)=> { %>
-                                        <tr>
-                                            <td>
-                                                <% if ( row.status==1 ) { %>
-                                                    <a href="status/<%= row._id  %>">
-                                                        đã đặt hàng, chờ xác nhận
-                                                    </a>
-                                                    <% } else if ( row.status==2) {%>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <% if ( row.status==1 ) { %>
                                                         <a href="status/<%= row._id  %>">
-                                                            đã xác nhận, đang xử lí
+                                                            đã đặt hàng,<br> chờ xác nhận
                                                         </a>
-                                                        <% } else if ( row.status==3) {%>
+                                                        <% } else if ( row.status==2) {%>
                                                             <a href="status/<%= row._id  %>">
-                                                                đang vận chuyển
+                                                                đã xác nhận,<br> đang xử lí
                                                             </a>
-                                                            <% } else if ( row.status==4) {%>
+                                                            <% } else if ( row.status==3) {%>
                                                                 <a href="status/<%= row._id  %>">
-                                                                    giao hàng thành công
+                                                                    đang vận chuyển
                                                                 </a>
-                                                                <% } else if ( row.status==0) {%>
+                                                                <% } else if ( row.status==4) {%>
                                                                     <a href="status/<%= row._id  %>">
-                                                                        đã bị hủy
+                                                                        giao hàng thành công
                                                                     </a>
-                                                                    <% } %>
-                                            </td>
-                                            <td>
-                                                <%= row.real_price %>
-                                            </td>
-                                            <td>
-                                                <%= row.create_at %>
-                                            </td>
-                                            <td>
-                                                <%= row.id_discount.value %>
-                                            </td>
-                                            <td>
-                                                <%= row.id_address.username %><br>
-                                                    <%= row.id_address.phone %><br>
-                                                        <%= row.id_address.location %>
-                                            </td>
-                                            <td>
-                                                <a href="bill/chitiet/<%= row._id  %>">
-                                                    Chi tiết
-                                                </a>
-                                                <!-- <%= row.detail %> -->
-                                            </td>
+                                                                    <% } else if ( row.status==0) {%>
+                                                                        <a href="status/<%= row._id  %>">
+                                                                            đã bị hủy
+                                                                        </a>
+                                                                        <% } %>
+                                                </td>
+                                                <td>
+                                                    <%= row.real_price %>
+                                                </td>
+                                                <td>
+                                                    <%= row.create_at %>
+                                                </td>
+                                                <td>
+                                                    <%= row.id_discount.value %>
+                                                </td>
+                                                <td>
+                                                    <%= row.id_address.username %><br>
+                                                        <%= row.id_address.phone %><br>
+                                                            <%= row.id_address.location %>
+                                                </td>
+                                                <td>
+                                                    <a href="bill/chitiet/<%= row._id  %>">
+                                                        <%= row.detail.length %> sản phẩm
+                                                    </a>
+                                                </td>
 
-                                        </tr>
-
+                                            </tr>
+                                        </tbody>
                                         <% }) %>
+                                            <% }else { %>
+                                                <h3>Danh sách rỗng</h3>
+                                                <% } %>
 
-                                </tbody>
+
                             </table>
 
                         </div>

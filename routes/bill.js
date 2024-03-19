@@ -17,10 +17,10 @@ router.post('/:idUser', billCtrl.getBillUsername);
 router.get('/status/:id', billCtrl.changeStatus);
 router.post('/status/:id', billCtrl.changeStatus);
 
-router.get('/thapCao', billCtrl.getPriceThapCao);
-router.post('/thapCao', billCtrl.getPriceThapCao);
-router.get('/caoThap', billCtrl.getPriceCaoThap);
-router.post('/caoThap', billCtrl.getPriceCaoThap);
+router.get('/thapCao', billCtrl.getThapCao);
+router.post('/thapCao', billCtrl.getThapCao);
+router.get('/caoThap', billCtrl.getCaoThap);
+router.post('/caoThap', billCtrl.getCaoThap);
 
 
 
