@@ -354,114 +354,53 @@
 
                     <div class="grid_column-10">
                         <div class="row d-inline">
-
-                            <div class="d-inline">
-
-                            </div>
-                            <div class="input-group ">
-                                <div class="btn-group col-sm-4 col-md-2"
-                                    style="background-color: #F5F5F5; margin-right: 8px;">
-                                    <button type="button" class="btn">Email</button>
-                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/users/emailthapCao">A - Z</a></li>
-                                        <li><a class="dropdown-item" href="/users/emailcaoThap">Z - A</a></li>
-
-                                    </ul>
-                                </div>
-                                <div class="btn-group col-sm-4 col-md-2"
-                                    style="background-color: #F5F5F5; margin-right: 8px;">
-                                    <button type="button" class="btn">Active</button>
-                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/users/true">Hoạt động</a></li>
-                                        <li><a class="dropdown-item" href="/users/false">Ngưng hoạt động</a></li>
-
-                                    </ul>
-                                </div>
-
-                                <div class="btn-group col-sm-4 col-md-2"
-                                    style="background-color: #F5F5F5; margin-right: 8px;">
-                                    <button type="button" class="btn">Username</button>
-                                    <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/users/thapCao">A - Z</a></li>
-                                        <li><a class="dropdown-item" href="/users/caoThap">Z - A</a></li>
-
-                                    </ul>
-                                </div>
-                            </div>
-
+                        </div>
+                        <div style="margin: auto;">
+                            <h4>
+                                <%= msg %>
+                            </h4>
                         </div>
 
                         <div>
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">SĐT</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Giới tính</th>
-                                        <th scope="col">trạng thái</th>
-                                        <th scope="col">Điểm</th>
-                                        <th scope="col">Họ tên</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% listUsers.forEach((row)=> { %>
-                                        <tr>
-                                            <td>
-                                                <a href="/bill/<%= row._id  %>">
-                                                    <%= row.username %>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <%= row.phone %>
-                                            </td>
-                                            <td>
-                                                <%= row.email %>
-                                            </td>
-                                            <td>
-                                                <%= row.gender %>
-                                            </td>
-                                            <td>
-                                                <%= row.active %>
-                                            </td>
-                                            <td>
-                                                <%= row.points %>
-                                            </td>
-                                            <td>
-                                                <%= row.fullname %>
-                                            </td>
-                                            <td>
-                                                <% if (row.active) { %>
-                                                    <a href="/users/ban/<%= row._id %>" style="color: #000;">
-                                                        <i class='bx bxs-lock'></i>
-                                                    </a>
-                                                    <% } else { %>
-                                                        <a href="/users/unban/<%= row._id %>">
-                                                            <i class='bx bxs-lock-open'></i>
-                                                        </a>
-                                                        <% } %>
+                            <h3 style="color: grey;">Thay đổi trạng thái đơn hàng:<%= cre %>
+                            </h3>
 
-                                            </td>
+                            <div class="formss">
+                                <form method="post" action="">
+                                    <div class="mb-3">
+                                        <label class="form-label">Trạng thái</label><br>
 
-                                        </tr>
+                                        <% if (objBill.status==1 ){ %>
+                                            <select class="form-select" name="TrangThai"
+                                                aria-label="Default select example">
+                                                <option value="2">đã xác nhận, đang xử lí</option>
+                                                <option value="3">đang vận chuyển</option>
+                                                <option value="4">giao hàng thành công</option>
+                                            </select>
+                                            <%}else if (objBill.status==2) {%>
+                                                <select class="form-select" name="TrangThai"
+                                                    aria-label="Default select example">
+                                                    <option value="3">đang vận chuyển</option>
+                                                    <option value="4">giao hàng thành công</option>
+                                                </select>
 
-                                        <% }) %>
+                                                <%}else if (objBill.status==3) {%>
+                                                    <select class="form-select" name="TrangThai"
+                                                        aria-label="Default select example">
+                                                        <option value="4">giao hàng thành công</option>
+                                                    </select>
 
-                                </tbody>
-                            </table>
+                                                    <%}else if (objBill.status==0) {%>
+                                                        <h4>Đơn hàng đã bị hủy, không thể thay đổi trạng thái</h4>
+                                                        <%}else{%>
+                                                            <h4>Có lỗi </h4>
+                                                            <%} %>
 
-                        </div>
-                        <div class="d-inline p-2 ">Đang xem:<%= soluong %>/<%= soluong %>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
