@@ -4,7 +4,20 @@
 const { BillModel } = require("../../models/bill.model");
 
 const getAll = async (req, res) => {
-  const allData = await BillModel.find();
+  const { id_user } = req.query;
+  console.log(id_user);
+
+  var allData;
+  if (id_user) {
+    try {
+      allData = await BillModel.find({ id_user: id_user });
+    } catch (error) {
+      return res.apiError("something's wrong, try another");
+    }
+  } else {
+    allData = await BillModel.find();
+  }
+
   return res.apiSuccess({ data: allData });
 };
 
