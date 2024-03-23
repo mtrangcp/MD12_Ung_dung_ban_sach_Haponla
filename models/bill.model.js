@@ -38,6 +38,9 @@ const BillSchema = new Schema({
     type: Number,
     min: 0,
   },
+  method: {
+    type: String
+  },
   create_at: {
     type: Date,
     default: Date.now,
