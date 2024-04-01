@@ -45,19 +45,25 @@ exports.changeStatus = async (req, res, next) => {
 
     try {
         if (req.method == 'POST') {
-            let objBill = new myModel.BillModel();
+            let objBill1 = new myModel.BillModel();
 
             if (typeof (req.body.TrangThai != 'undefined')) {
                 console.log(req.body.TrangThai);
 
-                objBill.status = req.body.TrangThai;
+                objBill1.status = req.body.TrangThai;
             }
 
-            objBill._id = _id;
+            objBill1._id = _id;
+            objBill1.detail = objBill.detail;
 
             try {
-                await myModel.BillModel.findByIdAndUpdate({ _id: _id }, objBill);
+                await myModel.BillModel.findByIdAndUpdate({ _id: _id }, objBill1);
                 msg = 'Cập nhật trạng thái thành công!'
+
+                // setTimeout(() => {   
+                //     res.redirect('/bill/objBill.idUser');
+                // }, 3000);
+
                 console.log(objBill);
 
             } catch (err) {
