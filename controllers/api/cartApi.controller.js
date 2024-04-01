@@ -1,14 +1,11 @@
-/**
- * dev: ManhThai
- */
 const { CartModel } = require("../../models/cart.model");
 
-const getAll = async (req, res) => {
+exports.getListCart = async (req, res) => {
   const allData = await CartModel.find();
   return res.apiSuccess({ data: allData });
 };
 
-const add = async (req, res) => {
+exports.addCart = async (req, res) => {
   console.log(req.body);
   const data = new CartModel(req.body);
   await data.save();
@@ -20,7 +17,7 @@ const add = async (req, res) => {
   }
 };
 
-const get = async (req, res) => {
+exports.getOneCart = async (req, res) => {
   const { id } = req.params;
 
   const data = await CartModel.findById(id);
@@ -32,7 +29,7 @@ const get = async (req, res) => {
   }
 };
 
-const remove = async (req, res) => {
+exports.deleteCart = async (req, res) => {
   const { id } = req.params;
 
   const data = await CartModel.findByIdAndDelete(id, { new: true });
@@ -44,7 +41,7 @@ const remove = async (req, res) => {
   }
 };
 
-const set = async (req, res) => {
+exports.updateCart = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
@@ -57,12 +54,4 @@ const set = async (req, res) => {
   } else {
     return res.apiError("something's wrong, try another");
   }
-};
-
-module.exports = {
-  getAll,
-  get,
-  add,
-  remove,
-  set,
 };

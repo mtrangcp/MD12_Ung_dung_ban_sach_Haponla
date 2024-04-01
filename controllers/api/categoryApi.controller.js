@@ -1,14 +1,11 @@
-/**
- * dev: ManhThai
- */
 const { CategoryModel } = require("../../models/category.model");
 
-const getAll = async (req, res) => {
+exports.getListCategory = async (req, res) => {
   const allData = await CategoryModel.find();
   return res.apiSuccess({ data: allData });
 };
 
-const add = async (req, res) => {
+exports.addCategory = async (req, res) => {
   console.log(req.body);
   const data = new CategoryModel(req.body);
   await data.save();
@@ -20,7 +17,7 @@ const add = async (req, res) => {
   }
 };
 
-const get = async (req, res) => {
+exports.getOneCategory = async (req, res) => {
   const { id } = req.params;
 
   const data = await CategoryModel.findById(id);
@@ -32,7 +29,7 @@ const get = async (req, res) => {
   }
 };
 
-const remove = async (req, res) => {
+exports.deleteCategory = async (req, res) => {
   const { id } = req.params;
 
   const data = await CategoryModel.findByIdAndDelete(id, { new: true });
@@ -44,7 +41,7 @@ const remove = async (req, res) => {
   }
 };
 
-const set = async (req, res) => {
+exports.updateCategory = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
@@ -59,10 +56,3 @@ const set = async (req, res) => {
   }
 };
 
-module.exports = {
-  getAll,
-  get,
-  add,
-  remove,
-  set,
-};

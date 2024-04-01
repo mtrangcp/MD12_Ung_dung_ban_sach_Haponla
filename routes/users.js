@@ -38,6 +38,17 @@ router.post('/thapCao', userCtrl.getListUserThapcao);
 router.get('/caoThap', userCtrl.getListUserCaoThap);
 router.post('/caoThap', userCtrl.getListUserCaoThap);
 
+router.get('/emailthapCao', userCtrl.getListUserEmailThapcao);
+router.post('/emailthapCao', userCtrl.getListUserEmailThapcao);
+
+router.get('/emailcaoThap', userCtrl.getListUserEmailCaoThap);
+router.post('/emailcaoThap', userCtrl.getListUserEmailCaoThap);
+
+router.get('/true', userCtrl.getListUserTrue);
+router.post('/true', userCtrl.getListUserTrue);
+
+router.get('/false', userCtrl.getListUserFalse);
+router.post('/false', userCtrl.getListUserFalse);
 
 
 module.exports = router;

@@ -1,14 +1,11 @@
-/**
- * dev: ManhThai
- */
 const { BillItemModel } = require("../../models/bill.model");
 
-const getAll = async (req, res) => {
+exports.getListBillItem = async (req, res) => {
   const allData = await BillItemModel.find();
   return res.apiSuccess({ data: allData });
 };
 
-const add = async (req, res) => {
+exports.addBillItem = async (req, res) => {
   console.log(req.body);
   const data = new BillItemModel(req.body);
   await data.save();
@@ -20,7 +17,7 @@ const add = async (req, res) => {
   }
 };
 
-const get = async (req, res) => {
+exports.getOneBillItem = async (req, res) => {
   const { id } = req.params;
 
   const data = await BillItemModel.findById(id);
@@ -32,7 +29,7 @@ const get = async (req, res) => {
   }
 };
 
-const remove = async (req, res) => {
+exports.deleteBillItem = async (req, res) => {
   const { id } = req.params;
 
   const data = await BillItemModel.findByIdAndDelete(id, { new: true });
@@ -44,7 +41,7 @@ const remove = async (req, res) => {
   }
 };
 
-const set = async (req, res) => {
+exports.updateBillItem = async (req, res) => {
   console.log(req.body);
   const { id } = req.params;
 
@@ -57,12 +54,4 @@ const set = async (req, res) => {
   } else {
     return res.apiError("something's wrong, try another");
   }
-};
-
-module.exports = {
-  getAll,
-  get,
-  add,
-  remove,
-  set,
 };

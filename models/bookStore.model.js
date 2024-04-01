@@ -3,7 +3,7 @@ var db = require('../configs/database')
 const addressChema = new db.mongoose.Schema(
     {
         username: { type: String, required: true },
-        phone: { type: Number, required: true },
+        phone: { type: String, required: true },
         location: { type: String, required: true }
     },
     { collection: 'Address', versionKey: false }
@@ -21,11 +21,11 @@ const discountChema = new db.mongoose.Schema(
     {
         codename: { type: String, required: true },
         value: { type: Number, required: true },
-        start_date: { type: String, required: true },
-        expiration_date: { type: String, required: true },
+        start_date: { type: Date, required: true },
+        end_date: { type: Date, required: true },
         detail: { type: String, required: true },
         status: { type: Boolean, required: true },
-        entityType: {
+        type: {
             type: String,
             enum: ['SHIP', 'PERCENT', 'PRICE'], // Các loại cố định
             required: true
@@ -80,7 +80,6 @@ let item_discountModel = db.mongoose.model('item_discountModel', item_discountCh
 let notificationModel = db.mongoose.model('item_notificationModel', notificationChema);
 let userModel = db.mongoose.model('userModel', userChema);
 let categoryModel = db.mongoose.model('categoryModel', categoryChema);
-
 
 
 module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel, categoryModel };
