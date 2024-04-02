@@ -4,8 +4,20 @@
 const { BookModel } = require("../../models/book.model");
 
 const getAll = async (req, res) => {
-  const allData = await BookModel.find();
-  return res.apiSuccess({ data: allData });
+  try {
+    const { id_category } = req.query;
+    var books;
+
+    if (id_category) {
+      books = await BookModel.find({ id_category }).populate("id_category");
+    } else {
+      books = await BookModel.find().populate("id_category");
+    }
+
+    return res.apiSuccess({ data: books });
+  } catch (error) {
+    return res.apiError(error);
+  }
 };
 
 const add = async (req, res) => {
