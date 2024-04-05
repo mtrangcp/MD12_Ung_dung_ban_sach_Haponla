@@ -14,13 +14,12 @@ const errorMiddleware = require("./middlewares/error");
 const apiVariationRouter = require("./routes/variationApi.route");
 const apiEvaluteRouter = require("./routes/evaluateApi.route");
 
-const categoryRouter = require('./routes/category.route')
-const bookRouter = require('./routes/book.route')
+const categoryRouter = require('./routes/category.route');
+const bookRouter = require('./routes/book.route');
 // const apiBookRouter = require("./routes/bookApi.route");
 // const apiCartRouter = require("./routes/cartApi.route");
 // const apiBillItemRouter = require("./routes/billItemApi.route");
 // const apiBillRouter = require("./routes/billApi.route");
-
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");

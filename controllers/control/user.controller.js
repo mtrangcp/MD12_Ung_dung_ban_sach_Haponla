@@ -11,7 +11,8 @@ exports.getListUser = async (req, res, next) => {
     var list = await myModel.userModel.find(dk_loc);
     var soluong = list.length;
 
-    res.render('users/listUser', { listUsers: list, soluong: soluong });
+    res.render('users/listUser', { listUsers: list, soluong: soluong  });
+    
 }
 
 // loc theo username
@@ -176,7 +177,7 @@ exports.login = async (req, res, next) => {
             console.log(error);
         }
     }
-    res.render('users/login', { msg: msg })
+    res.render('users/login', { msg: msg, layout: "users/login"})
 }
 
 exports.chiTietUser = async (req, res, next) => {

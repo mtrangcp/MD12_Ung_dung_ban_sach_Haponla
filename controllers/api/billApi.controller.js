@@ -1,6 +1,5 @@
 const { BillModel } = require("../../models/bill.model");
 
-
 const getAll = async (req, res) => {
   const { id_user } = req.query;
   console.log(id_user);

@@ -1,4 +1,5 @@
-var db = require('../configs/database')
+var db = require('../configs/database');
+const { CartModel } = require("./cart.model");
 
 const addressChema = new db.mongoose.Schema(
     {
@@ -61,6 +62,7 @@ const userChema = new db.mongoose.Schema(
         address: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'addressModel', required: false }],
         discounts: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'item_discountModel', required: false }],
         notifications: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'notificationModel', required: false }],
+        carts: { type: db.mongoose.Schema.Types.ObjectId, ref: CartModel.modelName, required: false },
         points: { type: Number, required: true }
     },
     { collection: 'User', versionKey: false }

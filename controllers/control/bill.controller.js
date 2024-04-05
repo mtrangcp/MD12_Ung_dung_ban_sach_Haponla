@@ -60,10 +60,6 @@ exports.changeStatus = async (req, res, next) => {
                 await myModel.BillModel.findByIdAndUpdate({ _id: _id }, objBill1);
                 msg = 'Cập nhật trạng thái thành công!'
 
-                // setTimeout(() => {   
-                //     res.redirect('/bill/objBill.idUser');
-                // }, 3000);
-
                 console.log(objBill);
 
             } catch (err) {
