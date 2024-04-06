@@ -43,15 +43,6 @@ const notificationChema = new db.mongoose.Schema(
     { collection: 'Notification', versionKey: false }
 );
 
-// const cartSchema = new db.mongoose.Schema(
-//   {
-//     quantity: { type: Number, required: true, min: 1 },
-//     price: { type: Number, min: 0 },
-//     id_book: { type: db.mongoose.Schema.Types.ObjectId, ref: BookModel.modelName, required: true }
-//   },
-//   { collection: 'Cart', versionKey: false });   
-
-
 const userChema = new db.mongoose.Schema(
     {
         username: { type: String, required: true },
@@ -70,7 +61,7 @@ const userChema = new db.mongoose.Schema(
         address: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'addressModel', required: false }],
         discounts: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'item_discountModel', required: false }],
         notifications: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'notificationModel', required: false }],
-        carts: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'cartModel', required: false }],
+        carts: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'cart', required: false }],
         points: { type: Number, required: true }
     },
     { collection: 'User', versionKey: false }
