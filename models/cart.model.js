@@ -8,7 +8,7 @@ const CartSchema = new Schema(
     price: { type: Number, min: 0 },
     id_book: { type: ObjectId, ref: BookModel.modelName, required: true },
   },
-  { collection: "Cart" }
+  { collection: "Cart", versionKey: false }
 );
 
 const CartModel = model("cart", CartSchema);
