@@ -1,5 +1,4 @@
 var db = require('../configs/database');
-const { BookModel } = require("./book.model");
 
 const addressChema = new db.mongoose.Schema(
     {
@@ -44,13 +43,13 @@ const notificationChema = new db.mongoose.Schema(
     { collection: 'Notification', versionKey: false }
 );
 
-const cartSchema = new db.mongoose.Schema(
-  {
-    quantity: { type: Number, required: true, min: 1 },
-    price: { type: Number, min: 0 },
-    id_book: { type: db.mongoose.Schema.Types.ObjectId, ref: 'BookModel', required: true }
-  },
-  { collection: 'Cart', versionKey: false });   
+// const cartSchema = new db.mongoose.Schema(
+//   {
+//     quantity: { type: Number, required: true, min: 1 },
+//     price: { type: Number, min: 0 },
+//     id_book: { type: db.mongoose.Schema.Types.ObjectId, ref: BookModel.modelName, required: true }
+//   },
+//   { collection: 'Cart', versionKey: false });   
 
 
 const userChema = new db.mongoose.Schema(
@@ -91,7 +90,7 @@ let item_discountModel = db.mongoose.model('item_discountModel', item_discountCh
 let notificationModel = db.mongoose.model('item_notificationModel', notificationChema);
 let userModel = db.mongoose.model('userModel', userChema);
 let categoryModel = db.mongoose.model('categoryModel', categoryChema);
-let cartModel = db.mongoose.model('cartModel', cartSchema);
+// let cartModel = db.mongoose.model('cartModel', cartSchema);
 
 
-module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel, categoryModel, cartModel };
+module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel, categoryModel };
