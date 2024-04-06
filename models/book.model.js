@@ -4,7 +4,7 @@ const { CategoryModel } = require("./category.model");
 const { userModel } = require("./bookStore.model");
 
 // variation
-const VariationSchema = new Schema(
+const VariationSchema = new Schema( 
   {
     republish: { type: String, require: true },
     language: { type: String, default: "vi" },

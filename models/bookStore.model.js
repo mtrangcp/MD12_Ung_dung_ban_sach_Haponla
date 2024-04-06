@@ -1,5 +1,5 @@
 var db = require('../configs/database');
-const { CartModel } = require("./cart.model");
+const { BookModel } = require("./book.model");
 
 const addressChema = new db.mongoose.Schema(
     {
@@ -44,6 +44,15 @@ const notificationChema = new db.mongoose.Schema(
     { collection: 'Notification', versionKey: false }
 );
 
+const cartSchema = new db.mongoose.Schema(
+  {
+    quantity: { type: Number, required: true, min: 1 },
+    price: { type: Number, min: 0 },
+    id_book: { type: db.mongoose.Schema.Types.ObjectId, ref: 'BookModel', required: true }
+  },
+  { collection: 'Cart', versionKey: false });   
+
+
 const userChema = new db.mongoose.Schema(
     {
         username: { type: String, required: true },
@@ -62,7 +71,7 @@ const userChema = new db.mongoose.Schema(
         address: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'addressModel', required: false }],
         discounts: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'item_discountModel', required: false }],
         notifications: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'notificationModel', required: false }],
-        carts: { type: db.mongoose.Schema.Types.ObjectId, ref: CartModel.modelName, required: false },
+        carts: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'cartModel', required: false }],
         points: { type: Number, required: true }
     },
     { collection: 'User', versionKey: false }
@@ -82,6 +91,7 @@ let item_discountModel = db.mongoose.model('item_discountModel', item_discountCh
 let notificationModel = db.mongoose.model('item_notificationModel', notificationChema);
 let userModel = db.mongoose.model('userModel', userChema);
 let categoryModel = db.mongoose.model('categoryModel', categoryChema);
+let cartModel = db.mongoose.model('cartModel', cartSchema);
 
 
-module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel, categoryModel };
+module.exports = { addressModel, discountModel, item_discountModel, notificationModel, userModel, categoryModel, cartModel };
