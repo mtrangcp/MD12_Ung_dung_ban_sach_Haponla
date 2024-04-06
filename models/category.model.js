@@ -6,11 +6,10 @@ const CategorySchema = new Schema(
     image: {
       type: String,
       default: "https://cdn-icons-png.flaticon.com/512/5078/5078755.png",
-    }
+    },
   },
-  { collection: 'Category', versionKey: false }
+  { collection: "Category" }
 );
-
 
 const CategoryModel = model("category", CategorySchema);
 
