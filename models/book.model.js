@@ -9,7 +9,8 @@ const VariationSchema = new Schema(
     republish: { type: String, require: true },
     language: { type: String, default: "vi" },
   },
-  { collection: 'Variation', versionKey: false });
+  { collection: "Variation" }
+);
 
 const VariationModel = model("variation", VariationSchema);
 
@@ -22,7 +23,8 @@ const EvaluateSchema = new Schema(
     create_at: { type: Date, default: Date.now },
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },
   },
-  { collection: 'Evaluate', versionKey: false });
+  { collection: "Evaluate" }
+);
 
 const EvaluateModel = model("evaluate", EvaluateSchema);
 
@@ -32,24 +34,27 @@ const BookSchema = new Schema({
   author: { type: String },
   detail: { type: String },
   image: { type: String, default: "" },
-  original_price: { type: Number, min: 0,required: true },
-  price: { type: Number, min: 0, },
+  original_price: { type: Number, min: 0, required: true },
+  price: { type: Number, min: 0 },
   stock: { type: Number, min: 0 },
   sold: { type: Number, min: 0 },
   view: { type: Number, min: 0 },
   percent_discount: { type: Number, min: 0, max: 100 },
-  variations: [{
-    type: ObjectId,
-    ref: VariationModel.modelName,
-  }],
-  evaluates: [{
-    type: ObjectId,
-    ref: EvaluateModel.modelName,
-  }],
-  id_category: { type: ObjectId, ref: CategoryModel.modelName, required: true }
-
+  variations: [
+    {
+      type: ObjectId,
+      ref: VariationModel.modelName,
+    },
+  ],
+  evaluates: [
+    {
+      type: ObjectId,
+      ref: EvaluateModel.modelName,
+    },
+  ],
+  id_category: { type: ObjectId, ref: CategoryModel.modelName, required: true },
 });
 
 const BookModel = model("book", BookSchema);
 
-module.exports = { VariationModel, EvaluateModel, BookModel};
+module.exports = { VariationModel, EvaluateModel, BookModel };
