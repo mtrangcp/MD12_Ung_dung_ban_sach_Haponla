@@ -43,6 +43,7 @@ exports.changeStatus = async (req, res, next) => {
     let _id = req.params.id;
     let objBill = await myModel.BillModel.findById(_id).populate('id_user').populate('id_address').populate('id_discount').populate('detail');
 
+    console.log(objBill.detail);
     try {
         if (req.method == 'POST') {
             let objBill1 = new myModel.BillModel();
@@ -66,7 +67,6 @@ exports.changeStatus = async (req, res, next) => {
                 msg = 'Lỗi: ' + err;
                 console.log(err);
             }
-
         }
     } catch (error) {
         console.log(error);
