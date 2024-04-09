@@ -22,6 +22,9 @@ router.post('/thapCao', billCtrl.getThapCao);
 router.get('/caoThap', billCtrl.getCaoThap);
 router.post('/caoThap', billCtrl.getCaoThap);
 
+router.get('/chitiet/:idBill', billCtrl.getBillUsername);
+router.post('/chitiet/:idBill', billCtrl.getBillUsername);
+
 
 
 
