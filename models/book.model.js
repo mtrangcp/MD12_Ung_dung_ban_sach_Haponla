@@ -53,7 +53,8 @@ const BookSchema = new Schema({
     },
   ],
   id_category: { type: ObjectId, ref: CategoryModel.modelName, required: true },
-});
+},
+ { collection: "Book", versionKey: false });
 
 const BookModel = model("book", BookSchema);
 
