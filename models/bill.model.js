@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const ObjectId = Schema.ObjectId;
-const { BookModel } = require("./book.model");
+const { BookModel } = require("./book");
 const { userModel, addressModel, discountModel } = require("./bookStore.model");
 
 const BillItemSchema = new Schema(

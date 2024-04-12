@@ -1,6 +1,9 @@
+/**
+ * dev: ManhThai
+ */
 const { Schema, model } = require("mongoose");
 const ObjectId = Schema.ObjectId;
-const { CategoryModel } = require("./category.model");
+const { CategoryModel } = require("./category");
 const { userModel } = require("./bookStore.model");
 
 // variation
@@ -33,7 +36,10 @@ const BookSchema = new Schema(
   {
     name: { type: String, required: true },
     author: { type: String },
-    detail: { type: String },
+    introduction: { type: String },
+    page_number: { type: Number, min: 1 },
+    publisher: { type: String },
+    release_date: { type: Date },
     image: { type: String, default: "" },
     original_price: { type: Number, min: 0, required: true },
     price: { type: Number, min: 0 },

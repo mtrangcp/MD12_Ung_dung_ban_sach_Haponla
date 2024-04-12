@@ -1,5 +1,5 @@
 
-const { BookModel } = require("../../models/book.model");
+const { BookModel } = require("../../models/book");
 
 exports.getListBook = async (req, res) => {
   const allData = await BookModel.find();

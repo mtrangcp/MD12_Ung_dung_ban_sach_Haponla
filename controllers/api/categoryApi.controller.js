@@ -1,4 +1,4 @@
-const { CategoryModel } = require("../../models/category.model");
+const { CategoryModel } = require("../../models/category");
 
 exports.getListCategory = async (req, res) => {
   const allData = await CategoryModel.find();

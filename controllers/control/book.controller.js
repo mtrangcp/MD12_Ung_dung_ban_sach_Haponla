@@ -1,8 +1,8 @@
 /**
  * dev: Manh Thai
  */
-const { BookModel } = require("../../models/book.model");
-const { CategoryModel } = require("../../models/category.model");
+const { BookModel } = require("../../models/book");
+const { CategoryModel } = require("../../models/category");
 
 const getAll = async (req, res) => {
   const allData = await BookModel.find();

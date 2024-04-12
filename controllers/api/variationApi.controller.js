@@ -1,7 +1,7 @@
 /**
  * dev: ManhThai
  */
-const { VariationModel } = require("../../models/book.model");
+const { VariationModel } = require("../../models/book");
 
 const getAll = async (req, res) => {
   const allData = await VariationModel.find();
