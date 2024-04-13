@@ -8,7 +8,7 @@ const BillItemSchema = new Schema(
     quantity: { type: Number, min: 1, required: true },
     id_book: { type: ObjectId, ref: BookModel.modelName, required: true },
   },
-  {}
+  { collection: "BillItem", versionKey: false }
 );
 
 const BillItemModel = model("bill_item", BillItemSchema);
@@ -43,7 +43,7 @@ const BillSchema = new Schema(
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },
     id_address: { type: ObjectId, ref: addressModel.modelName, required: true },
   },
-  { collection: "Bill" }
+  { collection: "Bill", versionKey: false }
 );
 
 const BillModel = model("bill", BillSchema);

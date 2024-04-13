@@ -4,12 +4,12 @@ const { CategoryModel } = require("./category.model");
 const { userModel } = require("./bookStore.model");
 
 // variation
-const VariationSchema = new Schema( 
+const VariationSchema = new Schema(
   {
     republish: { type: String, require: true },
     language: { type: String, default: "vi" },
   },
-  { collection: "Variation" }
+  { collection: "Variation", versionKey: false }
 );
 
 const VariationModel = model("variation", VariationSchema);
@@ -23,38 +23,48 @@ const EvaluateSchema = new Schema(
     create_at: { type: Date, default: Date.now },
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },
   },
-  { collection: "Evaluate" }
+  { collection: "Evaluate", versionKey: false }
 );
 
 const EvaluateModel = model("evaluate", EvaluateSchema);
 
 // book
-const BookSchema = new Schema({
-  name: { type: String, required: true },
-  author: { type: String },
-  detail: { type: String },
-  image: { type: String, default: "" },
-  original_price: { type: Number, min: 0, required: true },
-  price: { type: Number, min: 0 },
-  stock: { type: Number, min: 0 },
-  sold: { type: Number, min: 0 },
-  view: { type: Number, min: 0 },
-  percent_discount: { type: Number, min: 0, max: 100 },
-  variations: [
-    {
+const BookSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    author: { type: String },
+    detail: { type: String },
+    image: { type: String, default: "" },
+    original_price: { type: Number, min: 0, required: true },
+    price: { type: Number, min: 0 },
+    stock: { type: Number, min: 0 },
+    sold: { type: Number, min: 0 },
+    view: { type: Number, min: 0 },
+    percent_discount: { type: Number, min: 0, max: 100 },
+    variations: [
+      {
+        type: ObjectId,
+        ref: VariationModel.modelName,
+      },
+    ],
+    evaluates: [
+      {
+        type: ObjectId,
+        ref: EvaluateModel.modelName,
+      },
+    ],
+    id_category: {
       type: ObjectId,
-      ref: VariationModel.modelName,
+      ref: CategoryModel.modelName,
+      required: true,
     },
-  ],
-  evaluates: [
-    {
-      type: ObjectId,
-      ref: EvaluateModel.modelName,
-    },
-  ],
-  id_category: { type: ObjectId, ref: CategoryModel.modelName, required: true },
-},
- { collection: "Book", versionKey: false });
+  },
+  {
+    collection: "Book",
+    versionKey: false,
+  }
+);
+
 
 const BookModel = model("book", BookSchema);
 
