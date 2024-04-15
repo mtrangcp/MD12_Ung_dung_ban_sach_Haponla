@@ -3,13 +3,12 @@
  */
 const express = require("express");
 const router = express.Router();
-const controller = require("../controllers/api/evaluateApi.controller");
+const controller = require("./cart.controller");
 
 router
   .get("/", controller.getAll)
   .post("/", controller.add)
-  .get("/:id", controller.get)
   .delete("/:id", controller.remove)
-  .patch("/:id", controller.set);
+  .patch("/:id", controller.update);
 
-module.exports = router
+module.exports = router;

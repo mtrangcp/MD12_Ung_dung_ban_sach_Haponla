@@ -7,31 +7,28 @@ var api_address = require('../controllers/api/address.api');
 var api_notification = require('../controllers/api/notification.api');
 var api_bill = require("../controllers/api/billApi.controller");
 var api_billItem = require("../controllers/api/billItemApi.controller");
-var api_book = require("../controllers/api/bookApi.controller");
-var api_cart = require("../controllers/api/cartApi.controller");
-var api_category = require("../controllers/api/categoryApi.controller");
 
 
 // category : the loai
-router.get('/category', api_category.getListCategory);
-router.get('/category/:id', api_category.getOneCategory);
-router.post('/category/add', api_category.addCategory);
-router.put('/category/update/:id', api_category.updateCategory);
-router.delete('/category/delete/:id', api_category.deleteCategory);
+// router.get('/category', api_category.getListCategory);
+// router.get('/category/:id', api_category.getOneCategory);
+// router.post('/category/add', api_category.addCategory);
+// router.put('/category/update/:id', api_category.updateCategory);
+// router.delete('/category/delete/:id', api_category.deleteCategory);
 
 // cart : gio hang
-router.get('/cart', api_cart.getListCart);
-router.get('/cart/:id', api_cart.getOneCart);
-router.post('/cart/add', api_cart.addCart);
-router.put('/cart/update/:id', api_cart.updateCart);
-router.delete('/cart/delete/:id', api_cart.deleteCart);
+// router.get('/cart', api_cart.getListCart);
+// router.get('/cart/:id', api_cart.getOneCart);
+// router.post('/cart/add', api_cart.addCart);
+// router.put('/cart/update/:id', api_cart.updateCart);
+// router.delete('/cart/delete/:id', api_cart.deleteCart);
 
 // book
-router.get('/book', api_book.getListBook);
-router.get('/book/:id', api_book.getOneBook);
-router.post('/book/add', api_book.addBook);
-router.put('/book/update/:id', api_book.updateBook);
-router.delete('/book/delete/:id', api_book.deleteBook);
+// router.get('/book', api_book.getListBook);
+// router.get('/book/:id', api_book.getOneBook);
+// router.post('/book/add', api_book.addBook);
+// router.put('/book/update/:id', api_book.updateBook);
+// router.delete('/book/delete/:id', api_book.deleteBook);
 
 // billItem 
 router.get('/billItem', api_billItem.getListBillItem);
