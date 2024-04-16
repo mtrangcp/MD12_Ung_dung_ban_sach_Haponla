@@ -49,7 +49,7 @@ const BookSchema = new Schema(
     percent_discount: { type: Number, min: 0, max: 100 },
     variations: [
       {
-        type: ObjectId,
+        type: VariationSchema,
         ref: VariationModel.modelName,
       },
     ],

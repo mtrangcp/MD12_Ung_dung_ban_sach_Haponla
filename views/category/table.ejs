@@ -4,6 +4,7 @@
       <th>#</th>
       <th>Image</th>
       <th>Name</th>
+      <th>Books</th>
     </tr>
   </thead>
   <tbody>
@@ -19,6 +20,7 @@
         <img src="<%= item.image %>" width="80px" />
       </td>
       <td><%= item.name %></td>
+      <td><a class="btn" href="/books?id_category=<%= item.id %>"><i class="fa-solid fa-book"></i></a></td>
     </tr>
     <!-- modal updating -->
     <%- include('./modal.ejs', {item, modalId}) %> <% }) %>
