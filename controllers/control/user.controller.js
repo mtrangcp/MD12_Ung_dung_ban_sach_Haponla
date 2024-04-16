@@ -158,7 +158,7 @@ exports.login = async (req, res, next) => {
             console.log(objUser);
 
             if (objUser != null) {
-                if (objUser.passwork == req.body.Pass) {
+                if (objUser.password == req.body.Pass) {
                     if (objUser.role == "ADMIN") {
                         msg = 'Đăng nhập thành công!';
                         req.session.userLogin = objUser;
