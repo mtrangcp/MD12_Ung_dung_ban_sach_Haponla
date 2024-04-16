@@ -1,7 +1,7 @@
 /**
  * dev: ManhThai
  */
-const { EvaluateModel } = require("../../models/book.model");
+const { EvaluateModel } = require("../../models/book");
 
 const getAll = async (req, res) => {
   const allData = await EvaluateModel.find();

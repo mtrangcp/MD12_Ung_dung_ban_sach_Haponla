@@ -1,3 +1,6 @@
+/**
+ * dev: ManhThai
+ */
 const { Schema, model } = require("mongoose");
 
 const CategorySchema = new Schema(
@@ -8,7 +11,7 @@ const CategorySchema = new Schema(
       default: "https://cdn-icons-png.flaticon.com/512/5078/5078755.png",
     },
   },
-  { collection: "Category",versionKey:false }
+  { collection: "Category", versionKey: false }
 );
 
 const CategoryModel = model("category", CategorySchema);

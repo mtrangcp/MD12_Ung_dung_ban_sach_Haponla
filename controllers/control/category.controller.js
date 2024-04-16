@@ -1,7 +1,7 @@
 /**
  * dev: Manh Thai
  */
-const { CategoryModel } = require("../../models/category.model");
+const { CategoryModel } = require("../../models/category");
 
 const getAll = async (req, res) => {
   const allData = await CategoryModel.find();
