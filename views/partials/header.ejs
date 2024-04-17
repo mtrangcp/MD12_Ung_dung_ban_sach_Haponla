@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <!-- brand -->
-    <a class="navbar-brand" href="/">HaPonLa</a>
+    <a class="navbar-brand" href="/users">HaPonLa</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -84,7 +84,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">User</a></li>
-            <li><a class="dropdown-item" href="/evaluates">Reply Comment</a></li>
+            <li>
+              <a class="dropdown-item" href="/evaluates">Reply Comment</a>
+            </li>
           </ul>
         </li>
         <li class="nav-item">
@@ -102,16 +104,33 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form> -->
       <!-- admin -->
+
       <div class="d-flex align-items-center">
-        <a href="#"><i class="fa-regular fa-bell"></i></a>
-        <a href="#" class="d-flex align-items-center mx-2">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png"
-            width="40px"
-            class="rounded-circle"
-          />
-          <!-- Admin  -->
-        </a>
+        <div class="grid" style="justify-content: center; margin-left: 870px">
+          <nav>
+            <ul class="header_navbar-list">
+              <li class="header_navbar-item">
+                <a href="#" class="header_navbar-item-link item-separate">
+                  <i class="header_nav-icon bx bxs-bell"></i>
+                </a>
+              </li>
+              <li class="header_navbar-item item-separate">
+                <a href="#" class="nav-icon-link">
+                  <i class="header_nav-icon bx bxs-help-circle"></i>
+                </a>
+              </li>
+              <li class="header_navbar-item">
+                <a href="/users/admin" class="d-flex align-items-center mx-2">
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png"
+                    width="30px"
+                    class="rounded-circle"
+                  />
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   </div>

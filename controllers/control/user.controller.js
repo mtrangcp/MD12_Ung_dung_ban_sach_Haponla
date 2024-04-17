@@ -121,6 +121,7 @@ exports.banUser = async (req, res, next) => {
             await objUser.save();
 
             msg = 'Đã ban người dùng thành công!';
+            
         } else {
             msg = " User không tồn tại!"
         }
@@ -158,7 +159,7 @@ exports.login = async (req, res, next) => {
             console.log(objUser);
 
             if (objUser != null) {
-                if (objUser.passwork == req.body.Pass) {
+                if (objUser.password === req.body.password) {
                     if (objUser.role == "ADMIN") {
                         msg = 'Đăng nhập thành công!';
                         req.session.userLogin = objUser;
