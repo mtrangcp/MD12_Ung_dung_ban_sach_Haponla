@@ -61,11 +61,11 @@ router.put('/discount/update/:id', api_discount.updateDiscount);
 router.delete('/discount/delete/:id', api_discount.deleteDiscount);
 
 // address : dia chi
-router.get('/address', api_address.getListAddress);
-router.get('/address/:id', api_address.getOneAddress);
-router.post('/address/add', api_address.addAddress);
-router.put('/address/update/:id', api_address.updateAddress);
-router.delete('/address/delete/:id', api_address.deleteAddress);
+// router.get('/address', api_address.getListAddress);
+// router.get('/address/:id', api_address.getOneAddress);
+// router.post('/address/add', api_address.addAddress);
+// router.put('/address/update/:id', api_address.updateAddress);
+// router.delete('/address/delete/:id', api_address.deleteAddress);
 
 // notification : thong bao
 router.get('/notification', api_notification.getListNotification);
