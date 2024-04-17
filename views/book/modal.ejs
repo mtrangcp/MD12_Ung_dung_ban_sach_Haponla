@@ -13,36 +13,43 @@
       <!-- body -->
       <div class="modal-body">
         <form method="post" action="<%= locals.item ? " /books/"+item._id : "/books" %>">
+          <!-- name -->
           <div class="mb-3">
             <label for="bookInputName" class="form-label">Name *</label>
             <input name="name" value="<%= locals.item ?
             locals.item.name : "" %>" type="text" class="form-control" id="bookInputName" required />
           </div>
+          <!-- author -->
           <div class="mb-3">
             <label for="bookInputAuthor" class="form-label">Author *</label>
             <input name="author" value="<%= locals.item ?
             locals.item.author : "" %>" type="text" class="form-control" id="bookInputAuthor" required />
           </div>
+          <!-- introduction -->
           <div class="mb-3">
             <label for="bookInputIntroduction" class="form-label">Introduction *</label>
             <textarea name="introduction" value="<%= locals.item ?
             locals.item.introduction : "" %>" type="text" class="form-control" id="bookInputIntroduction" rows="3" required></textarea>
           </div>
+          <!-- page number -->
           <div class="mb-3">
             <label for="bookInputPageNumber" class="form-label">Page number *</label>
             <input name="page_number" value="<%= locals.item ?
             locals.item.page_number : "" %>" type="number" class="form-control" id="bookInputPrice" min="1" required />
           </div>
+          <!-- publisher -->
           <div class="mb-3">
             <label for="bookInputPublisher" class="form-label">Publisher *</label>
             <input name="publisher" value="<%= locals.item ?
             locals.item.publisher : "" %>" type="text" class="form-control" id="bookInputPublisher" required />
           </div>
+          <!-- release date -->
           <div class="mb-3">
             <label for="bookInputReleaseDate" class="form-label">Release Date *</label>
             <input name="release_date" value="<%= locals.item ?
             locals.item.release_date : "" %>" type="date" class="form-control" id="bookInputReleaseDate" required />
           </div>
+          <!-- image -->
           <div class="mb-3">
             <!-- TODO feature: get image by multer -->
             <!-- <label for="formFile" class="form-label">Image</label>
@@ -52,22 +59,26 @@
             locals.item.image : "" %>" type="text" class="form-control" id="bookInputImage" required />
             <img src="<%= locals.item ? locals.item.image : "" %>" width="80px">
           </div>
+          <!-- original price -->
           <div class="mb-3">
             <label for="bookInputOriginalPrice" class="form-label">Original Price *</label>
             <input name="original_price" value="<%= locals.item ?
             locals.item.original_price : "" %>" type="number" min="0" class="form-control" id="bookInputOriginalPrice" required />
           </div>
+          <!-- price -->
           <div class="mb-3">
             <label for="bookInputPrice" class="form-label">Price *</label>
             <input name="price" value="<%= locals.item ?
             locals.item.price : "" %>" type="number" min="0" class="form-control" id="bookInputPrice" required />
           </div>
+          <!-- stock -->
           <div class="mb-3">
             <label for="bookInputStock" class="form-label">Stock *</label>
             <input name="stock" value="<%= locals.item ?
             locals.item.stock : "" %>" type="number" min="0" class="form-control" id="bookInputStock" required />
           </div>
-          <div class="mb-3">
+          <!-- variation -->
+          <div class="mb-3" id="input-container-<%= modalId %>">
             <label for="bookInputVariation" class="form-label">Variation *</label>
             <div class="row input-row mb-1">
               <div class="col">
@@ -77,27 +88,18 @@
                 <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
               </div>
               <div class="col-auto">
-                <button class="btn btn-danger remove-input" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
+                <button class="btn btn-danger remove-input disabled" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
               </div>
             </div>
-            <div class="row input-row mb-1">
-              <div class="col">
-                <input name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
-              </div>
-              <div class="col">
-                <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
-              </div>
-              <div class="col-auto">
-                <button class="btn btn-danger remove-input" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
-              </div>
-            </div>
-            <button class="btn text-primary-emphasis" onclick="addInput()">Add more variations</button>
+            <button class="btn text-primary-emphasis" type="button" onclick="addInput('input-container-<%= modalId %>')">Add more variations</button>
           </div>
+          <!-- percent discount -->
           <div class="mb-3">
             <label for="bookInputPercentDiscount" class="form-label">Percent discount </label>
             <input name="percent_discount" value="<%= locals.item ?
             locals.item.percent_discount : "" %>" type="number" min="0" class="form-control" id="bookInputPercentDiscount" />
           </div>
+          <!-- category -->
           <div class="mb-3">
             <label for="bookInputCategory" class="form-label">Category *</label>
             <%- include('../partials/select.ejs',{selectId:"id_category", options, current: typeof item=="undefined"
@@ -134,10 +136,11 @@
 
 
 <script>
-  function addInput() {
-    const inputContainer = document.getElementById('input-container');
+  function addInput(containerId) {
+    const inputContainer = document.getElementById(containerId);
+    // alert(`test::: ${inputContainer}`)
     const inputRow = document.createElement('div');
-    inputRow.classList.add('row', 'input-row');
+    inputRow.classList.add('row', 'input-row', 'mb-1');
     inputRow.innerHTML = `
               <div class="col">
                 <input name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
