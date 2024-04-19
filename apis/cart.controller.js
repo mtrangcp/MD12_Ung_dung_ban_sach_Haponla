@@ -81,7 +81,7 @@ const remove = async (req, res) => {
   }
 };
 
-const update = async (req, res) => {
+const set = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -105,5 +105,5 @@ module.exports = {
   getAll,
   add,
   remove,
-  update,
+  set,
 };

@@ -11,6 +11,7 @@ const database = require("./configs/database");
 const apiResponseMiddleware = require("./middlewares/response");
 const errorMiddleware = require("./middlewares/error");
 
+const addressApi = require('./apis/address.api')
 const categoryApi = require("./apis/category.api");
 const bookApi = require("./apis/book.api");
 const cartApi = require("./apis/cart.api");
@@ -52,6 +53,7 @@ app.use(
 
 //# routes
 // apis
+app.use("/api/addresses", addressApi);
 app.use("/api/categories", categoryApi);
 app.use("/api/books", bookApi);
 app.use("/api/carts", cartApi);

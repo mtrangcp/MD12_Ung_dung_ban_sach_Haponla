@@ -11,8 +11,8 @@ exports.getListUser = async (req, res, next) => {
     var list = await myModel.userModel.find(dk_loc);
     var soluong = list.length;
 
-    res.render('users/listUser', { listUsers: list, soluong: soluong  });
-    
+    res.render('users/listUser', { listUsers: list, soluong: soluong });
+
 }
 
 // loc theo username
@@ -121,7 +121,7 @@ exports.banUser = async (req, res, next) => {
             await objUser.save();
 
             msg = 'Đã ban người dùng thành công!';
-            
+
         } else {
             msg = " User không tồn tại!"
         }
@@ -159,7 +159,10 @@ exports.login = async (req, res, next) => {
             console.log(objUser);
 
             if (objUser != null) {
+
                 if (objUser.password === req.body.password) {
+                    // if (objUser.password == req.body.Pass) {
+
                     if (objUser.role == "ADMIN") {
                         msg = 'Đăng nhập thành công!';
                         req.session.userLogin = objUser;
@@ -178,7 +181,7 @@ exports.login = async (req, res, next) => {
             console.log(error);
         }
     }
-    res.render('users/login', { msg: msg, layout: "users/login"})
+    res.render('users/login', { msg: msg, layout: "users/login" })
 }
 
 exports.chiTietUser = async (req, res, next) => {

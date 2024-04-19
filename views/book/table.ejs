@@ -19,14 +19,14 @@
     >
       <td><%= index + 1 %></td>
       <td>
-        <img src="<%= item.image %>" width="80px" />
+        <img loading="lazy" src="<%= item.image %>" width="80px" />
       </td>
       <td><%= item.name %></td>
       <td><%= item.original_price %></td>
       <td><%= item.price %></td>
       <td>
         <h5>
-          <span class="badge text-bg-secondary"><%= item.category %></span>
+          <span class="badge text-bg-secondary"><%= item.id_category.name %></span>
         </h5>
       </td>
     </tr>
