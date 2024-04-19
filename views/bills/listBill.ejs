@@ -12,10 +12,10 @@
                     aria-expanded="false"></button>
                   <ul class="dropdown-menu">
                     <li>
-                      <a class="dropdown-item" href="/bills/tienThapCao">Thấp - Cao</a>
+                      <a class="dropdown-item" href="/bills/sx/tongThapCao">Thấp - Cao</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/bills/tienCaoThap">Cao - Thấp</a>
+                      <a class="dropdown-item" href="/bills/sx/tongCaoThap">Cao - Thấp</a>
                     </li>
                   </ul>
                 </div>
@@ -25,10 +25,10 @@
                     aria-expanded="false"></button>
                   <ul class="dropdown-menu">
                     <li>
-                      <a class="dropdown-item" href="/bills/tgMoi">Mới nhất</a>
+                      <a class="dropdown-item" href="/bills/sx/tgMoi">Mới nhất</a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/bills/tgCu">Cũ nhất</a>
+                      <a class="dropdown-item" href="/bills/sx/tgCu">Cũ nhất</a>
                     </li>
                   </ul>
                 </div>
@@ -65,23 +65,23 @@
                     <tr>
                       <td>
                         <% if ( row.status==1 ) { %>
-                          <a href="status/<%= row._id  %>">
+                          <a href="changeStatus/<%= row._id  %>">
                             đã đặt hàng,<br />
                             chờ xác nhận
                           </a>
                           <% } else if ( row.status==2) {%>
-                            <a href="status/<%= row._id  %>">
+                            <a href="changeStatus/<%= row._id  %>">
                               đã xác nhận,<br />
                               đang xử lí
                             </a>
                             <% } else if ( row.status==3) {%>
-                              <a href="status/<%= row._id  %>"> đang vận chuyển </a>
+                              <a href="changeStatus/<%= row._id  %>"> đang vận chuyển </a>
                               <% } else if ( row.status==4) {%>
-                                <a href="status/<%= row._id  %>">
+                                <a href="changeStatus/<%= row._id  %>">
                                   giao hàng thành công
                                 </a>
                                 <% } else if ( row.status==0) {%>
-                                  <a href="status/<%= row._id  %>"> đã bị hủy </a>
+                                  <a href="changeStatus/<%= row._id  %>"> đã bị hủy </a>
                                   <% } %>
                       </td>
                       <td>

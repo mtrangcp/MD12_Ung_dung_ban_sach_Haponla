@@ -113,6 +113,37 @@ exports.getBillUserTienCaoThap = async (req, res, next) => {
     res.render("bills/listBillUser", { listBillUser: list, soluong: soluong, idU: idU });
 };
 
+exports.getTongThapCao = async (req, res, next) => {
+    console.log("getTongThapCao");
+    try {
+        var list = await myModel.BillModel.find()
+            .sort({ real_price: 1 })
+            .populate("id_address")
+            .populate("id_discount")
+            .populate("id_user");
+        var soluong = list.length;
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.render("bills/listBill", { listBill: list, soluong: soluong });
+};
+exports.getTongCaoThap = async (req, res, next) => {
+    console.log("getTongCaoThap");
+    try {
+        var list = await myModel.BillModel.find()
+            .sort({ real_price: -1 })
+            .populate("id_address")
+            .populate("id_discount")
+            .populate("id_user");
+        var soluong = list.length;
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.render("bills/listBill", { listBill: list, soluong: soluong });
+};
+
 exports.getBillUserTgMoi = async (req, res, next) => {
     let idU = req.params.idUser;
     console.log("idUser: " + idU);
@@ -150,6 +181,35 @@ exports.getBillUserTgCu = async (req, res, next) => {
     }
 
     res.render("bills/listBillUser", { listBillUser: list, soluong: soluong, idU: idU });
+};
+
+exports.getBillTgMoi = async (req, res, next) => {
+    try {
+        var list = await myModel.BillModel.find()
+            .sort({ create_at: -1 })
+            .populate("id_address")
+            .populate("id_discount")
+            .populate("id_user");
+        var soluong = list.length;
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.render("bills/listBill", { listBill: list, soluong: soluong });
+};
+exports.getBillTgCu = async (req, res, next) => {
+    try {
+        var list = await myModel.BillModel.find()
+            .sort({ create_at: 1 })
+            .populate("id_address")
+            .populate("id_discount")
+            .populate("id_user");
+        var soluong = list.length;
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.render("bills/listBill", { listBill: list, soluong: soluong });
 };
 
 exports.getBillUser0 = async (req, res, next) => {
@@ -259,7 +319,7 @@ exports.getBillWithStatus = async (req, res, next) => {
         console.log(error);
     }
 
-    res.render("bills/listBill", { listBillUser: list, soluong: soluong });
+    res.render("bills/listBill", { listBill: list, soluong: soluong });
 };
 
 exports.changeStatus = async (req, res, next) => {
