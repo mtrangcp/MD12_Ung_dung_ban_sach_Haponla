@@ -56,6 +56,7 @@ router.post('/user/dn', api_user.dangNhap);
 // discount : giam gia
 router.get('/discount', api_discount.getListDiscount);
 router.get('/discount/:id', api_discount.getOneDiscount);
+router.get('/discount/user/:idU', api_discount.getListWithIdUser);
 router.post('/discount/add', api_discount.addDiscount);
 router.put('/discount/update/:id', api_discount.updateDiscount);
 router.delete('/discount/delete/:id', api_discount.deleteDiscount);

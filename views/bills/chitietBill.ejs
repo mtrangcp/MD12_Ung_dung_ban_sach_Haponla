@@ -1,0 +1,80 @@
+<div class="container">
+  <h4 style="text-align: center; margin-bottom: 40px; margin-top: 30px">
+    Chi tiết hóa đơn có mã: <%= objBill._id %>
+  </h4>
+  <div class="formss" style="width: 500px; margin: auto">
+    <form method="post" action="">
+      <fieldset disabled>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Trạng thái</label>
+          <input type="text" id="disabledTextInput" class="form-control" value="
+                <% if ( objBill.status==1 ) { %> 
+                    đã đặt hàng,chờ xác nhận 
+                <% } else if ( objBill.status==2) {%> 
+                     đã xác nhận,đang xử lí 
+                <% } else if ( objBill.status==3) {%> 
+                    đang vận chuyển 
+                <% } else if ( objBill.status==4) {%> 
+                    giao hàng thành công
+                <% } else if ( objBill.status==0) {%> 
+                    đã bị hủy <% } %>  " />
+        </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Sản phẩm</label>
+          <table class="table table-bordered ">
+            <thead>
+              <tr>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Giá</th>
+                <th scope="col">Số lượng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% listSach.forEach((row, index)=> { %>
+                <tr>
+                  <td><img src="<%= row.image %>" width="80px" /></td>
+                  <td>
+                    <%= row.name %>
+                  </td>
+                  <td>
+                    <%= row.price %>
+                  </td>
+                  <td>
+                    <%= listBillitem[index].quantity %>
+                  </td> <!-- Hiển thị số lượng sách tương ứng với sách hiện tại -->
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+        </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Tổng tiền</label>
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.real_price  %>" />
+        </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Người mua</label>
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.id_user.username  %>" />
+        </div>
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Thông tin nhận hàng</label>
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.id_address.username %> " />
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.id_address.phone %> " />
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.id_address.location %>" />
+        </div>
+
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Giảm giá</label>
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.id_discount.value  %>" />
+        </div>
+
+        <div class="mb-3">
+          <label for="disabledTextInput" class="form-label">Thời gian</label>
+          <input type="text" id="disabledTextInput" class="form-control" value="<%= objBill.create_at  %>" />
+        </div>
+
+
+      </fieldset>
+    </form>
+  </div>
+</div>

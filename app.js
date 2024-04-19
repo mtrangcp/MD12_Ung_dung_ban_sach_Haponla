@@ -61,7 +61,7 @@ app.use("/api", apiRouter);
 // web
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/bill", billsRouter);
+app.use("/bills", billsRouter);
 app.use("/categories", categoryRouter);
 app.use("/books", bookRouter);
 

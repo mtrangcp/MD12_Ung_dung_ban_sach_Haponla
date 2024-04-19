@@ -36,8 +36,8 @@ const BillSchema = new Schema(
       {
         type: ObjectId,
         ref: BillItemModel.modelName,
-        required: true,
-      },
+        required: true
+      }
     ],
     id_discount: { type: ObjectId, ref: discountModel.modelName },
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },
