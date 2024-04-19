@@ -1,49 +1,70 @@
-<body>
-    <div class="wrapper">
-        <div class=" app_container">
-            <div class="grid">
-                <div class="grid_row">
-                  
-                    <div class="grid_column-10">
-                        <div style="margin: auto; height: 50px;">
-                            <h4>
-                                <%= msg %>
-                            </h4>
-                        </div>
+<div class="container shadow my-5 px-5 py-4">
+    <div class="grid">
+        <div class="grid_row">
 
-                        <h3>Thay đổi trạng thái đơn hàng: <%= objBill._id %>
-                        </h3>
-                        <h5>Đặt lúc: <%= cre %>
-                        </h5>
-                        <h5>Trạng thái hiện tại:
-                            <% if (objBill.status==1 ){%>
-                                <h5 style="color: #e42604;">đã đặt hàng, chờ xác nhận</h5>
+            <div class="grid_column-10">
+                <div style="margin: auto; height: 50px;">
+                    <h4>
+                        <%= msg %>
+                    </h4>
+                </div>
 
-                                <%}else if (objBill.status==2 ){%>
-                                    <h5 style="color: #e42604;">đã xác nhận, đang xử lí</h5>
+                <h3>Thay đổi trạng thái đơn hàng: <%= objBill._id %>
+                </h3>
+                <h5>Đặt lúc: <%= cre %>
+                </h5>
+                <h5>Trạng thái hiện tại:
+                    <% if (objBill.status==1 ){%>
+                        <h5 style="color: #e42604;">đã đặt hàng, chờ xác nhận</h5>
 
-                                    <%}else if (objBill.status==3 ){%>
-                                        <h5 style="color: #e42604;">đang vận chuyển</h5>
+                        <%}else if (objBill.status==2 ){%>
+                            <h5 style="color: #e42604;">đã xác nhận, đang xử lí</h5>
 
-                                        <%}else if (objBill.status==4 ){%>
-                                            <h5 style="color: #e42604;">giao hàng thành công</h5>
+                            <%}else if (objBill.status==3 ){%>
+                                <h5 style="color: #e42604;">đang vận chuyển</h5>
 
-                                            <%}else if (objBill.status==0 ){%>
-                                                <h5 style="color: #e42604;">đã bị hủy</h5>
-                                                <%}%>
+                                <%}else if (objBill.status==4 ){%>
+                                    <h5 style="color: #e42604;">giao hàng thành công</h5>
 
-                        </h5>
-                        <h5>Người đặt: <%= objBill.id_user.username %>
-                        </h5>
+                                    <%}else if (objBill.status==0 ){%>
+                                        <h5 style="color: #e42604;">đã bị hủy</h5>
+                                        <%}%>
 
-                        <div>
-                            <% if (objBill.status==1 ){%>
+                </h5>
+                <h5>Người đặt: <%= objBill.id_user.username %>
+                </h5>
+
+                <div>
+                    <% if (objBill.status==1 ){%>
+                        <form method="post" action="">
+                            <div class="mb-3" style="margin: 30px;">
+                                <select class="form-select" name="TrangThai" aria-label="Default select example">
+                                    <option value="2">đã xác nhận, đang xử lí</option>
+                                    <option value="3">đang vận chuyển</option>
+                                    <option value="4">giao hàng thành công</option>
+                                </select>
+                            </div>
+                            <div style="align-items: center; justify-content: center; width: 100%; display: flex;">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                        <%} else if (objBill.status==2 ){%>
+                            <form method="post" action="">
+                                <div class="mb-3" style="margin: 30px;">
+                                    <select class="form-select" name="TrangThai" aria-label="Default select example">
+                                        <option value="3">đang vận chuyển</option>
+                                        <option value="4">giao hàng thành công</option>
+                                    </select>
+                                </div>
+                                <div style="align-items: center; justify-content: center; width: 100%; display: flex;">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                            <%} else if (objBill.status==3 ){%>
                                 <form method="post" action="">
                                     <div class="mb-3" style="margin: 30px;">
                                         <select class="form-select" name="TrangThai"
                                             aria-label="Default select example">
-                                            <option value="2">đã xác nhận, đang xử lí</option>
-                                            <option value="3">đang vận chuyển</option>
                                             <option value="4">giao hàng thành công</option>
                                         </select>
                                     </div>
@@ -52,40 +73,13 @@
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
-                                <%} else if (objBill.status==2 ){%>
-                                    <form method="post" action="">
-                                        <div class="mb-3" style="margin: 30px;">
-                                            <select class="form-select" name="TrangThai"
-                                                aria-label="Default select example">
-                                                <option value="3">đang vận chuyển</option>
-                                                <option value="4">giao hàng thành công</option>
-                                            </select>
-                                        </div>
-                                        <div
-                                            style="align-items: center; justify-content: center; width: 100%; display: flex;">
-                                            <button type="submit" class="btn btn-primary">Save</button>
-                                        </div>
-                                    </form>
-                                    <%} else if (objBill.status==3 ){%>
-                                        <form method="post" action="">
-                                            <div class="mb-3" style="margin: 30px;">
-                                                <select class="form-select" name="TrangThai"
-                                                    aria-label="Default select example">
-                                                    <option value="4">giao hàng thành công</option>
-                                                </select>
-                                            </div>
-                                            <div
-                                                style="align-items: center; justify-content: center; width: 100%; display: flex;">
-                                                <button type="submit" class="btn btn-primary">Save</button>
-                                            </div>
-                                        </form>
-                                        <%} else if (objBill.status==4 ){%>
-                                            <h3>Đơn hàng đã giao thành công</h3>
-                                            <%}else if (objBill.status==0 ){%>
-                                                <h3>Đơn hàng đã bị hủy</h3>
-                                                <%} else {%>
-                                                    <h3>Lỗi trạng thái: <%=objBill.status %>
-                                                            <% console.log("objBill.status: "+objBill.status); %>
+                                <%} else if (objBill.status==4 ){%>
+                                    <h3>Đơn hàng đã giao thành công</h3>
+                                    <%}else if (objBill.status==0 ){%>
+                                        <h3>Đơn hàng đã bị hủy</h3>
+                                        <%} else {%>
+                                            <h3>Lỗi trạng thái: <%=objBill.status %>
+                                                    <% console.log("objBill.status: "+objBill.status); %>
                                                     </h3>
                                                     <%}%>
 
@@ -94,4 +88,3 @@
                 </div>
             </div>
         </div>
-</body>

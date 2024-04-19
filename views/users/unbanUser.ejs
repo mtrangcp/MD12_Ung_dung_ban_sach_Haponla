@@ -1,29 +1,26 @@
+<div class="container shadow my-5 px-5 py-4">
+    <div style="margin: 50px; text-align: center;">
+        <h2>Bỏ cấm User</h2>
+    </div>
+    <div style="margin: auto;">
+        <h4>
+            <%= msg %>
+        </h4>
+    </div>
 
-        <div class="container">
-            <div style="margin: 50px; text-align: center;">
-                <h2>Bỏ cấm User</h2>
-            </div>
-            <div style="margin: auto;">
-                <h4>
-                    <%= msg %>
-                </h4>
-            </div>
+    <div style="width: 350px; margin: auto;">
+        <form class="formss" action="" method="post">
 
-            <div style="width: 350px; margin: auto;">
-                <form class="formss" action="" method="post">
+            Có chắc chắn bỏ cấm: <%= objUser.username %> ? <br>
 
-                    Có chắc chắn bỏ cấm: <%= objUser.username %> ? <br>
+                <div style="margin: 30px; display: flex; justify-content: space-between;">
+                    <button type="submit button" class="btn btn-secondary">YES</button>
+                    <button type="button" class="btn btn-secondary">
+                        <a href="/users" style="text-decoration: none; color: white;">NO</a>
+                    </button>
+                </div>
 
-                        <div style="margin: 30px; display: flex; justify-content: space-between;">
-                            <button type="submit button" class="btn btn-secondary">YES</button>
-                            <button type="button" class="btn btn-secondary">
-                                <a href="/users" style="text-decoration: none; color: white;">NO</a>
-                            </button>
-                        </div>
+        </form>
+    </div>
 
-                </form>
-            </div>
-
-        </div>
-
-  
+</div>
