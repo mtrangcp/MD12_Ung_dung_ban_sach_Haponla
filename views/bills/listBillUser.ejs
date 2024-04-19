@@ -1,125 +1,118 @@
-<body>
-  <div class="app_container">
-    <div class="grid">
-      <div class="grid_row">
-        <div class="grid_column-10">
-          <div class="row d-inline">
+<div class="container shadow my-5 px-5 py-4">
+  <div class="grid_column-10">
+    <div class="row d-inline">
+      <div class="input-group">
+        <div class="d-inline" style="margin-right: 30px;">
+          <h5>Đơn hàng của: <%= listBillUser[0].id_user.username %>
+          </h5>
+        </div>
+        <div class="btn-group col-sm-4 col-md-2" style="background-color: #f5f5f5; margin-right: 8px">
+          <button type="button" class="btn">Tổng tiền</button>
+          <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false"></button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/bills/tienThapCao/<%= idU  %>">Thấp - Cao</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/bills/tienCaoThap/<%= idU  %>">Cao - Thấp</a>
+            </li>
+          </ul>
+        </div>
 
-            <div class="input-group">
-              <div class="d-inline" style="margin-right: 30px;">
-                <h5>Đơn hàng của: <%= listBillUser[0].id_user.username %>
-                </h5>
-              </div>
-              <div class="btn-group col-sm-4 col-md-2" style="background-color: #f5f5f5; margin-right: 8px">
-                <button type="button" class="btn">Tổng tiền</button>
-                <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                  aria-expanded="false"></button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="/bills/tienThapCao/<%= idU  %>">Thấp - Cao</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/bills/tienCaoThap/<%= idU  %>">Cao - Thấp</a>
-                  </li>
-                </ul>
-              </div>
+        <div class="btn-group col-sm-4 col-md-2" style="background-color: #f5f5f5; margin-right: 8px">
+          <button type="button" class="btn">Thời gian</button>
+          <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false"></button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/bills/tgMoi/<%= idU  %>">Mới nhất</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/bills/tgCu/<%= idU  %>">Cũ nhất</a>
+            </li>
+          </ul>
+        </div>
 
-              <div class="btn-group col-sm-4 col-md-2" style="background-color: #f5f5f5; margin-right: 8px">
-                <button type="button" class="btn">Thời gian</button>
-                <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                  aria-expanded="false"></button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="/bills/tgMoi/<%= idU  %>">Mới nhất</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/bills/tgCu/<%= idU  %>">Cũ nhất</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="btn-group col-sm-4 col-md-2" style="background-color: #f5f5f5; margin-right: 8px">
-                <button type="button" class="btn">Trạng thái</button>
-                <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                  aria-expanded="false"></button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/bills/0/<%= idU  %>">đã bị hủy</a></li>
-                  <li><a class="dropdown-item" href="/bills/1/<%= idU  %>">Đã đặt hàng, chờ xác nhận</a></li>
-                  <li><a class="dropdown-item" href="/bills/2/<%= idU  %>">Đã xác nhận, đang xử lí</a></li>
-                  <li><a class="dropdown-item" href="/bills/3/<%= idU  %>">Đang vận chuyển</a></li>
-                  <li><a class="dropdown-item" href="/bills/4/<%= idU  %>">Giao hàng thành công</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Tổng tiền</th>
-                  <th scope="col">Thời gian</th>
-                  <th scope="col">Giảm giá</th>
-                  <th scope="col">Thông tin nhận</th>
-                  <th scope="col">Chi tiết</th>
-                </tr>
-              </thead>
-
-              <% if (listBillUser) {%>
-                <% listBillUser.forEach((row)=> { %>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <% if ( row.status==1 ) { %>
-                          <a href="changeStatus/<%= row._id  %>">
-                            đã đặt hàng,<br />
-                            chờ xác nhận
-                          </a>
-                          <% } else if ( row.status==2) {%>
-                            <a href="changeStatus/<%= row._id  %>">
-                              đã xác nhận,<br />
-                              đang xử lí
-                            </a>
-                            <% } else if ( row.status==3) {%>
-                              <a href="changeStatus/<%= row._id  %>"> đang vận chuyển </a>
-                              <% } else if ( row.status==4) {%>
-                                <a href="changeStatus/<%= row._id  %>"> giao hàng thành công </a>
-                                <% } else if ( row.status==0) {%>
-                                  <a href="changeStatus/<%= row._id  %>"> đã bị hủy </a>
-                                  <% } %>
-                      </td>
-                      <td>
-                        <%= row.real_price %>
-                      </td>
-                      <td>
-                        <%= row.create_at %>
-                      </td>
-                      <td>
-                        <%= row.id_discount.value %>
-                      </td>
-                      <td>
-                        <%= row.id_address.username %><br />
-                          <%= row.id_address.phone %><br />
-                            <%= row.id_address.location %>
-                      </td>
-                      <td>
-                        <a href="/bills/chitiet/<%= row._id  %>">
-                          <%= row.detail.length %> sản phẩm
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                  <% }) %>
-                    <% }else { %>
-                      <h3>Danh sách rỗng</h3>
-                      <% } %>
-            </table>
-          </div>
-          <div class="d-inline p-2">Đang xem:<%= soluong %>/<%= soluong %>
-          </div>
+        <div class="btn-group col-sm-4 col-md-2" style="background-color: #f5f5f5; margin-right: 8px">
+          <button type="button" class="btn">Trạng thái</button>
+          <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+            aria-expanded="false"></button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/bills/0/<%= idU  %>">đã bị hủy</a></li>
+            <li><a class="dropdown-item" href="/bills/1/<%= idU  %>">Đã đặt hàng, chờ xác nhận</a></li>
+            <li><a class="dropdown-item" href="/bills/2/<%= idU  %>">Đã xác nhận, đang xử lí</a></li>
+            <li><a class="dropdown-item" href="/bills/3/<%= idU  %>">Đang vận chuyển</a></li>
+            <li><a class="dropdown-item" href="/bills/4/<%= idU  %>">Giao hàng thành công</a></li>
+          </ul>
         </div>
       </div>
     </div>
+
+    <div>
+      <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+          <tr class="text-center">
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Thời gian</th>
+            <th scope="col">Giảm giá</th>
+            <th scope="col">Thông tin nhận</th>
+            <th scope="col">Chi tiết</th>
+          </tr>
+        </thead>
+
+        <% if (listBillUser) {%>
+          <% listBillUser.forEach((row)=> { %>
+            <tbody>
+              <tr>
+                <td>
+                  <% if ( row.status==1 ) { %>
+                    <a href="changeStatus/<%= row._id  %>">
+                      đã đặt hàng,<br />
+                      chờ xác nhận
+                    </a>
+                    <% } else if ( row.status==2) {%>
+                      <a href="changeStatus/<%= row._id  %>">
+                        đã xác nhận,<br />
+                        đang xử lí
+                      </a>
+                      <% } else if ( row.status==3) {%>
+                        <a href="changeStatus/<%= row._id  %>"> đang vận chuyển </a>
+                        <% } else if ( row.status==4) {%>
+                          <a href="changeStatus/<%= row._id  %>"> giao hàng thành công </a>
+                          <% } else if ( row.status==0) {%>
+                            <a href="changeStatus/<%= row._id  %>"> đã bị hủy </a>
+                            <% } %>
+                </td>
+                <td>
+                  <%= row.real_price %>
+                </td>
+                <td>
+                  <%= row.create_at %>
+                </td>
+                <td>
+                  <%= row.id_discount.value %>
+                </td>
+                <td>
+                  <%= row.id_address.username %><br />
+                    <%= row.id_address.phone %><br />
+                      <%= row.id_address.location %>
+                </td>
+                <td>
+                  <a href="/bills/chitiet/<%= row._id  %>">
+                    <%= row.detail.length %> sản phẩm
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <% }) %>
+              <% }else { %>
+                <h3>Danh sách rỗng</h3>
+                <% } %>
+      </table>
+    </div>
+    <div class="d-inline p-2">Đang xem:<%= soluong %>/<%= soluong %>
+    </div>
   </div>
-</body>
+</div>
