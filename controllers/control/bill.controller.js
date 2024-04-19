@@ -132,7 +132,6 @@ exports.getBillUserTgMoi = async (req, res, next) => {
 
     res.render("bills/listBillUser", { listBillUser: list, soluong: soluong, idU: idU });
 };
-
 exports.getBillUserTgCu = async (req, res, next) => {
     let idU = req.params.idUser;
     console.log("idUser: " + idU);
@@ -242,6 +241,25 @@ exports.getBillUser4 = async (req, res, next) => {
     }
 
     res.render("bills/listBillUser", { listBillUser: list, soluong: soluong, idU: idU });
+};
+
+exports.getBillWithStatus = async (req, res, next) => {
+    let status = req.params.status;
+    console.log("status: " + status);
+    try {
+        let dk_loc = { status: status };
+        console.log("----dk loc:" + dk_loc);
+
+        var list = await myModel.BillModel.find(dk_loc)
+            .populate("id_address")
+            .populate("id_discount")
+            .populate("id_user");
+        var soluong = list.length;
+    } catch (error) {
+        console.log(error);
+    }
+
+    res.render("bills/listBill", { listBillUser: list, soluong: soluong });
 };
 
 exports.changeStatus = async (req, res, next) => {

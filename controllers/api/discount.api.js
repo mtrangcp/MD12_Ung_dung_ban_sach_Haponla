@@ -53,6 +53,44 @@ exports.getOneDiscount = async (req, res, next) => {
     return res.json(objReturn);
 }
 
+exports.getListWithIdUser = async (req, res, next) => {
+    const id = req.params.idU;
+    const objUser = await userModel.findById(id);
+    console.log(objUser);
+    var listIdDiscount = [];
+    var listDiscount = [];
+
+    if (objUser) {
+        listIdDiscount = objUser.discounts;
+        if (listIdDiscount) {
+            console.log("--------------------->>listIdDiscount ok");
+            console.log(listIdDiscount);
+
+            for (const idItem of listIdDiscount) {
+                var newDiscount = await discountModel.findOne(idItem);
+                listDiscount.push(newDiscount);
+            }
+            console.log("--------------------->>listDiscount ok");
+            console.log(listDiscount);
+
+            if (listDiscount) {
+                objReturn.data = listDiscount;
+                objReturn.status = 1;
+                objReturn.msg = 'lay thanh cong'
+
+            } else {
+                objReturn.status = 0;
+                objReturn.msg = 'k co du lieu'
+            }
+        }
+    } else {
+        console.log("k tim thay du lieu");
+        objReturn.status = 0;
+        objReturn.msg = 'k co du lieu'
+    }
+    return res.json(objReturn);
+}
+
 exports.addDiscount = async (req, res, next) => {
 
     try {
