@@ -24,7 +24,7 @@ const discountChema = new db.mongoose.Schema(
         start_date: { type: Date, required: true },
         end_date: { type: Date, required: true },
         detail: { type: String, required: true },
-        status: { type: Boolean, required: true },
+        status: { type: Boolean, required: true, default: true },
         type: {
             type: String,
             enum: ['SHIP', 'PERCENT', 'PRICE'], // Các loại cố định

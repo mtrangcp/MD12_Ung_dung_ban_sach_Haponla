@@ -18,11 +18,12 @@ const cartApi = require("./apis/cart.api");
 
 const categoryRouter = require("./routes/category");
 const bookRouter = require("./routes/book");
-
+const discountRouter = require('./routes/discount')
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var apiRouter = require("./routes/api");
 var billsRouter = require("./routes/bill");
+
 
 var app = express();
 
@@ -64,6 +65,7 @@ app.use("/users", usersRouter);
 app.use("/bill", billsRouter);
 app.use("/categories", categoryRouter);
 app.use("/books", bookRouter);
+app.use("/discounts", discountRouter);
 
 //# middlewares
 app.use(errorMiddleware.notFound);

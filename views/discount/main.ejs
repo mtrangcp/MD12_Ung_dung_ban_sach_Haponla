@@ -1,0 +1,25 @@
+<main class="container shadow my-5 px-5 py-4">
+  <!-- add button -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>Danh sách Phiếu giảm giá</h2>
+      <!-- <p> Category / All </p> -->
+    </div>
+    <div>
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#modalForAddingTask"
+      >
+        Thêm
+      </button>
+    </div>
+  </div>
+  <!-- alert -->
+  <% if (message) { %> <%- include('../partials/alert.ejs', {status, message})%> <% } %>
+  <!-- table -->
+  <%- include('./table.ejs') %>
+  <!-- modal adding -->
+  <%- include('./modal.ejs',{modalId: "modalForAddingTask"}) %>
+</main>

@@ -1,0 +1,67 @@
+<div class="modal fade" id="<%= modalId %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <!-- header -->
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          <%= locals.item ? "Updating: " +item.name : "Adding" %>
+        </h1>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+      <form method="post" action="<%= locals.item ? " /discounts/"+item._id : "/discounts" %>">
+        <!-- body -->
+          <div class="mb-3">
+            <label for="discountInputCodename" class="form-label">Codename *</label>
+            <input name="codename" value="<%= locals.item ?
+            locals.item.codename : "" %>" type="text" class="form-control" id="discountInputCodename" required />
+          </div>
+          <div class="mb-3">
+            <label for="discountInputValue" class="form-label">Value *</label>
+            <input name="value" value="<%= locals.item ?
+            locals.item.value : "" %>" type="number" class="form-control" id="discountInputValue" min="0" required />
+          </div>
+          <div class="mb-3">
+            <label for="discountInputStartDate" class="form-label">Start date *</label>
+            <input name="start_date" value="<%= locals.item ?
+            locals.item.start_date : "" %>" type="date" class="form-control" id="discountInputStartDate"required />
+          </div>
+          <div class="mb-3">
+            <label for="discountInputEndDate" class="form-label">End date *</label>
+            <input name="end_date" value="<%= locals.item ?
+            locals.item.end_date : "" %>" type="date" class="form-control" id="discountInputEndDate"required />
+          </div>
+          <div class="mb-3">
+            <label for="discountInputDetail" class="form-label">Detail *</label>
+            <input name="detail" value="<%= locals.item ?
+            locals.item.detail : "" %>" type="text" class="form-control" id="discountInputDetail" required />
+          </div>
+          <div class="mb-3">
+            <label for="discountInputType" class="form-label">Type *</label>
+              <select name="type" class="form-select" aria-label="Default select example">
+                <option value="SHIP" selected>SHIP</option>
+                <option value="PERCENT">PERCENT</option>
+                <option value="PRICE">PRICE</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="discountInputCondition" class="form-label">Condition *</label>
+            <input name="condition" value="<%= locals.item ?
+            locals.item.condition : "" %>" type="number" class="form-control" id="discountInputCondition" required />
+          </div>
+        <!-- footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light-subtle" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+
+    </div>
+  </div>
+</div>

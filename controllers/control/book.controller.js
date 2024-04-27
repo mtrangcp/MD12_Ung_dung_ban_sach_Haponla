@@ -6,13 +6,16 @@ const { CategoryModel } = require("../../models/category");
 
 const getAll = async (req, res) => {
   try {
-    const query = req.query instanceof BookModel ? req.query : {};
-    const books = await BookModel.find(query).populate("id_category");
+    const { id_category, status, message } = req.query;
+
+    let books;
+    if (id_category) {
+      books = await BookModel.find({ id_category }).populate("id_category");
+    } else {
+      books = await BookModel.find().populate("id_category");
+    }
 
     const categories = await CategoryModel.find();
-
-    const status = req.query.status;
-    const message = req.query.message;
 
     return res.render("book/main", {
       title: "Book Manager",
@@ -32,14 +35,13 @@ const add = async (req, res) => {
   const data = new BookModel(req.body);
   await data.save();
 
-
   const variationLength = req.body.language.length;
   for (let i = 0; i < variationLength; i++) {
     const newVariation = new VariationModel({
       language: req.body.language[i],
-      republish: req.body.republish[i]
+      republish: req.body.republish[i],
     });
-    await newVariation.save()
+    await newVariation.save();
     await data.updateOne({ $push: { variations: newVariation } });
   }
 
