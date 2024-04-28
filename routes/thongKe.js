@@ -12,10 +12,5 @@ router.use((req, res, next) => {
 router.get('/', check_login.yeu_cau_login, thongKeCtrl.getThongKe);
 
 
-
-
-
-
-
 module.exports = router;
 

@@ -5,6 +5,55 @@ var objReturn = {
     msg: 'ok'
 }
 
+exports.getListDiscountConHSD = async (req, res, next) => {
+    let listDiscount = [];
+
+    try {
+        const today = new Date(); // Ngày hiện tại
+        listDiscount = await discountModel.find({ end_date: { $gte: today } });
+        
+        if (listDiscount) {
+            objReturn.data = listDiscount;
+            objReturn.status = 1;
+            objReturn.msg = 'lay thanh cong list discount con hsd'
+
+        } else {
+            objReturn.status = 0;
+            objReturn.msg = 'k co du lieu'
+        }
+
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    return res.json(objReturn);
+}
+
+exports.getListDiscountSpinner = async (req, res, next) => {
+    let listDiscount = [];
+
+    try {
+        const today = new Date();
+        listDiscount = await discountModel.find({ end_date: { $gte: today } });
+
+        if (listDiscount) {
+            objReturn.data = listDiscount;
+            objReturn.status = 1;
+            objReturn.msg = 'lay thanh cong list discount con hsd'
+
+        } else {
+            objReturn.status = 0;
+            objReturn.msg = 'k co du lieu'
+        }
+
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    return res.json(objReturn);
+}
 
 exports.getListDiscount = async (req, res, next) => {
     let listDiscount = [];
@@ -90,6 +139,8 @@ exports.getListWithIdUser = async (req, res, next) => {
     }
     return res.json(objReturn);
 }
+
+
 
 exports.addDiscount = async (req, res, next) => {
 
