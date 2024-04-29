@@ -14,20 +14,45 @@ router.get('/', check_login.yeu_cau_login, billCtrl.getListBill);
 router.get('/:idUser', billCtrl.getBillUsername);
 router.post('/:idUser', billCtrl.getBillUsername);
 
-router.get('/status/:id', billCtrl.changeStatus);
-router.post('/status/:id', billCtrl.changeStatus);
+router.get('/changeStatus/:id', billCtrl.changeStatus);
+router.post('/changeStatus/:id', billCtrl.changeStatus);
 
-router.get('/thapCao', billCtrl.getThapCao);
-router.post('/thapCao', billCtrl.getThapCao);
-router.get('/caoThap', billCtrl.getCaoThap);
-router.post('/caoThap', billCtrl.getCaoThap);
+router.get('/chitiet/:idBill', billCtrl.chitietBill);
+router.post('/chitiet/:idBill', billCtrl.chitietBill);
 
-router.get('/chitiet/:idBill', billCtrl.getBillUsername);
-router.post('/chitiet/:idBill', billCtrl.getBillUsername);
+router.get('/sx/tongThapCao', billCtrl.getTongThapCao);
+router.post('/sx/tongThapCao', billCtrl.getTongThapCao);
+router.get('/sx/tongCaoThap', billCtrl.getTongCaoThap);
+router.post('/sx/tongCaoThap', billCtrl.getTongCaoThap);
+
+router.get('/sx/tgMoi', billCtrl.getBillTgMoi);
+router.post('/sx/tgMoi', billCtrl.getBillTgMoi);
+router.get('/sx/tgCu', billCtrl.getBillTgCu);
+router.post('/sx/tgCu', billCtrl.getBillTgCu);
+
+router.get('/tienThapCao/:idUser', billCtrl.getBillUserTienThapCao);
+router.post('/tienThapCao/:idUser', billCtrl.getBillUserTienThapCao);
+router.get('/tienCaoThap/:idUser', billCtrl.getBillUserTienCaoThap);
+router.post('/tienCaoThap/:idUser', billCtrl.getBillUserTienCaoThap);
+
+router.get('/tgMoi/:idUser', billCtrl.getBillUserTgMoi);
+router.post('/tgMoi/:idUser', billCtrl.getBillUserTgMoi);
+router.get('/tgCu/:idUser', billCtrl.getBillUserTgCu);
+router.post('/tgCu/:idUser', billCtrl.getBillUserTgCu);
+
+router.get('/0/:idUser', billCtrl.getBillUser0);
+router.post('/0/:idUser', billCtrl.getBillUser0);
+router.get('/1/:idUser', billCtrl.getBillUser1);
+router.post('/1/:idUser', billCtrl.getBillUser1);
+router.get('/2/:idUser', billCtrl.getBillUser2);
+router.post('/2/:idUser', billCtrl.getBillUser2);
+router.get('/3/:idUser', billCtrl.getBillUser3);
+router.post('/3/:idUser', billCtrl.getBillUser3);
+router.get('/4/:idUser', billCtrl.getBillUser4);
+router.post('/4/:idUser', billCtrl.getBillUser4);
 
 
-
-
-
+router.get('/status/:status', billCtrl.getBillWithStatus);
+router.post('/status/:status', billCtrl.getBillWithStatus);
 
 module.exports = router;

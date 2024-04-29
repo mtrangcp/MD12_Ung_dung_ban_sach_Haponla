@@ -1,16 +1,9 @@
-<nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <!-- brand -->
-    <a class="navbar-brand" href="/">HaPonLa</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <a class="navbar-brand" href="/users">HaPonLa</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -42,76 +35,71 @@
           </ul>
         </li> -->
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Product
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/books">Book</a></li>
-            <li><a class="dropdown-item" href="/categories">Category</a></li>
+            <li><a class="dropdown-item" href="/books">Sách</a></li>
+            <li><a class="dropdown-item" href="/categories">Danh mục</a></li>
             <!-- <li><a class="dropdown-item" href="/variations">Variation</a></li> -->
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Order
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/bills">Bill</a></li>
-            <li><a class="dropdown-item" href="/discounts">Discount</a></li>
+            <li><a class="dropdown-item" href="/bills">Đơn hàng</a></li>
+            <li><a class="dropdown-item" href="/discounts">Giảm giá</a></li>
+            <li><a class="dropdown-item" href="/thongKe">Thống kê </a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             User
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/users">User</a></li>
+            <li><a class="dropdown-item" href="/users">Người dùng</a></li>
             <li><a class="dropdown-item" href="/evaluates">Reply Comment</a></li>
+
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" href="/users/admin">About</a>
         </li>
       </ul>
-      <!-- search -->
-      <!-- <form class="d-flex m-auto" role="search">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form> -->
-      <!-- admin -->
+
       <div class="d-flex align-items-center">
+
+        <!-- <div class="grid" style="justify-content: center; margin-left: 870px">
+          <nav>
+            <ul class="header_navbar-list">
+              <li class="header_navbar-item">
+                <a href="#" class="header_navbar-item-link item-separate">
+                  <i class="header_nav-icon bx bxs-bell"></i>
+                </a>
+              </li>
+              <li class="header_navbar-item item-separate">
+                <a href="#" class="nav-icon-link">
+                  <i class="header_nav-icon bx bxs-help-circle"></i>
+                </a>
+              </li>
+              <li class="header_navbar-item">
+                <a href="/users/admin" class="d-flex align-items-center mx-2">
+                  <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" width="30px"
+                    class="rounded-circle" />
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div> -->
+
         <a href="#"><i class="fa-regular fa-bell"></i></a>
-        <a href="/users" class="d-flex align-items-center mx-2">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png"
-            width="40px"
-            class="rounded-circle"
-          />
+        <a href="/users/admin" class="d-flex align-items-center mx-2">
+          <img src="https://cdn-icons-png.flaticon.com/512/6858/6858504.png" width="40px" class="rounded-circle" />
           <!-- Admin  -->
         </a>
+
       </div>
     </div>
   </div>

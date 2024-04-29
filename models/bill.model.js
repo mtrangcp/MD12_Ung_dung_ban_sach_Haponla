@@ -19,7 +19,7 @@ const BillSchema = new Schema(
       /*
         0: đã bị hủy
         1: đã đặt hàng, chờ xác nhận (có thể hủy)
-        2: đã xác nhận, đang xử lí (có thể hủy)
+        2: đã xác nhận, đang xử lí 
         3: đang vận chuyển
         4: giao hàng thành công
       */
@@ -36,8 +36,8 @@ const BillSchema = new Schema(
       {
         type: ObjectId,
         ref: BillItemModel.modelName,
-        required: true,
-      },
+        required: true
+      }
     ],
     id_discount: { type: ObjectId, ref: discountModel.modelName },
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },

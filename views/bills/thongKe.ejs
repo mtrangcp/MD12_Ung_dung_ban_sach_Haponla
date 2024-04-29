@@ -1,0 +1,170 @@
+<div class="container shadow my-5 px-5 py-4">
+    <h2>Thong ke</h2>
+    <!-- <% console.log("listView: " + listView);%> -->
+
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            Từ: <input id="formDate" type="date" min="" max="">
+            đến: <input id="toDate" type="date" min="" max="">
+        </div>
+
+        <div>
+            <% console.log("listBill: " +listBill); %>
+                <% let totalPriceBill=listBill.reduce((total, item)=> { return total += item.real_price;}, 0)%>
+                    <strong>
+                        <%= totalPriceBill.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+                    </strong>
+        </div>
+    </div>
+
+    <canvas id="myChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+
+            function formatDate(date) {
+                const year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                if (day < 10) {
+                    day = '0' + day;
+                }
+
+                return `${year}-${month}-${day}`;
+            }
+
+            function generateYearMonthObject(startDate, endDate) {
+                const startYear = new Date(startDate).getFullYear();
+                const endYear = new Date(endDate).getFullYear();
+                const years = {};
+
+                for (let year = startYear; year <= endYear; year++) {
+                    const startMonth = (year === startYear) ? new Date(startDate).getMonth() + 1 : 1;
+                    const endMonth = (year === endYear) ? new Date(endDate).getMonth() + 1 : 12;
+                    const months = [];
+
+                    for (let month = startMonth; month <= endMonth; month++) {
+                        months.push(month);
+                    }
+
+                    years[year] = months;
+                }
+
+                return years;
+            }
+
+            function convertToObjectString(yearMonthObject) {
+                const result = [];
+
+                for (const [year, months] of Object.entries(yearMonthObject)) {
+                    for (const month of months) {
+                        const dateString = `${year}-${String(month).padStart(2, '0')}`;
+                        result.push(dateString);
+                    }
+                }
+
+                return result;
+            }
+
+            function generateYearMonthArraysWithTotal(startDate, endDate, data) {
+                let months = [];
+                let totals = [];
+
+                const startYear = startDate.getFullYear();
+                const endYear = endDate.getFullYear();
+                const startMonth = startDate.getMonth();
+                const endMonth = endDate.getMonth();
+
+                const dataYears = new Set(data.map(item => new Date(item.date).getFullYear()));
+
+                for (let year of dataYears) {
+                    const start = year === startYear ? startMonth : 0;
+                    const end = year === endYear ? endMonth : 11;
+
+                    for (let month = start; month <= end; month++) {
+                        const monthData = data.filter(item => {
+                            const itemDate = new Date(item.date);
+                            return itemDate.getFullYear() === year && itemDate.getMonth() === month;
+                        });
+
+                        const total = monthData.reduce((acc, item) => acc + item.price, 0);
+                        const monthStr = (month + 1).toString().padStart(2, '0');
+                        const yearMonth = `${year}-${monthStr}`;
+                        months.push(yearMonth);
+                        totals.push(total);
+                    }
+                }
+
+                return [months, totals];
+            }
+
+            const rawListBill = <%- JSON.stringify(listBill) %>;
+            
+            const bills = rawListBill.map((item) => {
+                return {
+                    price: item.real_price,
+                    date: item.create_at.substring(0, 10)
+                }
+            });
+
+            const fromDateHTML = document.getElementById("formDate");
+            const toDateHTML = document.getElementById("toDate");
+
+            let selectFromDate = formatDate(new Date("2024-01-01"));
+            let selectToDate = formatDate(new Date());
+            let [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
+
+            const ctx = document.getElementById('myChart');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labelsChart,
+                    datasets: [{
+                        label: '# Total price of Month',
+                        data: valuesChart,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            fromDateHTML.min = formatDate(new Date("2024-01-01"));
+            fromDateHTML.max = formatDate(new Date());
+            fromDateHTML.addEventListener("change", function (event) {
+                const selectedDate = event.target.value;
+                selectFromDate = selectedDate;
+                toDateHTML.min = selectedDate;
+
+                [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
+                myChart.data.labels = labelsChart;
+                myChart.data.datasets[0].data = valuesChart;
+                myChart.update();
+            });
+
+            toDateHTML.min = formatDate(new Date("2024-01-01"));
+            toDateHTML.max = formatDate(new Date());
+            toDateHTML.addEventListener("change", function (event) {
+                const selectedDate = event.target.value;
+                selectToDate = selectedDate;
+                fromDateHTML.max = selectedDate;
+
+                [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
+                myChart.data.labels = labelsChart;
+                myChart.data.datasets[0].data = valuesChart;
+                myChart.update();
+            });
+        </script>
+        
+
+        
+</div>

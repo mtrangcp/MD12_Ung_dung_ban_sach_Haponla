@@ -23,6 +23,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var apiRouter = require("./routes/api");
 var billsRouter = require("./routes/bill");
+var thongKeRouter = require("./routes/thongKe");
 
 
 var app = express();
@@ -62,7 +63,8 @@ app.use("/api", apiRouter);
 // web
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/bill", billsRouter);
+app.use("/bills", billsRouter);
+app.use("/thongKe", thongKeRouter);
 app.use("/categories", categoryRouter);
 app.use("/books", bookRouter);
 app.use("/discounts", discountRouter);
