@@ -50,6 +50,7 @@ const userChema = new db.mongoose.Schema(
         email: { type: String, required: true },
         phone: { type: String, required: true },
         fullname: { type: String, required: true },
+        create_at: { type: Date, default: Date.now },
         gender: {
             type: String,
             enum: ['MALE', 'FEMALE', 'OTHER'],
