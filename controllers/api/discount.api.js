@@ -294,22 +294,24 @@ exports.updateDiscountItem = async (req, res, next) => {
     return res.json(objReturn);
 }
 
-// exports.deleteDiscountItem = async (req, res, next) => {
+exports.addDiscountToUser = async (req, res, next) => {
+    try {
+        const id_user = req.params.idU;
+        const user = await userModel.findById(id_user).populate("discounts");
+        const discounts = user.discounts;
+        
+        const newDiscountItem = await item_discountModel.create(req.body);
+        const result = await user.updateOne({ $push: { discounts: newDiscountItem } });
 
-//     try {
-//         const id = req.params.id;
+        return res.status(200).json(result);
 
-//         await userModel.deleteMany({ discounts: id });
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
 
-//         const result = await item_discountModel.findByIdAndDelete(id);
-//         return res.status(200).json(result);
-//     } catch (error) {
-//         objReturn.status = 0;
-//         objReturn.msg = error.msg;
-//     }
-
-//     return res.json(objReturn);
-// }
+    return res.json(objReturn);
+}
 
 
 
