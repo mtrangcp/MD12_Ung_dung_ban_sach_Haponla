@@ -1,5 +1,5 @@
 <div class="container shadow my-5 px-5 py-4">
-    <h5>Thống kê </h5>
+    <h5>Biểu đồ </h5>
     
     <div style="display: flex; justify-content: space-between;">
         <div>
@@ -8,11 +8,9 @@
         </div>
 
         <div>
-            <% console.log("listBill: " +listBill); %>
-                <% let totalPriceBill=listBill.reduce((total, item)=> { return total += item.real_price;}, 0)%>
-                    <strong>
-                        Tổng: <%= totalPriceBill.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
-                    </strong>
+            <strong>
+                Tổng: <%= tongDT.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+            </strong>
         </div>
     </div>
 
@@ -255,5 +253,87 @@
                 mixedChart.update();
             }
         });
+    </script> 
+
+    <h5 style="margin-top: 30px;">Thống kê hóa đơn và sách bán chạy</h5>
+    <form action="/thongKe/billstatics" method="POST" style="margin-top: 20px; margin-bottom: 20px;">
+        <label for="startDate">Từ ngày:</label>
+        <input type="date" id="startDate" name="startDate" required min="2024-01-01" max="<%= (new Date()).toISOString().split('T')[0] %>">
+        
+        <label for="endDate">Đến ngày:</label>
+        <input type="date" id="endDate" name="endDate" required min="2024-01-01" max="<%= (new Date()).toISOString().split('T')[0] %>">
+
+        <button type="submit">Lọc</button>
+    </form>
+    
+    <h5 >Kết quả:</h5>
+    <div id="statisticsResult">
+        
+    </div>
+    
+    <script>
+        document.querySelector('form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            const response = await fetch('/thongKe/billstatics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ startDate, endDate })
+            });
+
+            const data = await response.json();
+
+            function formatCurrency(amount) {
+                const formatter = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+                return formatter.format(amount);
+            }
+
+            const resultDiv = document.getElementById('statisticsResult');
+            resultDiv.innerHTML = `
+                    <p>Số lượng hóa đơn theo trạng thái:</p>
+                    <ul>
+                        <li>Đã hủy( trạng thái 0 ): ${data.statusCounts[0]}</li>
+                        <li>Đã đặt hàng( trạng thái 1 ): ${data.statusCounts[1]}</li>
+                        <li>Đã xác nhận( trạng thái 2 ): ${data.statusCounts[2]}</li>
+                        <li>Đang vận chuyển( trạng thái 3 ): ${data.statusCounts[3]}</li>
+                        <li>Giao hàng thành công( trạng thái 4 ): ${data.statusCounts[4]}</li>
+                        
+                    </ul>
+                    <p>Doanh thu (hóa đơn ở trạng thái 2, 3, 4): ${formatCurrency(data.revenue)}</p>
+                    <p>Tổng giá trị (hóa đơn chờ xác nhận - trạng thái 1): ${formatCurrency(data.pendingValue)}</p>
+                    <p>Top 5 sách bán chạy:</p>
+                    <table class="table table-borderless table-striped table-hover table-response">
+                        <thead class="table-dark">
+                            <tr class="text-center">
+                                <th >Ảnh</th>
+                                <th >Tên sách</th>
+                                <th >Số lượng đã bán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.topBooks.map(book => `
+                                <tr>
+                                    <td><img src="${book.image}" alt="Ảnh sách" style="width: 100px; height: auto;"></td>
+                                    <td >${book.name}</td>
+                                    <td>${book.soldQuantity}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+        });
     </script>
+    <style>
+        table td {
+            text-align: center;
+        }
+    </style>
+
 </div>
