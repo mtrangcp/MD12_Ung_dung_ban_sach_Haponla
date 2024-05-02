@@ -166,7 +166,7 @@ exports.login = async (req, res, next) => {
                     if (objUser.role == "ADMIN") {
                         msg = 'Đăng nhập thành công!';
                         req.session.userLogin = objUser;
-                        return res.redirect('/users');
+                        return res.redirect('/bills');
                     } else {
                         msg = 'Bạn không có quyền đăng nhập!';
                     }
