@@ -61,10 +61,9 @@ exports.getBillStatistics = async (req, res) => {
         }
 
         // Sắp xếp và lấy top 5 sách bán chạy nhất
-        const sortedBooks = Array.from(bookSalesMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5);
+        const sortedBooks = Array.from(bookSalesMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6);
 
-        const topBooks = []; // Mảng để lưu trữ danh sách top 5 sách bán chạy
-
+        const topBooks = [];
         const seenBooks = new Set(); // Set để loại bỏ các quyển sách trùng lặp
 
         // Lấy thông tin sách duy nhất từ danh sách đã sắp xếp
@@ -82,13 +81,11 @@ exports.getBillStatistics = async (req, res) => {
             // Kiểm tra xem sách đã tồn tại trong Set seenBooks chưa
             if (!seenBooks.has(bookKey)) {
                 seenBooks.add(bookKey); // Thêm key vào Set để đánh dấu là đã thấy sách này
-
-                // Thêm thông tin sách vào mảng topBooks
                 topBooks.push(bookInfo);
             }
         }));
 
-        // Hiển thị kết quả cuối cùng (danh sách các sách bán chạy duy nhất) trên console
+        topBooks.sort((a, b) => b.soldQuantity - a.soldQuantity);
         console.log(topBooks);
 
         res.json({
@@ -98,7 +95,6 @@ exports.getBillStatistics = async (req, res) => {
             topBooks
         });
 
-        // res.render("bills/thongKe", { topBooks: topBooks, statusCounts: statusCounts, topList: topList });
     } catch (err) {
         console.error(err);
         console.log("loi: "+err);
