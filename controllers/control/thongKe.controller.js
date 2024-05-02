@@ -61,19 +61,32 @@ exports.getBillStatistics = async (req, res) => {
         }
 
         // Sắp xếp và lấy top 5 sách bán chạy nhất
-        const sortedBooks = Array.from(bookSalesMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 5);
-        const topBooks = await Promise.all(sortedBooks.map(async ([bookId, soldQuantity]) => {
+        const sortedBooks = Array.from(bookSalesMap.entries()).sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+        const topBooks = [];
+        const seenBooks = new Set(); // Set để loại bỏ các quyển sách trùng lặp
+
+        // Lấy thông tin sách duy nhất từ danh sách đã sắp xếp
+        await Promise.all(sortedBooks.map(async ([bookId, soldQuantity]) => {
             const book = await books.BookModel.findById(bookId);
-            return {
+            const bookInfo = {
                 name: book.name,
                 image: book.image,
                 soldQuantity
             };
+
+            // Tạo một key duy nhất dựa trên name và image của sách
+            const bookKey = `${bookInfo.name}-${bookInfo.image}`;
+
+            // Kiểm tra xem sách đã tồn tại trong Set seenBooks chưa
+            if (!seenBooks.has(bookKey)) {
+                seenBooks.add(bookKey); // Thêm key vào Set để đánh dấu là đã thấy sách này
+                topBooks.push(bookInfo);
+            }
         }));
 
-        console.log("statusCounts: " + statusCounts);
-        console.log("topBooks: " + topBooks);
-        const topList = JSON.stringify(topBooks);
+        topBooks.sort((a, b) => b.soldQuantity - a.soldQuantity);
+        console.log(topBooks);
 
         res.json({
             revenue,
@@ -82,7 +95,6 @@ exports.getBillStatistics = async (req, res) => {
             topBooks
         });
 
-        res.render("bills/thongKe", { topBooks: topBooks, statusCounts: statusCounts, topList: topList });
     } catch (err) {
         console.error(err);
         console.log("loi: "+err);
