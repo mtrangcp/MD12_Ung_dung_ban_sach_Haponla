@@ -66,6 +66,8 @@ router.put('/discount/update/:id', api_discount.updateDiscount);
 router.delete('/discount/delete/:id', api_discount.deleteDiscount);
 
 router.get('/discountItem', api_discount.getListDiscountItem);
+router.get('/discountItem/user/:idU', api_discount.getListDiscountItemWithUser);
+
 router.post('/discountItem/add', api_discount.addDiscountItem);
 router.put('/discountItem/update/:id', api_discount.updateDiscountItem);
 // router.delete('/discountItem/delete/:id', api_discount.deleteDiscount);
