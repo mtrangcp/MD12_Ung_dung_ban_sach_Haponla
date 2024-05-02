@@ -28,9 +28,9 @@ const BillSchema = new Schema(
       max: 4,
       default: 1,
     },
-    temp_price: { type: Number, min: 0 },
-    real_price: { type: Number, min: 0 },
-    method: { type: String },
+    temp_price: { type: Number, min: 0, required: true },
+    real_price: { type: Number, min: 0, required: true },
+    method: { type: String, required: true },
     create_at: { type: Date, default: Date.now },
     detail: [
       {
@@ -39,7 +39,7 @@ const BillSchema = new Schema(
         required: true
       }
     ],
-    id_discount: { type: ObjectId, ref: discountModel.modelName },
+    id_discount: { type: ObjectId, ref: discountModel.modelName, required: true },
     id_user: { type: ObjectId, ref: userModel.modelName, required: true },
     id_address: { type: ObjectId, ref: addressModel.modelName, required: true },
   },

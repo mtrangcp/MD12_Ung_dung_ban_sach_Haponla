@@ -263,7 +263,7 @@
         <label for="endDate">Đến ngày:</label>
         <input type="date" id="endDate" name="endDate" required min="2024-01-01" max="<%= (new Date()).toISOString().split('T')[0] %>">
 
-        <button type="submit">Lọc</button>
+        <button type="submit" class="button">Lọc</button>
     </form>
     
     <h5 >Kết quả:</h5>
@@ -307,8 +307,8 @@
                         
                     </ul>
                     <p>Doanh thu (hóa đơn ở trạng thái 2, 3, 4): ${formatCurrency(data.revenue)}</p>
-                    <p>Tổng giá trị (hóa đơn chờ xác nhận - trạng thái 1): ${formatCurrency(data.pendingValue)}</p>
-                    <p>Top 5 sách bán chạy:</p>
+                    <p>Tổng giá trị hóa đơn chờ xác nhận (trạng thái 1): ${formatCurrency(data.pendingValue)}</p>
+                    <p>Top sách bán chạy:</p>
                     <table class="table table-borderless table-striped table-hover table-response">
                         <thead class="table-dark">
                             <tr class="text-center">
@@ -333,6 +333,23 @@
     <style>
         table td {
             text-align: center;
+        }
+        .button {
+            margin-left: 15px;
+            border: 1px solid #ccc;/* Xóa viền */
+            border-radius: 10px; /* Bo góc */
+            padding: 4px 16px; /* Độ lớn padding để tạo khoảng cách xung quanh nội dung */
+            text-align: center; /* Căn giữa nội dung của button */
+            font-size: 15px; /* Kích cỡ chữ */
+            color: #333; /* Màu chữ */
+            background-color: #f0f0f0; /* Màu nền */
+            cursor: pointer; /* Biểu tượng chuột khi di chuột qua button */
+            transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi màu nền và màu chữ khi hover */
+        }
+
+        .button:hover {
+            background-color: #ddd; /* Màu nền khi di chuột qua button */
+            color: #555; /* Màu chữ khi di chuột qua button */
         }
     </style>
 
