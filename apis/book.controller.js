@@ -21,6 +21,23 @@ const getAll = async (req, res) => {
   }
 };
 
+const getTopBanChay = async (req, res) => {
+  try {
+    const books = await BookModel.find().sort({sold: -1}).limit(10);
+
+    // data empty
+    if (!books) {
+      return res.apiError("Data is empty!");
+    }
+
+    // finally success
+    return res.apiSuccess({ data: books });
+  } catch (error) {
+    console.log(error);
+    return res.apiInternalError(error);
+  }
+};
+
 const get = async (req, res) => {
   try {
     console.log(req.params);
@@ -42,5 +59,5 @@ const get = async (req, res) => {
 
 module.exports = {
   getAll,
-  get
+  get, getTopBanChay
 };

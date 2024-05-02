@@ -47,7 +47,6 @@ exports.getListBill = async (req, res, next) => {
   return res.json(objReturn);
 }
 
-
 exports.addBill = async (req, res) => {
   console.log(req.body);
   const data = new BillModel(req.body);
@@ -59,6 +58,7 @@ exports.addBill = async (req, res) => {
     return res.apiError("something's wrong, try another");
   }
 };
+
 
 exports.getOneBill = async (req, res) => {
   const { id } = req.params;
