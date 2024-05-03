@@ -1,4 +1,4 @@
-const { BillModel } = require("../../models/bill.model");
+const { BillModel, BillItemModel } = require("../../models/bill.model");
 var { BookModel } = require("../../models/book");
 
 const getAll = async (req, res) => {
@@ -49,35 +49,47 @@ exports.getListBill = async (req, res, next) => {
 }
 
 exports.addBill = async (req, res) => {
-  console.log("req.body: "+req.body);
+  console.log("req.body: ",req.body);
   const data = new BillModel(req.body);
+
+  console.log("data: " + data);
+  console.log("data.detail: " + data.detail);
    
   try {
     let canCreateBill = true;
 
-    for (let item of data.detail) {
-      // Lấy tt sách từ BillItem
+    // Lấy danh sách đầy đủ của các BillItem từ MongoDB
+    let fullDetail = [];
+    for (let itemId of data.detail) {
+      let billItem = await BillItemModel.findById(itemId).exec();
+      if (billItem) {
+        fullDetail.push(billItem);
+      }
+    }
+
+    // Kiểm tra số lượng sách trước khi tạo hóa đơn
+    for (let item of fullDetail) {
       let bookId = item.id_book;
       let quantity = item.quantity;
 
-      let book = await BookModel.findById(bookId);
-      if (book && quantity > book.stock) {
-          canCreateBill = false;
-          break; 
-      } 
+      let bookItem = await BookModel.findById(bookId).exec();
+      if (!bookItem || quantity > bookItem.stock) {
+        canCreateBill = false;
+        break;
+      }
     }
 
     if (canCreateBill) {
       // Cập nhật số lượng sách và lưu hóa đơn
-      for (let item of data.detail) {
+      for (let item of fullDetail) {
         let bookId = item.id_book;
         let quantity = item.quantity;
 
-        let book = await BookModel.findById(bookId);
-        if (book) {
-          book.sold += quantity;
-          book.stock -= quantity;
-          await book.save();
+        let bookItem = await BookModel.findById(bookId).exec();
+        if (bookItem) {
+          bookItem.sold += quantity;
+          bookItem.stock -= quantity;
+          await bookItem.save();
         }
       }
 
