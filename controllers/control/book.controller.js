@@ -55,7 +55,7 @@ const add = async (req, res) => {
   await newBook.updateOne({ $push: { variations: variations } });
 
   let status = true;
-  let message = `added: ${newBook.name}`;
+  let message = `Thêm thành công: ${newBook.name}`;
 
   return res.redirect(`/books?status=${status}&message=${message}`);
 };
@@ -101,7 +101,7 @@ const set = async (req, res) => {
   await updatedBook.updateOne({ variations: variations });
 
   let status = true;
-  let message = `updated: ${updatedBook.name}`;
+  let message = `Cập nhật thành công: ${updatedBook.name}`;
 
   return res.redirect(`/books?status=${status}&message=${message}`);
 };

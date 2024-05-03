@@ -4,26 +4,26 @@
       <th>#</th>
       <th>Ảnh minh họa</th>
       <th>Tên</th>
-      <th>Giá nhập</th>
       <th>Giá bán</th>
+      <th>Stock</th>
       <th>Thể loại</th>
     </tr>
   </thead>
   <tbody>
     <% data.forEach(function(item,index){ %> <% var modalId
     ="modalForUpdatingTask-"+item._id %>
-    <tr
-      class="text-center align-middle"
-      data-bs-toggle="modal"
-      data-bs-target="#<%= modalId %>"
-    >
+    <tr class="text-center align-middle" data-bs-toggle="modal" data-bs-target="#<%= modalId %>">
       <td><%= index + 1 %></td>
       <td>
         <img loading="lazy" src="<%= item.image %>" width="80px" />
       </td>
       <td><%= item.name %></td>
-      <td><%= item.original_price %></td>
       <td><%= item.price %></td>
+      <td class="align-middle">
+        <% item.variations.forEach(function(variation,index){ %>
+        <h6><%= variation.language %> - <%= variation.stock %></h6>
+        <% }) %>
+      </td>
       <td>
         <h5>
           <span class="badge text-bg-secondary"><%= item.id_category.name %></span>

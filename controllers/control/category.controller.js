@@ -24,7 +24,7 @@ const add = async (req, res) => {
   await data.save();
 
   let status = true;
-  let message = `added: ${data.name}`;
+  let message = `Thêm thành công: ${data.name}`;
 
   return res.redirect(`/categories?status=${status}&message=${message}`);
 };
@@ -38,7 +38,7 @@ const set = async (req, res) => {
   });
 
   let status = true;
-  let message = `updated: ${data.name}`;
+  let message = `Cập nhật thành công: ${data.name}`;
 
   return res.redirect(`/categories?status=${status}&message=${message}`);
 };
