@@ -1,4 +1,5 @@
 const { BillModel } = require("../../models/bill.model");
+var { BookModel } = require("../../models/book");
 
 const getAll = async (req, res) => {
   const { id_user } = req.query;
@@ -48,15 +49,50 @@ exports.getListBill = async (req, res, next) => {
 }
 
 exports.addBill = async (req, res) => {
-  console.log(req.body);
+  console.log("req.body: "+req.body);
   const data = new BillModel(req.body);
-  await data.save();
+   
+  try {
+    let canCreateBill = true;
 
-  if (data) {
-    return res.apiSuccess({ data });
-  } else {
-    return res.apiError("something's wrong, try another");
+    for (let item of data.detail) {
+      // Lấy tt sách từ BillItem
+      let bookId = item.id_book;
+      let quantity = item.quantity;
+
+      let book = await BookModel.findById(bookId);
+      if (book && quantity > book.stock) {
+          canCreateBill = false;
+          break; 
+      } 
+    }
+
+    if (canCreateBill) {
+      // Cập nhật số lượng sách và lưu hóa đơn
+      for (let item of data.detail) {
+        let bookId = item.id_book;
+        let quantity = item.quantity;
+
+        let book = await BookModel.findById(bookId);
+        if (book) {
+          book.sold += quantity;
+          book.stock -= quantity;
+          await book.save();
+        }
+      }
+
+      // Lưu hóa đơn sau khi đã cập nhật số lượng sách thành công
+      await data.save();
+      return res.apiSuccess({ data });
+    } else {
+      // Nếu có sách không đủ số lượng, trả về lỗi
+      return res.status(400).json({ message: "Hàng trong kho không đủ. Vui lòng giảm số lượng!" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Lỗi khi thêm hóa đơn." });
   }
+  
 };
 
 
