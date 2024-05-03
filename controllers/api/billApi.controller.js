@@ -1,5 +1,6 @@
 const { BillModel, BillItemModel } = require("../../models/bill.model");
 var { BookModel } = require("../../models/book");
+var myModel = require("../../models/bill.model");
 
 const getAll = async (req, res) => {
   const { id_user } = req.query;
@@ -107,7 +108,6 @@ exports.addBill = async (req, res) => {
   
 };
 
-
 exports.getOneBill = async (req, res) => {
   const { id } = req.params;
 
@@ -133,16 +133,67 @@ exports.deleteBill = async (req, res) => {
 };
 
 exports.updateBill = async (req, res) => {
-  console.log(req.body);
-  const { id } = req.params;
+  let _id = req.params.id;
 
-  const data = await BillModel.findByIdAndUpdate(id, req.body, {
-    new: true,
-  });
+  try {
+    if (req.method === "PUT" && typeof req.body.status !== "undefined") {
+      let objBill = await myModel.BillModel.findById(_id).populate("detail");
 
-  if (data) {
-    return res.apiSuccess({ data });
-  } else {
-    return res.apiError("something's wrong, try another");
+      if (!objBill) {
+        return res.status(404).json({ message: "Không tìm thấy đơn hàng." });
+      }
+
+      if (req.body.status == 0) {
+        console.log("trang thai 0");
+        // Lấy danh sách đầy đủ của các BillItem từ MongoDB
+        let fullDetail = [];
+        for (let itemId of objBill.detail) {
+          let billItem = await BillItemModel.findById(itemId).exec();
+          if (billItem) {
+            fullDetail.push(billItem);
+          }
+        }
+
+        // Hủy đơn hàng và cập nhật số lượng sách
+        const session = await myModel.BillModel.startSession();
+        session.startTransaction();
+
+        try {
+          for (let item of fullDetail) {
+            let bookId = item.id_book;
+            let quantity = item.quantity;
+
+            let bookItem = await BookModel.findById(bookId).exec();
+            if (bookItem) {
+              bookItem.sold -= quantity;
+              bookItem.stock += quantity;
+              await bookItem.save();
+            }
+          }
+
+          await myModel.BillModel.findByIdAndUpdate(_id, { status: req.body.status }, { new: true });
+
+          await session.commitTransaction();
+          session.endSession();
+
+          return res.status(200).json({ message: "Hủy đơn hàng thành công." });
+        } catch (error) {
+          await session.abortTransaction();
+          session.endSession();
+          console.error(error);
+          return res.status(500).json({ message: "Lỗi khi hủy đơn hàng." });
+        }
+      } else {
+        // Cập nhật trạng thái bình thường
+        const updatedBill = await myModel.BillModel.findByIdAndUpdate(_id, { status: req.body.status }, { new: true });
+
+        return res.status(200).json({ message: "Cập nhật trạng thái đơn hàng thành công.", data: updatedBill });
+      }
+    } else {
+      return res.status(400).json({ message: "Yêu cầu không hợp lệ." });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Lỗi khi cập nhật đơn hàng." });
   }
 };
