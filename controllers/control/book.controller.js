@@ -1,7 +1,7 @@
 /**
  * dev: Manh Thai
  */
-const { BookModel, VariationModel } = require("../../models/book");
+const { BookModel } = require("../../models/book");
 const { CategoryModel } = require("../../models/category");
 
 const getAll = async (req, res) => {
@@ -32,21 +32,30 @@ const getAll = async (req, res) => {
 const add = async (req, res) => {
   console.log(req.body);
 
-  const data = new BookModel(req.body);
-  await data.save();
+  const { language, republish, stock } = req.body;
 
-  const variationLength = req.body.language.length;
-  for (let i = 0; i < variationLength; i++) {
-    const newVariation = new VariationModel({
-      language: req.body.language[i],
-      republish: req.body.republish[i],
-    });
-    await newVariation.save();
-    await data.updateOne({ $push: { variations: newVariation } });
+  var variations;
+  if (
+    !Array.isArray(language) ||
+    !Array.isArray(republish) ||
+    !Array.isArray(stock)
+  ) {
+    variations = { language, republish, stock };
+  } else {
+    variations = language.map((language, index) => ({
+      language,
+      republish: republish[index],
+      stock: stock[index],
+    }));
   }
 
+  const newBook = new BookModel(req.body);
+  await newBook.save();
+
+  await newBook.updateOne({ $push: { variations: variations } });
+
   let status = true;
-  let message = `added: ${data.name}`;
+  let message = `added: ${newBook.name}`;
 
   return res.redirect(`/books?status=${status}&message=${message}`);
 };
@@ -64,14 +73,35 @@ const remove = async (req, res) => {
 
 const set = async (req, res) => {
   console.log(req.body);
+
+  const { language, republish, stock } = req.body;
+
+  var variations;
+  if (
+    !Array.isArray(language) ||
+    !Array.isArray(republish) ||
+    !Array.isArray(stock)
+  ) {
+    variations = { language, republish, stock };
+  } else {
+    variations = language.map((language, index) => ({
+      language,
+      republish: republish[index],
+      stock: stock[index],
+    }));
+  }
+
+  console.log(`variations::: ${JSON.stringify(variations)}`);
+
   const { id } = req.params;
 
-  const data = await BookModel.findByIdAndUpdate(id, req.body, {
+  const updatedBook = await BookModel.findByIdAndUpdate(id, req.body, {
     new: true,
   });
+  await updatedBook.updateOne({ variations: variations });
 
   let status = true;
-  let message = `updated: ${data.name}`;
+  let message = `updated: ${updatedBook.name}`;
 
   return res.redirect(`/books?status=${status}&message=${message}`);
 };

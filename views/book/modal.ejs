@@ -4,7 +4,7 @@
       <!-- header -->
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="staticBackdropLabel">
-          <%= locals.item ? "Updating: " +item.name : "Adding" %>
+          <%= locals.item ? "Cập nhật sách: " +item.name : "Thêm sách mới" %>
         </h1>
 
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -15,71 +15,91 @@
         <form method="post" action="<%= locals.item ? " /books/"+item._id : "/books" %>">
           <!-- name -->
           <div class="mb-3">
-            <label for="bookInputName" class="form-label">Name *</label>
+            <label for="bookInputName" class="form-label">Tên <span class="text-danger">*</span></label>
             <input name="name" value="<%= locals.item ?
             locals.item.name : "" %>" type="text" class="form-control" id="bookInputName" required />
           </div>
           <!-- author -->
           <div class="mb-3">
-            <label for="bookInputAuthor" class="form-label">Author *</label>
+            <label for="bookInputAuthor" class="form-label">Tác giả</label>
             <input name="author" value="<%= locals.item ?
-            locals.item.author : "" %>" type="text" class="form-control" id="bookInputAuthor" required />
+            locals.item.author : "" %>" type="text" class="form-control" id="bookInputAuthor" />
           </div>
           <!-- introduction -->
           <div class="mb-3">
-            <label for="bookInputIntroduction" class="form-label">Introduction *</label>
-            <textarea name="introduction" value="<%= locals.item ?
-            locals.item.introduction : "" %>" type="text" class="form-control" id="bookInputIntroduction" rows="3" required></textarea>
+            <label for="bookInputIntroduction" class="form-label">Giới thiệu </label>
+            <textarea name="introduction" type="text" class="form-control" id="bookInputIntroduction" rows="3" ><%= locals.item ? locals.item.introduction : "" %></textarea>
           </div>
           <!-- page number -->
           <div class="mb-3">
-            <label for="bookInputPageNumber" class="form-label">Page number *</label>
+            <label for="bookInputPageNumber" class="form-label">Số trang</label>
             <input name="page_number" value="<%= locals.item ?
-            locals.item.page_number : "" %>" type="number" class="form-control" id="bookInputPrice" min="1" required />
+            locals.item.page_number : "" %>" type="number" class="form-control" id="bookInputPrice" min="1" />
           </div>
           <!-- publisher -->
           <div class="mb-3">
-            <label for="bookInputPublisher" class="form-label">Publisher *</label>
+            <label for="bookInputPublisher" class="form-label">Nhà xuất bản</label>
             <input name="publisher" value="<%= locals.item ?
-            locals.item.publisher : "" %>" type="text" class="form-control" id="bookInputPublisher" required />
+            locals.item.publisher : "" %>" type="text" class="form-control" id="bookInputPublisher"  />
           </div>
           <!-- release date -->
           <div class="mb-3">
-            <label for="bookInputReleaseDate" class="form-label">Release Date *</label>
-            <input name="release_date" value="<%= locals.item ?
-            locals.item.release_date : "" %>" type="date" class="form-control" id="bookInputReleaseDate" required />
+            <%#= locals.item ? new Date(locals.item.release_date).toLocaleDateString('en-CA', { year: 'numeric' ,
+              month: '2-digit' , day: '2-digit' }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2' ) : '' %>
+            <label for="bookInputReleaseDate" class="form-label">Ngày phát hành <span class="text-danger">*</span></label>
+            <input name="release_date" value="<%= locals.item ? new Date(locals.item.release_date).toLocaleDateString('en-CA', { year: 'numeric' ,
+              month: '2-digit' , day: '2-digit' }).replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2' ) : '' %>" type="date" class="form-control" id="bookInputReleaseDate" required />
           </div>
           <!-- image -->
           <div class="mb-3">
             <!-- TODO feature: get image by multer -->
             <!-- <label for="formFile" class="form-label">Image</label>
             <input name="image" class="form-control" type="file" id="formFile" accept="image/*" /> -->
-            <label for="bookInputImage" class="form-label">Image *</label>
+            <label for="bookInputImage" class="form-label">Ảnh minh họa <span class="text-danger">*</span></label>
             <input name="image" value="<%= locals.item ?
             locals.item.image : "" %>" type="text" class="form-control" id="bookInputImage" required />
             <img src="<%= locals.item ? locals.item.image : "" %>" width="80px">
           </div>
           <!-- original price -->
           <div class="mb-3">
-            <label for="bookInputOriginalPrice" class="form-label">Original Price *</label>
+            <label for="bookInputOriginalPrice" class="form-label">Giá nhập <span class="text-danger">*</span></label>
             <input name="original_price" value="<%= locals.item ?
             locals.item.original_price : "" %>" type="number" min="0" class="form-control" id="bookInputOriginalPrice" required />
           </div>
           <!-- price -->
           <div class="mb-3">
-            <label for="bookInputPrice" class="form-label">Price *</label>
+            <label for="bookInputPrice" class="form-label">Giá bán <span class="text-danger">*</span></label>
             <input name="price" value="<%= locals.item ?
             locals.item.price : "" %>" type="number" min="0" class="form-control" id="bookInputPrice" required />
           </div>
           <!-- stock -->
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="bookInputStock" class="form-label">Stock *</label>
-            <input name="stock" value="<%= locals.item ?
+            <input name="stock" value="<%#= locals.item ?
             locals.item.stock : "" %>" type="number" min="0" class="form-control" id="bookInputStock" required />
-          </div>
+          </div> -->
           <!-- variation -->
+          <%#= locals.item ? locals.item.variations : "" %>
           <div class="mb-3" id="input-container-<%= modalId %>">
-            <label for="bookInputVariation" class="form-label">Variation *</label>
+            <label for="bookInputVariation" class="form-label">Biến thể <span class="text-danger">*</span></label>
+            <% if(locals.item){ %>
+            <% locals.item.variations.forEach(function(item,index){ %>
+            <div class="row input-row mb-1">
+              <div class="col">
+                <input value="<%= item.language %>" name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
+              </div>
+              <div class="col">
+                <input value="<%= item.republish %>" name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
+              </div>
+              <div class="col">
+                <input value="<%= item.stock %>" name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Stock" required>
+              </div>
+              <div class="col-auto">
+                <button class="btn btn-danger remove-input <%= index == 0 ? "disabled" : "" %>" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
+              </div>
+            </div>
+            <% }) %>
+            <% } else { %>
             <div class="row input-row mb-1">
               <div class="col">
                 <input name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
@@ -87,25 +107,30 @@
               <div class="col">
                 <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
               </div>
+              <div class="col">
+                <input name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Stock" required>
+              </div>
               <div class="col-auto">
                 <button class="btn btn-danger remove-input disabled" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
               </div>
             </div>
-            <button class="btn text-primary-emphasis" type="button" onclick="addInput('input-container-<%= modalId %>')">Add more variations</button>
+
+            <% } %>
+            <button class="btn text-primary-emphasis" type="button" onclick="addInput('input-container-<%= modalId %>')">Thêm biến thể</button>
           </div>
           <!-- percent discount -->
           <div class="mb-3">
-            <label for="bookInputPercentDiscount" class="form-label">Percent discount </label>
+            <label for="bookInputPercentDiscount" class="form-label">Giảm giá </label>
             <input name="percent_discount" value="<%= locals.item ?
             locals.item.percent_discount : "" %>" type="number" min="0" class="form-control" id="bookInputPercentDiscount" />
           </div>
           <!-- category -->
           <div class="mb-3">
-            <label for="bookInputCategory" class="form-label">Category *</label>
+            <label for="bookInputCategory" class="form-label">Thể loại <span class="text-danger">*</span></label>
             <%- include('../partials/select.ejs',{selectId:"id_category", options, current: typeof item=="undefined"
-              ? "" : item.id_category}) %>
+              ? "" : item.id_category.id}) %>
           </div>
-          <!-- <% if(locals.item){ %>
+          <!-- <%# if(locals.item){ %>
           <div class="card card-body">
             <button class="btn text-danger" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
               Danger section
@@ -115,17 +140,17 @@
                 <button class="btn btn-light-subtle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                   Cancel
                 </button>
-                <a href="/books/<%= item._id %>" class="btn btn-danger">Delete</a>
+                <a href="/books/<%#= item._id %>" class="btn btn-danger">Delete</a>
               </div>
             </div>
           </div>
-          <% } %> -->
+          <%# } %> -->
           <!-- footer -->
           <div class="modal-footer">
             <button type="button" class="btn btn-light-subtle" data-bs-dismiss="modal">
-              Close
+              Đóng
             </button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
           </div>
         </form>
       </div>
@@ -133,7 +158,6 @@
     </div>
   </div>
 </div>
-
 
 <script>
   function addInput(containerId) {
@@ -147,6 +171,9 @@
               </div>
               <div class="col">
                 <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
+              </div>
+              <div class="col">
+                <input name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Stock" required>
               </div>
               <div class="col-auto">
                 <button class="btn btn-danger remove-input" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
