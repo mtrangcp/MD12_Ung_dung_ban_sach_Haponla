@@ -77,13 +77,13 @@
             <% locals.item.variations.forEach(function(item,index){ %>
             <div class="row input-row mb-1">
               <div class="col">
-                <input value="<%= item.language %>" name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
+                <input value="<%= item.language %>" name="language" type="text" class="form-control" placeholder="Ngôn ngữ" aria-label="Language" required>
               </div>
               <div class="col">
-                <input value="<%= item.republish %>" name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
+                <input value="<%= item.republish %>" name="republish" type="text" class="form-control" placeholder="Tái bản" aria-label="Republish" required>
               </div>
               <div class="col">
-                <input value="<%= item.stock %>" name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Stock" required>
+                <input value="<%= item.stock %>" name="stock" type="number" min="0" class="form-control" placeholder="Kho" aria-label="Stock" required>
               </div>
               <div class="col-auto">
                 <button class="btn btn-danger remove-input <%= index == 0 ? "disabled" : "" %>" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
@@ -93,13 +93,13 @@
             <% } else { %>
             <div class="row input-row mb-1">
               <div class="col">
-                <input name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
+                <input name="language" type="text" class="form-control" placeholder="Language" aria-label="Ngôn ngữ" required>
               </div>
               <div class="col">
-                <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
+                <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Tái bản" required>
               </div>
               <div class="col">
-                <input name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Stock" required>
+                <input name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Kho" required>
               </div>
               <div class="col-auto">
                 <button class="btn btn-danger remove-input disabled" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
@@ -142,13 +142,13 @@
     inputRow.classList.add('row', 'input-row', 'mb-1');
     inputRow.innerHTML = `
               <div class="col">
-                <input name="language" type="text" class="form-control" placeholder="Language" aria-label="Language" required>
+                <input name="language" type="text" class="form-control" placeholder="Ngôn ngữ" aria-label="Language" required>
               </div>
               <div class="col">
-                <input name="republish" type="text" class="form-control" placeholder="Republish" aria-label="Republish" required>
+                <input name="republish" type="text" class="form-control" placeholder="Tái bản" aria-label="Republish" required>
               </div>
               <div class="col">
-                <input name="stock" type="number" min="0" class="form-control" placeholder="Stock" aria-label="Stock" required>
+                <input name="stock" type="number" min="0" class="form-control" placeholder="Kho" aria-label="Stock" required>
               </div>
               <div class="col-auto">
                 <button class="btn btn-danger remove-input" onclick="removeInput(this)"><i class="fa-solid fa-minus"></i></button>
