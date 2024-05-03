@@ -325,43 +325,53 @@ exports.getBillWithStatus = async (req, res, next) => {
 exports.changeStatus = async (req, res, next) => {
     let msg = "";
     let _id = req.params.id;
-    let objBill = await myModel.BillModel.findById(_id)
-        .populate("id_user")
-        .populate("id_address")
-        .populate("id_discount")
-        .populate("detail");
+    let objBill = await myModel.BillModel.findById(_id).populate("id_user").populate("id_address").populate("id_discount").populate("detail");
 
     console.log(objBill.detail);
     try {
         if (req.method == "POST") {
-            let objBill1 = new myModel.BillModel();
+            if (typeof req.body.TrangThai !== "undefined") {
+                console.log("req.body.TrangThai: " + req.body.TrangThai);
 
-            if (typeof (req.body.TrangThai != "undefined")) {
-                console.log(req.body.TrangThai);
+                // Khởi tạo đối tượng BillModel mới để cập nhật
+                let objBillToUpdate = {
+                    status: req.body.TrangThai,
+                    detail: objBill.detail 
+                };
 
-                objBill1.status = req.body.TrangThai;
-            }
+                // if (req.body.TrangThai == 2) {
+                //     // Duyệt qua từng BillItem trong detail của đơn hàng
+                //     for (let item of objBill.detail) {
+                //         // Lấy tt sách từ BillItem
+                //         let bookId = item.id_book;
+                //         let quantity = item.quantity;
 
-            objBill1._id = _id;
-            objBill1.detail = objBill.detail;
+                //         //  cập nhật sold và stock
+                //         let book = await BookModel.BookModel.findById(bookId);
+                //         if (book && quantity < book.stock) {
+                //             book.sold += quantity; 
+                //             book.stock -= quantity; 
+                //             await book.save(); 
+                //         } else {
+                //             msg = "Hàng trong kho không đủ! Vui lòng giảm số lượng sách: "+ book.name;
+                //         }
+                //     }
+                // }
 
-            try {
-                await myModel.BillModel.findByIdAndUpdate({ _id: _id }, objBill1);
-                msg = "Cập nhật trạng thái thành công!";
+                // Cập nhật tt đơn hàng trong cơ sở dữ liệu
+                try {
+                    await myModel.BillModel.findByIdAndUpdate(_id, objBillToUpdate);
+                    msg = "Cập nhật trạng thái đơn hàng thành công!";
 
-                console.log(objBill);
-            } catch (err) {
-                msg = "Lỗi: " + err;
-                console.log(err);
-            }
+                } catch (err) {
+                    msg = "Lỗi: " + err;
+                    console.log(err);
+                }
+            } 
         }
     } catch (error) {
         console.log(error);
     }
 
-    res.render("bills/changeStatus", {
-        objBill: objBill,
-        msg: msg,
-        cre: objBill.create_at,
-    });
+    res.render("bills/changeStatus", { objBill: objBill, msg: msg, cre: objBill.create_at });
 };
