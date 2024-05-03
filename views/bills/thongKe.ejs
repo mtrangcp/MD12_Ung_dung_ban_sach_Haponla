@@ -162,17 +162,17 @@
                 datasets: [
                     {
                         type: 'line',
-                        label: 'Status 0',
+                        label: 'Đơn bị hủy',
                         data: data0,
                     }, 
                     {
                         type: 'line',
-                        label: 'Status 3',
+                        label: 'Đơn đang vận chuyển',
                         data: data3,
                     },
                     {
                         type: 'line',
-                        label: 'Status 4',
+                        label: 'Đơn thành công',
                         data: data4,
                     }
                 ],
@@ -306,7 +306,7 @@
                         <li>Giao hàng thành công( trạng thái 4 ): ${data.statusCounts[4]}</li>
                         
                     </ul>
-                    <p>Doanh thu (hóa đơn ở trạng thái 2, 3, 4): ${formatCurrency(data.revenue)}</p>
+                    <p>Doanh thu (hóa đơn thành công): ${formatCurrency(data.revenue)}</p>
                     <p>Tổng giá trị hóa đơn chờ xác nhận (trạng thái 1): ${formatCurrency(data.pendingValue)}</p>
                     <p>Top sách bán chạy:</p>
                     <table class="table table-borderless table-striped table-hover table-response">

@@ -8,7 +8,7 @@ exports.getThongKe = async (req, res, next) => {
     let tongDT = 0; // Tổng tiền của hóa đơn ở trạng thái 2, 3, 4
 
     listBill.forEach(bill => {
-        if (bill.status === 2 || bill.status === 3 || bill.status === 4 || bill.status === 1) {
+        if (bill.status == 4) {
             tongDT += bill.real_price || 0;
         } 
     });
@@ -36,7 +36,7 @@ exports.getBillStatistics = async (req, res) => {
         let pendingValue = 0; // Tổng giá trị của hóa đơn ở trạng thái 1
 
         bills.forEach(bill => {
-            if (bill.status === 2 || bill.status === 3 || bill.status === 4) {
+            if (bill.status === 4) {
                 revenue += bill.real_price || 0;
             } else if (bill.status === 1) {
                 pendingValue += bill.real_price || 0;

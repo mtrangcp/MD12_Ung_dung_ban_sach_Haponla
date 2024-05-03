@@ -339,30 +339,10 @@ exports.changeStatus = async (req, res, next) => {
                     detail: objBill.detail 
                 };
 
-                // if (req.body.TrangThai == 2) {
-                //     // Duyệt qua từng BillItem trong detail của đơn hàng
-                //     for (let item of objBill.detail) {
-                //         // Lấy tt sách từ BillItem
-                //         let bookId = item.id_book;
-                //         let quantity = item.quantity;
-
-                //         //  cập nhật sold và stock
-                //         let book = await BookModel.BookModel.findById(bookId);
-                //         if (book && quantity < book.stock) {
-                //             book.sold += quantity; 
-                //             book.stock -= quantity; 
-                //             await book.save(); 
-                //         } else {
-                //             msg = "Hàng trong kho không đủ! Vui lòng giảm số lượng sách: "+ book.name;
-                //         }
-                //     }
-                // }
-
-                // Cập nhật tt đơn hàng trong cơ sở dữ liệu
                 try {
                     await myModel.BillModel.findByIdAndUpdate(_id, objBillToUpdate);
                     msg = "Cập nhật trạng thái đơn hàng thành công!";
-
+                    res.redirect('/bills');
                 } catch (err) {
                     msg = "Lỗi: " + err;
                     console.log(err);
