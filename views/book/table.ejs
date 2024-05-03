@@ -19,11 +19,12 @@
       </td>
       <td><%= item.name %></td>
       <td><%= item.price %></td>
-      <td class="align-middle">
-        <% item.variations.forEach(function(variation,index){ %>
-        <h6><%= variation.language %> - <%= variation.stock %></h6>
-        <% }) %>
-      </td>
+      <!-- <td class="align-middle">
+        <%# item.variations.forEach(function(variation,index){ %>
+        <h6><%#= variation.language %> - <%#= variation.stock %></h6>
+        <%# }) %>
+      </td> -->
+      <td><%= item.stock %></td>
       <td>
         <h5>
           <span class="badge text-bg-secondary"><%= item.id_category.name %></span>

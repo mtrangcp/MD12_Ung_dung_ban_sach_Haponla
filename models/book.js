@@ -18,6 +18,7 @@ const BookSchema = new Schema(
     image: { type: String, default: "" },
     original_price: { type: Number, min: 0, required: true },
     price: { type: Number, min: 0 },
+    stock: { type: Number, min: 0 },
     sold: { type: Number, min: 0 },
     view: { type: Number, min: 0 },
     percent_discount: { type: Number, min: 0, max: 100 },
