@@ -31,27 +31,112 @@ exports.getListDiscountConHSD = async (req, res, next) => {
 }
 
 exports.getListDiscountSpinner = async (req, res, next) => {
-    let listDiscount = [];
+    const id = req.params.idU;
+    const objUser = await userModel.findById(id);
+    console.log(objUser);
+    var listIdDiscountItem = [];
+    var listDiscountItem = [];
+    var listIdDiscount = [];
+    var listDiscount = [];
 
-    try {
-        const today = new Date();
-        listDiscount = await discountModel.find({ end_date: { $gte: today } });
+    if (objUser) {
+        listIdDiscountItem = objUser.discounts;
+        if (listIdDiscountItem) {
+            console.log("--------------------->>listIdDiscountItem ok");
+            console.log(listIdDiscountItem);
 
-        if (listDiscount) {
-            objReturn.data = listDiscount;
-            objReturn.status = 1;
-            objReturn.msg = 'lay thanh cong list discount con hsd'
+            for (const idItem of listIdDiscountItem) {
+                var newDiscount = await item_discountModel.findOne(idItem);
+                listDiscountItem.push(newDiscount);
+            }
+            console.log("\n--------------------->>listDiscountItem ok");
+            console.log(listDiscountItem);
 
-        } else {
-            objReturn.status = 0;
-            objReturn.msg = 'k co du lieu'
+            for (const item of listDiscountItem) {
+                if (item.status == true) {
+                    listIdDiscount.push(item.id_discount);
+                }
+            }
+            console.log("--------------------->>listIdDiscount ok");
+            console.log(listIdDiscount);
+
+            for (const item of listIdDiscount) {
+                var newDiscount = await discountModel.findOne(item);
+                listDiscount.push(newDiscount);
+            }
+            console.log("--------------------->>listDiscount ok");
+            console.log(listDiscount);
+
+
+            if (listDiscount) {
+                objReturn.data = listDiscount;
+                objReturn.status = 1;
+                objReturn.msg = 'lay thanh cong'
+
+            } else {
+                objReturn.status = 0;
+                objReturn.msg = 'k co du lieu'
+            }
         }
-
-    } catch (error) {
+    } else {
+        console.log("k tim thay du lieu");
         objReturn.status = 0;
-        objReturn.msg = error.msg;
+        objReturn.msg = 'k co du lieu'
     }
+    return res.json(objReturn);
+}
 
+exports.getListWithIdUser = async (req, res, next) => {
+    const id = req.params.idU;
+    const objUser = await userModel.findById(id);
+    console.log(objUser);
+    var listIdDiscountItem = [];
+    var listDiscountItem = [];
+    var listIdDiscount = [];
+    var listDiscount = [];
+
+    if (objUser) {
+        listIdDiscountItem = objUser.discounts;
+        if (listIdDiscountItem) {
+            console.log("--------------------->>listIdDiscountItem ok");
+            console.log(listIdDiscountItem);
+
+            for (const idItem of listIdDiscountItem) {
+                var newDiscountItem = await item_discountModel.findOne(idItem);
+                listDiscountItem.push(newDiscountItem);
+            }
+            console.log("\n--------------------->>listDiscountItem ok");
+            console.log(listDiscountItem);
+
+            for (const item of listDiscountItem) {
+                listIdDiscount.push(item.id_discount);
+            }
+            console.log("--------------------->>listIdDiscount ok");
+            console.log(listIdDiscount);
+
+            for (const item of listIdDiscount) {
+                var newDiscount = await discountModel.findOne(item);
+                listDiscount.push(newDiscount);
+            }
+            console.log("--------------------->>listDiscount ok");
+            console.log(listDiscount);
+
+
+            if (listDiscount) {
+                objReturn.data = listDiscount;
+                objReturn.status = 1;
+                objReturn.msg = 'lay thanh cong'
+
+            } else {
+                objReturn.status = 0;
+                objReturn.msg = 'k co du lieu'
+            }
+        }
+    } else {
+        console.log("k tim thay du lieu");
+        objReturn.status = 0;
+        objReturn.msg = 'k co du lieu'
+    }
     return res.json(objReturn);
 }
 
@@ -101,46 +186,6 @@ exports.getOneDiscount = async (req, res, next) => {
 
     return res.json(objReturn);
 }
-
-exports.getListWithIdUser = async (req, res, next) => {
-    const id = req.params.idU;
-    const objUser = await userModel.findById(id);
-    console.log(objUser);
-    var listIdDiscount = [];
-    var listDiscount = [];
-
-    if (objUser) {
-        listIdDiscount = objUser.discounts;
-        if (listIdDiscount) {
-            console.log("--------------------->>listIdDiscount ok");
-            console.log(listIdDiscount);
-
-            for (const idItem of listIdDiscount) {
-                var newDiscount = await discountModel.findOne(idItem);
-                listDiscount.push(newDiscount);
-            }
-            console.log("--------------------->>listDiscount ok");
-            console.log(listDiscount);
-
-            if (listDiscount) {
-                objReturn.data = listDiscount;
-                objReturn.status = 1;
-                objReturn.msg = 'lay thanh cong'
-
-            } else {
-                objReturn.status = 0;
-                objReturn.msg = 'k co du lieu'
-            }
-        }
-    } else {
-        console.log("k tim thay du lieu");
-        objReturn.status = 0;
-        objReturn.msg = 'k co du lieu'
-    }
-    return res.json(objReturn);
-}
-
-
 
 exports.addDiscount = async (req, res, next) => {
 
@@ -195,6 +240,116 @@ exports.deleteDiscount = async (req, res, next) => {
     return res.json(objReturn);
 }
 
+exports.getListDiscountItem = async (req, res, next) => {
+    let listDiscountItem = [];
+
+    try {
+        listDiscountItem = await item_discountModel.find();
+        if (listDiscountItem) {
+            objReturn.data = listDiscountItem;
+            objReturn.status = 1;
+            objReturn.msg = 'lay thanh cong'
+
+        } else {
+            objReturn.status = 0;
+            objReturn.msg = 'k co du lieu'
+        }
+
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    return res.json(objReturn);
+}
+
+exports.getListDiscountItemWithUser = async (req, res, next) => {
+    const id = req.params.idU;
+    const objUser = await userModel.findById(id);
+    console.log(objUser);
+    var listIdDiscountItem = [];
+    var listDiscountItem = [];
+    
+    if (objUser) {
+        listIdDiscountItem = objUser.discounts;
+        if (listIdDiscountItem) {
+            console.log("--------------------->>listIdDiscountItem ok");
+            console.log(listIdDiscountItem);
+
+            for (const idItem of listIdDiscountItem) {
+                var newDiscountItem = await item_discountModel.findOne(idItem);
+                listDiscountItem.push(newDiscountItem);
+            }
+            console.log("\n--------------------->>listDiscountItem ok");
+            console.log(listDiscountItem);
+
+            if (listDiscountItem) {
+                objReturn.data = listDiscountItem;
+                objReturn.status = 1;
+                objReturn.msg = 'lay thanh cong'
+
+            } else {
+                objReturn.status = 0;
+                objReturn.msg = 'k co du lieu'
+            }
+        }
+    } else {
+        console.log("k tim thay du lieu");
+        objReturn.status = 0;
+        objReturn.msg = 'k co du lieu'
+    }
+    return res.json(objReturn);
+}
+
+exports.addDiscountItem = async (req, res, next) => {
+
+    try {
+        const newData = req.body;
+        const dataRes = await item_discountModel.create(newData);
+        return res.status(200).json({ message: dataRes })
+       
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    return res.json(objReturn);
+}
+
+exports.updateDiscountItem = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const updatedData = req.body;
+        const result = await item_discountModel.findByIdAndUpdate(id, updatedData, { new: true });
+
+        return res.status(200).json(result);
+
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    return res.json(objReturn);
+}
+
+exports.addDiscountToUser = async (req, res, next) => {
+    try {
+        const id_user = req.params.idU;
+        const user = await userModel.findById(id_user).populate("discounts");
+        const discounts = user.discounts;
+        
+        const newDiscountItem = await item_discountModel.create(req.body);
+        const result = await user.updateOne({ $push: { discounts: newDiscountItem } });
+
+        return res.status(200).json(result);
+
+    } catch (error) {
+        objReturn.status = 0;
+        objReturn.msg = error.msg;
+    }
+
+    return res.json(objReturn);
+}
 
 
 

@@ -1,4 +1,5 @@
-const { BillModel } = require("../../models/bill.model");
+const { BillModel, BillItemModel } = require("../../models/bill.model");
+var { BookModel } = require("../../models/book");
 
 const getAll = async (req, res) => {
   const { id_user } = req.query;
@@ -47,18 +48,65 @@ exports.getListBill = async (req, res, next) => {
   return res.json(objReturn);
 }
 
-
 exports.addBill = async (req, res) => {
-  console.log(req.body);
+  console.log("req.body: ",req.body);
   const data = new BillModel(req.body);
-  await data.save();
 
-  if (data) {
-    return res.apiSuccess({ data });
-  } else {
-    return res.apiError("something's wrong, try another");
+  console.log("data: " + data);
+  console.log("data.detail: " + data.detail);
+   
+  try {
+    let canCreateBill = true;
+
+    // Lấy danh sách đầy đủ của các BillItem từ MongoDB
+    let fullDetail = [];
+    for (let itemId of data.detail) {
+      let billItem = await BillItemModel.findById(itemId).exec();
+      if (billItem) {
+        fullDetail.push(billItem);
+      }
+    }
+
+    // Kiểm tra số lượng sách trước khi tạo hóa đơn
+    for (let item of fullDetail) {
+      let bookId = item.id_book;
+      let quantity = item.quantity;
+
+      let bookItem = await BookModel.findById(bookId).exec();
+      if (!bookItem || quantity > bookItem.stock) {
+        canCreateBill = false;
+        break;
+      }
+    }
+
+    if (canCreateBill) {
+      // Cập nhật số lượng sách và lưu hóa đơn
+      for (let item of fullDetail) {
+        let bookId = item.id_book;
+        let quantity = item.quantity;
+
+        let bookItem = await BookModel.findById(bookId).exec();
+        if (bookItem) {
+          bookItem.sold += quantity;
+          bookItem.stock -= quantity;
+          await bookItem.save();
+        }
+      }
+
+      // Lưu hóa đơn sau khi đã cập nhật số lượng sách thành công
+      await data.save();
+      return res.apiSuccess({ data });
+    } else {
+      // Nếu có sách không đủ số lượng, trả về lỗi
+      return res.status(400).json({ message: "Hàng trong kho không đủ. Vui lòng giảm số lượng!" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Lỗi khi thêm hóa đơn." });
   }
+  
 };
+
 
 exports.getOneBill = async (req, res) => {
   const { id } = req.params;

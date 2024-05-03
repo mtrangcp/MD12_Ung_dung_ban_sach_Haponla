@@ -11,8 +11,8 @@ const addressChema = new db.mongoose.Schema(
 
 const item_discountChema = new db.mongoose.Schema(
     {
-        id_discount: [{ type: db.mongoose.Schema.Types.ObjectId, ref: 'discountModel' }],
-        status: { type: Boolean }
+        id_discount: { type: db.mongoose.Schema.Types.ObjectId, ref: 'discountModel' },
+        status: { type: Boolean, default: true }
     },
     { collection: 'ItemDiscount', versionKey: false }
 );
@@ -50,6 +50,7 @@ const userChema = new db.mongoose.Schema(
         email: { type: String, required: true },
         phone: { type: String, required: true },
         fullname: { type: String, required: true },
+        create_at: { type: Date, default: Date.now },
         gender: {
             type: String,
             enum: ['MALE', 'FEMALE', 'OTHER'],

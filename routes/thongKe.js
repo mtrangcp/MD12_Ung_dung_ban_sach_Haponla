@@ -10,6 +10,8 @@ router.use((req, res, next) => {
 });
 
 router.get('/', check_login.yeu_cau_login, thongKeCtrl.getThongKe);
+router.get('/user', check_login.yeu_cau_login, thongKeCtrl.getThongKeUser);
+router.post('/billstatics', check_login.yeu_cau_login, thongKeCtrl.getBillStatistics);
 
 
 module.exports = router;

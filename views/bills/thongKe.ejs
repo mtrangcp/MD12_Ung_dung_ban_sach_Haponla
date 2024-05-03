@@ -1,170 +1,356 @@
 <div class="container shadow my-5 px-5 py-4">
-    <h2>Thong ke</h2>
-    <!-- <% console.log("listView: " + listView);%> -->
-
+    <h5>Biểu đồ </h5>
+    
     <div style="display: flex; justify-content: space-between;">
         <div>
-            Từ: <input id="formDate" type="date" min="" max="">
-            đến: <input id="toDate" type="date" min="" max="">
+            Từ ngày: <input id="formDate" type="date" min="" max=""> 
+            Đến ngày: <input id="toDate" type="date" min="" max="">
         </div>
 
         <div>
-            <% console.log("listBill: " +listBill); %>
-                <% let totalPriceBill=listBill.reduce((total, item)=> { return total += item.real_price;}, 0)%>
-                    <strong>
-                        <%= totalPriceBill.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
-                    </strong>
+            <strong>
+                Tổng: <%= tongDT.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+            </strong>
         </div>
     </div>
 
     <canvas id="myChart"></canvas>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        <script>
+    <script>
 
-            function formatDate(date) {
-                const year = date.getFullYear();
-                let month = date.getMonth() + 1;
-                let day = date.getDate();
+        function formatDate(inputDateStr) {
+            const [year, month, day] = inputDateStr.split('-').map(Number);
+            const dateObject = new Date(year, month - 1, day); // month - 1 vì tháng trong JavaScript tính từ 0
+            const isoDateString = dateObject.toISOString();
+            return isoDateString;
+        }
 
-                if (month < 10) {
-                    month = '0' + month;
-                }
-                if (day < 10) {
-                    day = '0' + day;
-                }
+        function countOrdersByDay(startDate, endDate, orders) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
 
-                return `${year}-${month}-${day}`;
-            }
+            const startMonth = start.getMonth();
+            const startYear = start.getFullYear();
 
-            function generateYearMonthObject(startDate, endDate) {
-                const startYear = new Date(startDate).getFullYear();
-                const endYear = new Date(endDate).getFullYear();
-                const years = {};
+            const endMonth = end.getMonth();
+            const endYear = end.getFullYear();
 
-                for (let year = startYear; year <= endYear; year++) {
-                    const startMonth = (year === startYear) ? new Date(startDate).getMonth() + 1 : 1;
-                    const endMonth = (year === endYear) ? new Date(endDate).getMonth() + 1 : 12;
-                    const months = [];
+            let result = {};
 
-                    for (let month = startMonth; month <= endMonth; month++) {
-                        months.push(month);
+            for (let order of orders) {
+                const orderDate = new Date(order.create_at);
+
+                // Kiểm tra xem ngày đơn hàng có trong khoảng thời gian bắt đầu và kết thúc không
+                if (
+                    orderDate.getFullYear() >= startYear &&
+                    orderDate.getFullYear() <= endYear &&
+                    orderDate.getMonth() >= startMonth &&
+                    orderDate.getMonth() <= endMonth
+                ) {
+                    const dayKey = `${orderDate.getFullYear()}-${(orderDate.getMonth() + 1)
+                        .toString()
+                        .padStart(2, '0')}-${orderDate.getDate().toString().padStart(2, '0')}`;
+
+                    if (!result[dayKey]) {
+                        result[dayKey] = { '0': 0, '3': 0, '4': 0 };
                     }
 
-                    years[year] = months;
+                    result[dayKey][order.status.toString()]++;
                 }
-
-                return years;
             }
 
-            function convertToObjectString(yearMonthObject) {
-                const result = [];
-
-                for (const [year, months] of Object.entries(yearMonthObject)) {
-                    for (const month of months) {
-                        const dateString = `${year}-${String(month).padStart(2, '0')}`;
-                        result.push(dateString);
-                    }
-                }
-
-                return result;
-            }
-
-            function generateYearMonthArraysWithTotal(startDate, endDate, data) {
-                let months = [];
-                let totals = [];
-
-                const startYear = startDate.getFullYear();
-                const endYear = endDate.getFullYear();
-                const startMonth = startDate.getMonth();
-                const endMonth = endDate.getMonth();
-
-                const dataYears = new Set(data.map(item => new Date(item.date).getFullYear()));
-
-                for (let year of dataYears) {
-                    const start = year === startYear ? startMonth : 0;
-                    const end = year === endYear ? endMonth : 11;
-
-                    for (let month = start; month <= end; month++) {
-                        const monthData = data.filter(item => {
-                            const itemDate = new Date(item.date);
-                            return itemDate.getFullYear() === year && itemDate.getMonth() === month;
-                        });
-
-                        const total = monthData.reduce((acc, item) => acc + item.price, 0);
-                        const monthStr = (month + 1).toString().padStart(2, '0');
-                        const yearMonth = `${year}-${monthStr}`;
-                        months.push(yearMonth);
-                        totals.push(total);
-                    }
-                }
-
-                return [months, totals];
-            }
-
-            const rawListBill = <%- JSON.stringify(listBill) %>;
-            
-            const bills = rawListBill.map((item) => {
-                return {
-                    price: item.real_price,
-                    date: item.create_at.substring(0, 10)
-                }
+            // Chuyển đổi result thành mảng các cặp key-value và sắp xếp theo ngày
+            const sortedResult = Object.entries(result).sort(([dateA], [dateB]) => {
+                return new Date(dateA) - new Date(dateB);
             });
 
-            const fromDateHTML = document.getElementById("formDate");
-            const toDateHTML = document.getElementById("toDate");
+            // Tạo mảng ngày và các mảng kết quả tương ứng
+            const dates = [];
+            const status0 = [];
+            const status3 = [];
+            const status4 = [];
 
-            let selectFromDate = formatDate(new Date("2024-01-01"));
-            let selectToDate = formatDate(new Date());
-            let [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
+            sortedResult.forEach(([date, counts]) => {
+                dates.push(date);
+                status0.push(counts['0'] || 0);
+                status3.push(counts['3'] || 0);
+                status4.push(counts['4'] || 0);
+            });
 
-            const ctx = document.getElementById('myChart');
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labelsChart,
-                    datasets: [{
-                        label: '# Total price of Month',
-                        data: valuesChart,
-                        borderWidth: 1
-                    }]
+            return [dates, status0, status3, status4];
+        }
+
+        function isSameYearAndMonth(date1, date2) {
+            const d1 = new Date(date1);
+            const d2 = new Date(date2);
+
+            const year1 = d1.getFullYear();
+            const month1 = d1.getMonth();
+
+            const year2 = d2.getFullYear();
+            const month2 = d2.getMonth();
+
+            return year1 === year2 && month1 === month2;
+        }
+
+        function countOrdersByMonth(startDate, endDate, orders) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            const startMonth = start.getMonth();
+            const startYear = start.getFullYear();
+
+            const endMonth = end.getMonth();
+            const endYear = end.getFullYear();
+
+            let months = [];
+            let status0Counts = [];
+            let status3Counts = [];
+            let status4Counts = [];
+
+            let result = {};
+
+            for (let order of orders) {
+                const orderDate = new Date(order.create_at);
+
+                // Kiểm tra xem ngày đơn hàng có trong khoảng thời gian bắt đầu và kết thúc không
+                if (
+                    orderDate.getFullYear() >= startYear &&
+                    orderDate.getFullYear() <= endYear &&
+                    orderDate.getMonth() >= startMonth &&
+                    orderDate.getMonth() <= endMonth
+                ) {
+                    const monthKey = `${orderDate.getFullYear()}-${(orderDate.getMonth() + 1).toString().padStart(2, '0')}`;
+
+                    if (!result[monthKey]) {
+                        result[monthKey] = { '0': 0, '3': 0, '4': 0 };
+                    }
+
+                    result[monthKey][order.status.toString()]++;
+                }
+            }
+
+            // Sắp xếp các tháng theo thứ tự tăng dần
+            const sortedMonths = Object.keys(result).sort();
+
+            // Lặp qua các tháng đã được sắp xếp để lấy thông tin
+            for (let month of sortedMonths) {
+                months.push(month);
+                status0Counts.push(result[month]['0'] || 0);
+                status3Counts.push(result[month]['3'] || 0);
+                status4Counts.push(result[month]['4'] || 0);
+            }
+
+            return [months, status0Counts, status3Counts, status4Counts];
+        }
+
+        const rawListBill = <%- JSON.stringify(listBill) %>;
+
+        const fromDateHTML = document.getElementById("formDate");
+        const toDateHTML = document.getElementById("toDate");
+
+        let selectFromDate = formatDate("2024-01-01");
+        let selectToDate = formatDate((new Date()).toISOString().split('T')[0]);
+        // let [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
+
+        let labels = [], data0 = [], data3 = [], data4 = [];
+
+        const ctx = document.getElementById('myChart');
+        const mixedChart = new Chart(ctx, {
+            data: {
+                datasets: [
+                    {
+                        type: 'line',
+                        label: 'Status 0',
+                        data: data0,
+                    }, 
+                    {
+                        type: 'line',
+                        label: 'Status 3',
+                        data: data3,
+                    },
+                    {
+                        type: 'line',
+                        label: 'Status 4',
+                        data: data4,
+                    }
+                ],
+                labels: labels
+            },
+            // options: options
+        });
+
+
+        fromDateHTML.min = '2024-01-01';
+        fromDateHTML.max = (new Date()).toISOString().split('T')[0];
+        fromDateHTML.addEventListener("change", function (event) {
+            const selectedDate = event.target.value;
+            selectFromDate = formatDate(selectedDate);
+            toDateHTML.min = (new Date(selectedDate)).toISOString().split('T')[0];
+
+            const checkDay = isSameYearAndMonth(selectFromDate, selectToDate);
+            if (checkDay) {
+                const filteredOrders = rawListBill.filter(order => {
+                    const orderDate = new Date(order.create_at);
+                    return orderDate >= new Date(selectFromDate) && orderDate <= new Date(selectToDate);
+                });
+                const [label, mang0, mang3, mang4] = countOrdersByDay(selectFromDate, selectToDate, filteredOrders);
+
+                mixedChart.data.labels = label;
+                mixedChart.data.datasets[0].data = mang0;
+                mixedChart.data.datasets[1].data = mang3;
+                mixedChart.data.datasets[2].data = mang4;
+                mixedChart.update();
+
+            } else {
+                const filteredOrders = rawListBill.filter(order => {
+                    const orderDate = new Date(order.create_at);
+                    return orderDate >= new Date(selectFromDate) && orderDate <= new Date(selectToDate);
+                });
+                const [label, mang0, mang3, mang4] = countOrdersByMonth(selectFromDate, selectToDate, filteredOrders);
+
+                mixedChart.data.labels = label;
+                mixedChart.data.datasets[0].data = mang0;
+                mixedChart.data.datasets[1].data = mang3;
+                mixedChart.data.datasets[2].data = mang4;
+                mixedChart.update();
+            }
+
+        });
+
+        toDateHTML.min = '2024-01-01';
+        toDateHTML.max = (new Date()).toISOString().split('T')[0];
+        toDateHTML.addEventListener("change", function (event) {
+            const selectedDate = event.target.value;
+            selectToDate = formatDate(selectedDate);
+            fromDateHTML.max = (new Date(selectedDate)).toISOString().split('T')[0];
+
+            const checkDay = isSameYearAndMonth(selectFromDate, selectToDate);
+            if (checkDay) {
+                const filteredOrders = rawListBill.filter(order => {
+                    const orderDate = new Date(order.create_at);
+                    return orderDate >= new Date(selectFromDate) && orderDate <= new Date(selectToDate);
+                });
+                const [label, mang0, mang3, mang4] = countOrdersByDay(selectFromDate, selectToDate, filteredOrders);
+
+                mixedChart.data.labels = label;
+                mixedChart.data.datasets[0].data = mang0;
+                mixedChart.data.datasets[1].data = mang3;
+                mixedChart.data.datasets[2].data = mang4;
+                mixedChart.update();
+            } else {
+                const filteredOrders = rawListBill.filter(order => {
+                    const orderDate = new Date(order.create_at);
+                    return orderDate >= new Date(selectFromDate) && orderDate <= new Date(selectToDate);
+                });
+                const [label, mang0, mang3, mang4] = countOrdersByMonth(selectFromDate, selectToDate, filteredOrders);
+
+                mixedChart.data.labels = label;
+                mixedChart.data.datasets[0].data = mang0;
+                mixedChart.data.datasets[1].data = mang3;
+                mixedChart.data.datasets[2].data = mang4;
+                mixedChart.update();
+            }
+        });
+    </script> 
+
+    <h5 style="margin-top: 30px;">Thống kê hóa đơn và sách bán chạy</h5>
+    <form action="/thongKe/billstatics" method="POST" style="margin-top: 20px; margin-bottom: 20px;">
+        <label for="startDate">Từ ngày:</label>
+        <input type="date" id="startDate" name="startDate" required min="2024-01-01" max="<%= (new Date()).toISOString().split('T')[0] %>">
+        
+        <label for="endDate">Đến ngày:</label>
+        <input type="date" id="endDate" name="endDate" required min="2024-01-01" max="<%= (new Date()).toISOString().split('T')[0] %>">
+
+        <button type="submit" class="button">Lọc</button>
+    </form>
+    
+    <h5 >Kết quả:</h5>
+    <div id="statisticsResult">
+        
+    </div>
+    
+    <script>
+        document.querySelector('form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            const response = await fetch('/thongKe/billstatics', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
+                body: JSON.stringify({ startDate, endDate })
             });
 
-            fromDateHTML.min = formatDate(new Date("2024-01-01"));
-            fromDateHTML.max = formatDate(new Date());
-            fromDateHTML.addEventListener("change", function (event) {
-                const selectedDate = event.target.value;
-                selectFromDate = selectedDate;
-                toDateHTML.min = selectedDate;
+            const data = await response.json();
 
-                [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
-                myChart.data.labels = labelsChart;
-                myChart.data.datasets[0].data = valuesChart;
-                myChart.update();
-            });
+            function formatCurrency(amount) {
+                const formatter = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                });
+                return formatter.format(amount);
+            }
 
-            toDateHTML.min = formatDate(new Date("2024-01-01"));
-            toDateHTML.max = formatDate(new Date());
-            toDateHTML.addEventListener("change", function (event) {
-                const selectedDate = event.target.value;
-                selectToDate = selectedDate;
-                fromDateHTML.max = selectedDate;
+            const resultDiv = document.getElementById('statisticsResult');
+            resultDiv.innerHTML = `
+                    <p>Số lượng hóa đơn theo trạng thái:</p>
+                    <ul>
+                        <li>Đã hủy( trạng thái 0 ): ${data.statusCounts[0]}</li>
+                        <li>Đã đặt hàng( trạng thái 1 ): ${data.statusCounts[1]}</li>
+                        <li>Đã xác nhận( trạng thái 2 ): ${data.statusCounts[2]}</li>
+                        <li>Đang vận chuyển( trạng thái 3 ): ${data.statusCounts[3]}</li>
+                        <li>Giao hàng thành công( trạng thái 4 ): ${data.statusCounts[4]}</li>
+                        
+                    </ul>
+                    <p>Doanh thu (hóa đơn ở trạng thái 2, 3, 4): ${formatCurrency(data.revenue)}</p>
+                    <p>Tổng giá trị hóa đơn chờ xác nhận (trạng thái 1): ${formatCurrency(data.pendingValue)}</p>
+                    <p>Top sách bán chạy:</p>
+                    <table class="table table-borderless table-striped table-hover table-response">
+                        <thead class="table-dark">
+                            <tr class="text-center">
+                                <th >Ảnh</th>
+                                <th >Tên sách</th>
+                                <th >Số lượng đã bán</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.topBooks.map(book => `
+                                <tr>
+                                    <td><img src="${book.image}" alt="Ảnh sách" style="width: 100px; height: auto;"></td>
+                                    <td >${book.name}</td>
+                                    <td>${book.soldQuantity}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+        });
+    </script>
+    <style>
+        table td {
+            text-align: center;
+        }
+        .button {
+            margin-left: 15px;
+            border: 1px solid #ccc;/* Xóa viền */
+            border-radius: 10px; /* Bo góc */
+            padding: 4px 16px; /* Độ lớn padding để tạo khoảng cách xung quanh nội dung */
+            text-align: center; /* Căn giữa nội dung của button */
+            font-size: 15px; /* Kích cỡ chữ */
+            color: #333; /* Màu chữ */
+            background-color: #f0f0f0; /* Màu nền */
+            cursor: pointer; /* Biểu tượng chuột khi di chuột qua button */
+            transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi màu nền và màu chữ khi hover */
+        }
 
-                [labelsChart, valuesChart] = generateYearMonthArraysWithTotal(new Date(selectFromDate), new Date(selectToDate), bills);
-                myChart.data.labels = labelsChart;
-                myChart.data.datasets[0].data = valuesChart;
-                myChart.update();
-            });
-        </script>
-        
+        .button:hover {
+            background-color: #ddd; /* Màu nền khi di chuột qua button */
+            color: #555; /* Màu chữ khi di chuột qua button */
+        }
+    </style>
 
-        
 </div>

@@ -1,0 +1,128 @@
+<div class="container shadow my-5 px-5 py-4">
+    <h5>Thống kê người dùng</h5>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            Từ: <input id="formDate" type="date" min="" max="">
+            đến: <input id="toDate" type="date" min="" max="">
+        </div>
+
+        <div>
+            <span><span id="totalUser"></span> người dùng</span>
+        </div>
+
+    </div>
+
+    <canvas id="myChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        function formatDate(inputDateStr) {
+            const [year, month, day] = inputDateStr.split('-').map(Number);
+            const dateObject = new Date(year, month - 1, day); // month - 1 vì tháng trong JavaScript tính từ 0
+            const isoDateString = dateObject.toISOString();
+            return isoDateString;
+        }
+
+        function countUsersByMonth(data, startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            let result = {};
+
+            // Duyệt qua danh sách người dùng
+            for (let user of data) {
+                const createDate = new Date(user.create_at);
+
+                // Kiểm tra ngày tạo người dùng có trong khoảng thời gian bắt đầu và kết thúc không
+                if (createDate >= start && createDate <= end) {
+                    const year = createDate.getFullYear();
+                    const month = createDate.getMonth() + 1; // Tháng tính từ 0
+
+                    // Tạo key theo định dạng 'yyyy-MM'
+                    const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
+
+                    // Nếu chưa có thì khởi tạo đếm là 1, nếu đã có thì tăng lên 1
+                    if (!result[monthKey]) {
+                        result[monthKey] = 1;
+                    } else {
+                        result[monthKey]++;
+                    }
+                }
+            }
+
+            // Chuyển kết quả sang mảng để dễ dàng sử dụng và hiển thị
+            const months = [];
+            const userCounts = [];
+
+            // Duyệt qua các tháng trong kết quả và tạo mảng các tháng và số lượng người dùng được thêm vào
+            for (let key in result) {
+                months.push(key); // Thêm tháng vào mảng tháng
+                userCounts.push(result[key]); // Thêm số lượng người dùng vào mảng số lượng
+            }
+
+            return [months, userCounts];
+        }
+
+        const rawListUser = <%- JSON.stringify(listUser) %>;
+
+        const fromDateHTML = document.getElementById("formDate");
+        const toDateHTML = document.getElementById("toDate");
+        document.getElementById("totalUser").innerHTML = rawListUser.length || 0;
+
+        let selectFromDate = formatDate("2024-01-01");
+        let selectToDate = formatDate((new Date()).toISOString().split('T')[0]);
+
+        const [labels, data] = countUsersByMonth(rawListUser, selectFromDate, selectToDate);
+
+        const ctx = document.getElementById('myChart');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '# users',
+                    data: data,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        fromDateHTML.min = '2024-01-01';
+        fromDateHTML.max = (new Date()).toISOString().split('T')[0];
+        fromDateHTML.addEventListener("change", function (event) {
+            const selectedDate = event.target.value;
+            selectFromDate = formatDate(selectedDate);
+            toDateHTML.min = (new Date(selectedDate)).toISOString().split('T')[0];
+
+            const [labels, data] = countUsersByMonth(rawListUser, selectFromDate, selectToDate);
+            console.log(labels, data);
+
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = data;
+            myChart.update();
+        });
+
+        toDateHTML.min = '2024-01-01';
+        toDateHTML.max = (new Date()).toISOString().split('T')[0];
+        toDateHTML.addEventListener("change", function (event) {
+            const selectedDate = event.target.value;
+            selectToDate = formatDate(selectedDate);
+            fromDateHTML.max = (new Date(selectedDate)).toISOString().split('T')[0];
+
+            const [labels, data] = countUsersByMonth(rawListUser, selectFromDate, selectToDate);
+            console.log(labels, data);
+            myChart.data.labels = labels;
+            myChart.data.datasets[0].data = data;
+            myChart.update();
+        });
+    </script>
+</div>
