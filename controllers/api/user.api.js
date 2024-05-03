@@ -59,6 +59,7 @@ exports.addUser = async (req, res, next) => {
         const checkUsername = await userModel.findOne({ username: req.body.username })
         if ((checkEmail === null) && (checkUsername === null)) {
             const dataRes = await userModel.create(newData);
+            objReturn.status = 1;
             return res.status(200).json({ message: dataRes })
         } else {
             return res.status(400).json({ message: "Account da ton tai" })
