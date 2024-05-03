@@ -10,9 +10,9 @@ const getAll = async (req, res) => {
 
     let books;
     if (id_category) {
-      books = await BookModel.find({ id_category }).populate("id_category");
+      books = await BookModel.find({ id_category }).sort({_id:- 1}).populate("id_category");
     } else {
-      books = await BookModel.find().populate("id_category");
+      books = await BookModel.find().sort({_id: -1}).populate("id_category");
     }
 
     const categories = await CategoryModel.find();
